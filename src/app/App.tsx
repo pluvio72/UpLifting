@@ -25,7 +25,6 @@ const App: FC = () => {
             <Stack.Screen
               name={Screens.NewWorkout}
               component={NewWorkout}
-              options={{headerShown: false}}
             />
           </Stack.Navigator>
         </SafeAreaView>

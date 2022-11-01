@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleProp,
   TextInput as TextInputComponent,
@@ -24,6 +24,7 @@ export interface TextInputProps {
   style?: StyleProp<TextStyle>;
   textColor?: Color;
   type?: 'string' | 'number';
+  value?: string;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -42,6 +43,10 @@ const TextInput: React.FC<TextInputProps> = ({
   type = 'string',
 }) => {
   const [value, setValue] = useState(defaultValue);
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue])
 
   const onChangeValue = (newVal: string) => {
     setValue(newVal);

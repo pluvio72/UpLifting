@@ -17,10 +17,12 @@ const NewWorkout = () => {
 
   const toggleExerciseSelect = () => setShowExerciseSelect(!showExerciseSelect);
 
+  // console.log(exercises[0] ? exercises[0]['data'] : 'empt');
+
   const addExercise = (name: Exercise) => {
     setExercises(prev => [
       ...prev,
-      {data: [{weight: 0, reps: 0, completed: false}], name},
+      {data: [{weight: '', reps: '', completed: false}], name},
     ]);
   };
 
@@ -28,11 +30,16 @@ const NewWorkout = () => {
     exerciseIndex: number,
     type: 'reps' | 'weight' | 'completed',
     setIndex: number,
-    newValue: number | boolean,
+    newValue?: string | number,
   ) => {
     setExercises(prev => {
       let newSet = [...prev];
-      newSet[exerciseIndex]['data'][setIndex][type] = _newValue;
+      // if its completed field which is being updated
+      // toggle the value
+      if (type === 'completed')
+        newSet[exerciseIndex]['data'][setIndex]['completed'] =
+          !newSet[exerciseIndex]['data'][setIndex]['completed'];
+      else newSet[exerciseIndex]['data'][setIndex][type] = newValue as number;
       return newSet;
     });
   };
@@ -41,19 +48,44 @@ const NewWorkout = () => {
     setExercises(prev => {
       let newSet = [...prev];
       newSet[exerciseIndex]['data'].push({
-        weight: 0,
-        reps: 0,
+        weight: '',
+        reps: '',
         completed: false,
       });
       return newSet;
+    });
+  };
+
+  const removeSet = (exerciseIndex: number, setIndex: number) => {
+    setExercises(prev => {
+      let selectedExerciseSet = prev[exerciseIndex]['data'];
+      let newSet: ExerciseSet[];
+
+      // if set only has one remove the exercise
+      if (selectedExerciseSet.length === 1) {
+        newSet = [
+          ...prev.slice(0, exerciseIndex),
+          ...prev.slice(exerciseIndex + 1)
+        ]
+      } else {
+        newSet = [...prev];
+        newSet[exerciseIndex]['data'] = [
+          ...selectedExerciseSet.slice(0, setIndex),
+          ...selectedExerciseSet.slice(setIndex + 1)
+        ]
+      }
+
+      return [...newSet];
     })
   }
+
+  const finishWorkout = () => {};
 
   return (
     <KeyboardAvoidingView style={Styles.container}>
       <TextInput onChange={setTitle} defaultValue="New Workout" />
-      <Spacer size={2} />
-      <Button color={colors.primary} onPress={toggleExerciseSelect}>
+      <Spacer size={1} />
+      <Button bold color={colors.primary} onPress={toggleExerciseSelect}>
         Add Exercise
       </Button>
       <View style={styles.exercisesWrapper}>
@@ -65,9 +97,15 @@ const NewWorkout = () => {
               updateSet(index, type, setIndex, newValue)
             }
             data={exercise.data}
+            onRemove={(setIndex) => removeSet(index, setIndex)}
           />
         ))}
       </View>
+      {exercises.length > 0 &&
+        <Button color={colors.green} onPress={finishWorkout}>
+          Finish
+        </Button>
+      }
       <ExerciseSelectModal
         show={showExerciseSelect}
         onHide={toggleExerciseSelect}

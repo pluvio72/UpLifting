@@ -5,7 +5,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 10,
     textAlign: 'center',
+    flexDirection: 'row',
   },
-  text: {}
+  text: {},
+  icon: {
+    marginLeft: 6,
+    marginTop: 2
+  }
 });
 export default styles;

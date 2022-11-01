@@ -31,6 +31,15 @@ const GeneralStyles = StyleSheet.create({
   },
   container: {
     padding: 10
+  },
+  textBold: {
+    fontWeight: '600'
+  },
+  textMd: {
+    fontSize: 16,
+  },
+  textLg: {
+    fontSize: 20,
   }
 });
 
