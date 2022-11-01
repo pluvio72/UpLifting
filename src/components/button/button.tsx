@@ -1,8 +1,8 @@
 import React from 'react';
 import {Pressable, StyleProp, Text, TextStyle, ViewStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Padding} from '../../types/styles';
-import {Styles, PaddingStylesheet} from '../../util/styles';
+import {Margin, Padding} from '../../types/styles';
+import {Styles, PaddingStylesheet, MarginStylesheet} from '../../util/styles';
 import {Color, getTextColor} from '../../util/styles/colors';
 import styles from './button.styles';
 
@@ -15,10 +15,10 @@ interface ButtonProps {
   icon?: string;
   iconColor?: Color;
   iconSize?: number;
-  margin?: TextStyle['margin'];
+  margin?: Margin;
   onPress?: () => void;
   padding?: Padding;
-  textAlign?: TextStyle['textAlign'];
+  textAlign?: ViewStyle['justifyContent'];
 }
 
 const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
@@ -43,9 +43,10 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
         styles.container,
         {backgroundColor: color},
         elevated && Styles.dropShadow,
-        {margin},
+        MarginStylesheet(margin),
         PaddingStylesheet(padding),
         {borderRadius},
+        { justifyContent: 'center' }
       ]}>
       <Text
         style={[
@@ -53,7 +54,6 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
           styles.text,
           {fontWeight: bold ? '600' : '400'},
           {fontSize},
-          {textAlign},
         ]}>
         {children}
       </Text>

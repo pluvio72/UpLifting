@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     borderRadius: 12,
     height: 25,
-    marginRight: 'auto',
     display: 'flex',
     justifyContent: 'center',
     margin: 6,
@@ -21,11 +20,12 @@ const styles = StyleSheet.create({
 
 interface Props {
   color: Color;
+  text?: Color;
 }
 
-const Chip: React.FC<PropsWithChildren<Props>> = ({ children, color }) => (
+const Chip: React.FC<PropsWithChildren<Props>> = ({ children, color, text }) => (
   <View style={[{backgroundColor: color}, styles.container]}>
-    <Text style={styles.text}>{children}</Text>
+    <Text style={[styles.text, { color: text }]}>{children}</Text>
   </View>
 );
 

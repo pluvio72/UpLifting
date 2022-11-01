@@ -9,7 +9,7 @@ const colors = {
   accentDark: '#D90429',
   shadowColor: 'rgb(30,30,30)',
   borderColor: '#111',
-  green: 'rgb(20, 148, 30)',
+  green: '#d0f0c0',
   red: 'rgb(180, 34, 20)'
 } as const;
 
@@ -25,7 +25,7 @@ export const getTextColor = (color: Color) => {
   ) {
     return colors.light;
   } else {
-    return colors.primary;
+    return colors.black;
   }
 };
 

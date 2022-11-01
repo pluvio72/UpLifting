@@ -6,10 +6,18 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   historyWrapper: {
-    borderRadius: 6,
-    borderColor: colors.borderColor,
-    borderWidth: 1.5,
+    borderRadius: 16,
     display: 'flex',
+    padding: 10,
+    backgroundColor: colors.secondary,
+  },
+  historySet: {
+    backgroundColor: colors.grey,
+    padding: 8,
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 4,
   }
 });
 

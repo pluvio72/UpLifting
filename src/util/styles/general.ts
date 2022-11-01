@@ -38,6 +38,9 @@ const GeneralStyles = StyleSheet.create({
   textMd: {
     fontSize: 16,
   },
+  textCenter: {
+    textAlign: 'center'
+  },
   textLg: {
     fontSize: 20,
   }
