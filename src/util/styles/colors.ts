@@ -9,7 +9,7 @@ const colors = {
   accentDark: '#D90429',
   shadowColor: 'rgb(30,30,30)',
   borderColor: '#111',
-  green: '#d0f0c0',
+  green: '#32CD32',
   red: 'rgb(180, 34, 20)'
 } as const;
 

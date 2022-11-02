@@ -65,19 +65,19 @@ const NewWorkout = () => {
       if (selectedExerciseSet.length === 1) {
         newSet = [
           ...prev.slice(0, exerciseIndex),
-          ...prev.slice(exerciseIndex + 1)
-        ]
+          ...prev.slice(exerciseIndex + 1),
+        ];
       } else {
         newSet = [...prev];
         newSet[exerciseIndex]['data'] = [
           ...selectedExerciseSet.slice(0, setIndex),
-          ...selectedExerciseSet.slice(setIndex + 1)
-        ]
+          ...selectedExerciseSet.slice(setIndex + 1),
+        ];
       }
 
       return [...newSet];
-    })
-  }
+    });
+  };
 
   const finishWorkout = () => {};
 
@@ -97,15 +97,20 @@ const NewWorkout = () => {
               updateSet(index, type, setIndex, newValue)
             }
             data={exercise.data}
-            onRemove={(setIndex) => removeSet(index, setIndex)}
+            onRemove={setIndex => removeSet(index, setIndex)}
           />
         ))}
       </View>
-      {exercises.length > 0 &&
-        <Button color={colors.green} onPress={finishWorkout}>
+      {exercises.length > 0 && (
+        <Button
+          color={colors.green}
+          bold
+          fontSize={16}
+          textAlign="center"
+          onPress={finishWorkout}>
           Finish
         </Button>
-      }
+      )}
       <ExerciseSelectModal
         show={showExerciseSelect}
         onHide={toggleExerciseSelect}

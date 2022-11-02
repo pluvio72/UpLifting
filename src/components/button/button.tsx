@@ -19,6 +19,7 @@ interface ButtonProps {
   onPress?: () => void;
   padding?: Padding;
   textAlign?: ViewStyle['justifyContent'];
+  width?: ViewStyle['width'];
 }
 
 const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
@@ -35,6 +36,7 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   onPress,
   padding,
   textAlign,
+  width,
 }) => {
   return (
     <Pressable
@@ -46,7 +48,8 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
         MarginStylesheet(margin),
         PaddingStylesheet(padding),
         {borderRadius},
-        { justifyContent: 'center' }
+        { justifyContent: textAlign },
+        { width }
       ]}>
       <Text
         style={[

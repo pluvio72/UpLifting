@@ -25,6 +25,9 @@ const App: FC = () => {
             <Stack.Screen
               name={Screens.NewWorkout}
               component={NewWorkout}
+              options={{
+                headerTitle: 'New Workout'
+              }}
             />
           </Stack.Navigator>
         </SafeAreaView>

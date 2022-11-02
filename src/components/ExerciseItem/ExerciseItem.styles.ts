@@ -20,7 +20,32 @@ const styles = StyleSheet.create({
     paddingVertical: 2
   },
   exerciseName: {
-    width: '45%'
+    fontWeight: '600',
+    paddingHorizontal: 8,
+  },
+  prevBest: {
+    color: colors.secondary,
+    fontWeight: '500',
+    width: '50%',
+    textAlign: 'center',
+  },
+  settingsDropdown: {
+    width: '30%',
+    backgroundColor: colors.primary,
+    borderRadius: 8,
+  },
+  settingsDropdownText: {
+    fontSize: 12,
+    color: colors.white,
+    fontWeight: '600',
+    paddingLeft: 8,
+  },
+  settingsDropdownMenu: {
+    borderRadius: 8,
+  },
+  settingsDropdownMenuItem: {
+    fontSize: 12,
+    fontWeight: '600',
   },
   done: {
     color: colors.green,
