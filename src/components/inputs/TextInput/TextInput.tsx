@@ -22,6 +22,7 @@ export interface TextInputProps {
   onChange: (newVal: string) => void;
   placeholder?: string;
   style?: StyleProp<TextStyle>;
+  textArea?: boolean;
   textColor?: Color;
   type?: 'string' | 'number';
   value?: string;
@@ -31,7 +32,7 @@ const TextInput: React.FC<TextInputProps> = ({
   autoCapitalize,
   autoComplete,
   autoCorrect,
-  backgroundColor = 'white',
+  backgroundColor = colors.grey,
   disabled,
   defaultValue,
   margin,
@@ -39,6 +40,7 @@ const TextInput: React.FC<TextInputProps> = ({
   onChange,
   placeholder,
   style,
+  textArea,
   textColor = colors.black,
   type = 'string',
 }) => {
@@ -71,7 +73,8 @@ const TextInput: React.FC<TextInputProps> = ({
       ]}
       placeholder={placeholder ?? 'Value'}
       editable={disabled ?? true}
-      placeholderTextColor={colors.grey}
+      placeholderTextColor={colors.darkGrey}
+      multiline={textArea}
     />
   );
 };

@@ -8,6 +8,7 @@ import Button from '../button';
 import {TextInput} from '../inputs/TextInput';
 import TextInputWithLabel from '../inputs/TextInputWithLabel';
 import {Row} from '../Reusable/reusable';
+import Spacer from '../spacer';
 import styles from './ExerciseItem.styles';
 
 interface SetRowProps {
@@ -94,6 +95,9 @@ const SettingsItems = [
   {
     name: 'Add Notes',
   },
+  {
+    name: 'Remove Notes',
+  }
 ];
 
 const ExerciseItem: React.FC<ExerciseItemProps> = ({
@@ -107,9 +111,17 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
     onUpdate('completed', setIndex);
   };
 
+  const [showNotes, setShowNotes] = useState(false);
+  const [notes, setNotes] = useState('');
+
+  const onPressSettingsItem = (item: typeof SettingsItems[number]) => {
+    if(item.name === 'Add Notes') setShowNotes(true);
+    else if(item.name === 'Remove Notes') setShowNotes(false);
+  }
+
   return (
     <View style={styles.exerciseItem}>
-      <Row xAlign="center" yAlign="center" padding={{pb: 16}}>
+      <Row xAlign="center" yAlign="center" padding={{pb: 10}}>
         <Dropdown
           style={styles.settingsDropdown}
           placeholderStyle={styles.settingsDropdownText}
@@ -128,7 +140,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           labelField={'name'}
           valueField={'name'}
           placeholder="Settings"
-          onChange={() => {}}
+          onChange={onPressSettingsItem}
         />
         <Text style={[styles.exerciseName, Styles.textCenter]}>{name}</Text>
         <Button
@@ -141,6 +153,16 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           Metrics
         </Button>
       </Row>
+      {showNotes && 
+        <TextInput
+          textArea
+          maxLength={150}
+          onChange={setNotes}
+          backgroundColor={colors.grey}
+          placeholder="Add notes..."
+        />
+      }
+      <Spacer />
       <Row xAlign="space-around" margin={{mb: 8}}>
         <Text style={styles.prevBest}>50KG x 10</Text>
         <TextInput

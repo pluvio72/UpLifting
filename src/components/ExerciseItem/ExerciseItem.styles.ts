@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   },
   settingsDropdownMenu: {
     borderRadius: 8,
+    width: '40%'
   },
   settingsDropdownMenuItem: {
     fontSize: 12,

@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
   return (
     <View style={styles.container}>
       <NavbarIcon name='user' text='Profile' to={Screens.NewWorkout}/>
-      <NavbarIcon name='plus' text='Add' to={Screens.NewWorkout}/>
+      <NavbarIcon name='plus' text='Start' to={Screens.NewWorkout}/>
       <NavbarIcon name='bar-chart' text='Chart' to={Screens.NewWorkout}/>
     </View>
   )

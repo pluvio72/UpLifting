@@ -58,10 +58,16 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
         </View>
       </View>
       <Spacer/>
-      <Button color={colors.green} bold textAlign='center'>View History</Button>
+      <Button color={colors.accent} bold textAlign='center'>View History</Button>
       <Spacer size={2} />
       <View>
-        <Text style={[Styles.textBold, Styles.textMd, { marginLeft: 5 }]}>Templates</Text>
+        <Row xAlign='flex-start'>
+          <Text style={[Styles.textBold, Styles.textMd, { marginLeft: 5 }]}>
+            Templates
+          </Text>
+          <Chip color={colors.accent}>S</Chip>
+          <Chip color={colors.accentDark}>L</Chip>
+        </Row>
         <Spacer/>
         <View style={styles.historyWrapper}>
           <Text style={[Styles.textBold, Styles.textMd, Styles.textCenter, { marginBottom: 10 }]}>Chest & Back</Text>
