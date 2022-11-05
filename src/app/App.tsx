@@ -5,6 +5,7 @@ import {SafeAreaView, View} from 'react-native';
 import Navbar from '../components/navbar';
 import {RootStackParamList} from '../data/navigation';
 import {Screens} from '../data/navigation';
+import History from '../pages/history';
 import LandingPage from '../pages/landing';
 import NewWorkout from '../pages/newWorkout';
 import AppStyles from './App.styles';
@@ -28,6 +29,11 @@ const App: FC = () => {
               options={{
                 headerTitle: 'New Workout'
               }}
+            />
+            <Stack.Screen
+              name={Screens.History}
+              component={History}
+              options={{headerShown: false}}
             />
           </Stack.Navigator>
         </SafeAreaView>

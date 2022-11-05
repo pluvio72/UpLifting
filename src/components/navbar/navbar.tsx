@@ -31,7 +31,7 @@ const NavbarIcon: React.FC<NavbarIconProps> = ({ionic = false, name, text, to}) 
 const Navbar: React.FC = () => {
   return (
     <View style={styles.container}>
-      <NavbarIcon name="history" text="History" to={Screens.Landing} />
+      <NavbarIcon name="history" text="History" to={Screens.History} />
       <NavbarIcon name="user" text="Profile" to={Screens.Landing} />
       <NavbarIcon name="plus" text="Start" to={Screens.Landing} />
       <NavbarIcon name="bar-chart" text="Chart" to={Screens.NewWorkout} />

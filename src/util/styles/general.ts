@@ -30,7 +30,7 @@ const GeneralStyles = StyleSheet.create({
     shadowRadius: 5,
   },
   container: {
-    padding: 10
+    padding: 10,
   },
   textBold: {
     fontWeight: '600'

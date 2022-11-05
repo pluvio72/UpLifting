@@ -6,6 +6,7 @@ import {ScreenProps} from 'react-native-screens';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../components/button';
 import Chip from '../../components/chip';
+import HistoryItem from '../../components/HistoryItem/HistoryItem';
 import {Row} from '../../components/Reusable/reusable';
 import Spacer from '../../components/spacer';
 import templates from '../../data/mock';
@@ -42,24 +43,18 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
           History
         </Text>
         <Spacer />
-        <View style={styles.historyWrapper}>
-          <Text style={[Styles.textBold, Styles.textMd]}>Chest & Back</Text>
-          <Row style={{marginRight: 'auto'}}>
-            <Chip color={colors.accent}>Total 7549 kg</Chip>
-            <Chip color={colors.accentDark}>Sets 12</Chip>
-          </Row>
-          <View style={styles.historySet}>
-            <Text style={Styles.textBold}>Bench Press</Text>
-            <Text>Top Set: 100kg x 5</Text>
-          </View>
-          <View style={styles.historySet}>
-            <Text style={Styles.textBold}>Chest Supported Row</Text>
-            <Text>Top Set: 60.5kg x 8</Text>
-          </View>
-          <Button color={colors.primary} bold padding={{p: 8}} margin={{mt: 4}}>
-            Click To View More...
-          </Button>
-        </View>
+        <HistoryItem
+          total={7549}
+          name={'Chest & Back'}
+          sets={[{
+            name: 'Bench Press (Barbell)',
+            data: [{
+              reps: 8,
+              weight: 90,
+              completed: true,
+            }]
+          }]}
+        />
       </View>
       <Spacer />
       <Button color={colors.accent} fontSize={14} bold textAlign="center">
