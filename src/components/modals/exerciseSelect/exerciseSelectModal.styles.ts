@@ -3,16 +3,16 @@ import { colors } from "../../../util/styles";
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%'
+    height: '100%',
+    marginHorizontal: 20,
+
   },
   listWrapper: {
     marginTop: 10,
-    marginHorizontal: 20,
   },
   filterWrapper: {
-    marginBottom: 8,
+    marginVertical: 4,
     fontWeight: '600',
-    paddingVertical: 12,
   },
   item: {
     paddingHorizontal: 6,
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     borderColor: colors.grey400,
     borderWidth: 2,
     paddingHorizontal: 8,
+    borderRadius: 8,
   }
 });
 

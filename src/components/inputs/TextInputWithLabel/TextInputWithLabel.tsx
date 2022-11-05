@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import TextInput, {TextInputProps} from '../TextInput/TextInput';
 
 interface Props extends TextInputProps {
-  label: string;
+  label: string | JSX.Element;
 }
 
 const TextInputWithLabel = (props: Props) => (
@@ -17,8 +17,18 @@ const TextInputWithLabel = (props: Props) => (
         alignItems: 'center',
       },
     ]}>
-    <Text>{props.label}</Text>
-    <TextInput {...props} />
+    {typeof props.label === 'string' ?
+      (
+        <>
+          <Text>{props.label}</Text>
+          <TextInput {...props} />
+        </>
+      ):
+      <>
+        {props.label}
+        <TextInput {...props} />
+      </>
+    }
   </View>
 );
 

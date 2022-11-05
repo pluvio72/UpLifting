@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import allExercises, {
   Exercise,
@@ -18,6 +19,7 @@ import allExercises, {
 import {colors} from '../../../util/styles';
 import Button from '../../button';
 import {TextInput} from '../../inputs/TextInput';
+import TextInputWithLabel from '../../inputs/TextInputWithLabel';
 import styles from './exerciseSelectModal.styles';
 
 interface ExerciseSelectModalProps {
@@ -54,16 +56,15 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
   return (
     <Modal visible={show} animationType="slide">
       <SafeAreaView style={styles.container}>
-        <TextInput
+        <TextInputWithLabel
+          label={<Icon name="search" color={colors.grey100} style={{paddingHorizontal: 12}}/>}
           style={styles.filterWrapper}
           onChange={setFilter}
           backgroundColor={colors.black}
           textColor={colors.white}
+          borderRadius={8}
         />
-        <View
-          style={{
-            marginHorizontal: 20,
-          }}>
+        <View>
           <Dropdown
             style={styles.dropdownWrapper}
             data={categories}
