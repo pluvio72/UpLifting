@@ -43,6 +43,18 @@ const GeneralStyles = StyleSheet.create({
   },
   textLg: {
     fontSize: 20,
+  },
+  w100: {
+    width: '100%',
+  },
+  h100: {
+    height: '100%',
+  },
+  w50: {
+    width: '50%',
+  },
+  h50: {
+    height: '50%'
   }
 });
 

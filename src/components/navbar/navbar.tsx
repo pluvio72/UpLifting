@@ -26,8 +26,8 @@ const NavbarIcon: React.FC<NavbarIconProps> = ({ name, text, to }) => (
 const Navbar: React.FC = () => {
   return (
     <View style={styles.container}>
-      <NavbarIcon name='user' text='Profile' to={Screens.NewWorkout}/>
-      <NavbarIcon name='plus' text='Start' to={Screens.NewWorkout}/>
+      <NavbarIcon name='user' text='Profile' to={Screens.Landing}/>
+      <NavbarIcon name='plus' text='Start' to={Screens.Landing}/>
       <NavbarIcon name='bar-chart' text='Chart' to={Screens.NewWorkout}/>
     </View>
   )

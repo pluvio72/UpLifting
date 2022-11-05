@@ -4,7 +4,6 @@ import { colors } from "../../../util/styles";
 const styles = StyleSheet.create({
   container: {
     fontSize: 14,
-    borderWidth: 1,
     borderColor: colors.borderColor,
     paddingVertical: 8,
     paddingHorizontal: 14,

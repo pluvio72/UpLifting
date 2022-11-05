@@ -83,7 +83,14 @@ const NewWorkout = () => {
 
   return (
     <KeyboardAvoidingView style={Styles.container}>
-      <TextInput onChange={setTitle} defaultValue="New Workout" />
+      <TextInput
+        onChange={setTitle}
+        defaultValue="New Workout"
+        backgroundColor={colors.grey100}
+        underlineThickness={3}
+        fontSize={16}
+        maxLength={30}
+      />
       <Spacer size={1} />
       <Button bold color={colors.primary} onPress={toggleExerciseSelect}>
         Add Exercise
@@ -103,14 +110,18 @@ const NewWorkout = () => {
       </View>
       {exercises.length > 0 && (
         <Button
-          color={colors.green}
+          color={colors.accent}
           bold
+          margin={{mt:8}}
           fontSize={16}
           textAlign="center"
           onPress={finishWorkout}>
           Finish
         </Button>
       )}
+      <Button color={colors.grey300} bold margin={{mt: 8}}>
+        Cancel Workout
+      </Button>
       <ExerciseSelectModal
         show={showExerciseSelect}
         onHide={toggleExerciseSelect}

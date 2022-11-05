@@ -1,16 +1,18 @@
 import {NavigationProp} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import {ScreenProps} from 'react-native-screens';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../components/button';
 import Chip from '../../components/chip';
-import { Row } from '../../components/Reusable/reusable';
+import {Row} from '../../components/Reusable/reusable';
 import Spacer from '../../components/spacer';
+import templates from '../../data/mock';
 import {RootStackParamList, Screens} from '../../data/navigation';
 import {Styles} from '../../util/styles';
 import colors from '../../util/styles/colors';
+import ExerciseTemplates from './landingComponents/ExerciseTemplates';
 import styles from './LandingPage.styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'landing'>;
@@ -36,13 +38,15 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
       </Button>
       <Spacer size={2} />
       <View>
-        <Text style={[Styles.textBold, Styles.textMd, { marginLeft: 5 }]}>History</Text>
-        <Spacer/>
+        <Text style={[Styles.textBold, Styles.textMd, {marginLeft: 5}]}>
+          History
+        </Text>
+        <Spacer />
         <View style={styles.historyWrapper}>
           <Text style={[Styles.textBold, Styles.textMd]}>Chest & Back</Text>
-          <Row style={{ marginRight: 'auto'}}>
+          <Row style={{marginRight: 'auto'}}>
             <Chip color={colors.accent}>Total 7549 kg</Chip>
-            <Chip color={colors.accentDark} >Sets 12</Chip>
+            <Chip color={colors.accentDark}>Sets 12</Chip>
           </Row>
           <View style={styles.historySet}>
             <Text style={Styles.textBold}>Bench Press</Text>
@@ -52,56 +56,46 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
             <Text style={Styles.textBold}>Chest Supported Row</Text>
             <Text>Top Set: 60.5kg x 8</Text>
           </View>
-          <Button color={colors.primary } bold padding={{p: 8}} margin={{mt: 4}}>
+          <Button color={colors.primary} bold padding={{p: 8}} margin={{mt: 4}}>
             Click To View More...
           </Button>
         </View>
       </View>
-      <Spacer/>
-      <Button color={colors.accent} bold textAlign='center'>View History</Button>
+      <Spacer />
+      <Button color={colors.accent} fontSize={14} bold textAlign="center">
+        View History
+      </Button>
       <Spacer size={2} />
       <View>
-        <Row xAlign='flex-start'>
-          <Text style={[Styles.textBold, Styles.textMd, { marginLeft: 5 }]}>
+        <Row xAlign="flex-start">
+          <Text style={[Styles.textBold, Styles.textMd, {marginLeft: 5}]}>
             Templates
           </Text>
-          <Chip color={colors.accent}>S</Chip>
-          <Chip color={colors.accentDark}>L</Chip>
         </Row>
-        <Spacer/>
-        <View style={styles.historyWrapper}>
-          <Text style={[Styles.textBold, Styles.textMd, Styles.textCenter, { marginBottom: 10 }]}>Chest & Back</Text>
-          <View style={styles.historySet}>
-            <Text style={Styles.textBold}>Bench Press</Text>
-            <Text>Top Set: 100kg x 5</Text>
-          </View>
-          <View style={styles.historySet}>
-            <Text style={Styles.textBold}>Chest Supported Row</Text>
-            <Text>Top Set: 60.5kg x 8</Text>
-          </View>
-          <View style={styles.historySet}>
-            <Text style={Styles.textBold}>Machine Fly</Text>
-            <Text>Top Set: 76kg x 12</Text>
-          </View>
-        </View>
-        <Spacer size={1} />
-        <View style={styles.historyWrapper}>
-          <Text style={[Styles.textBold, Styles.textMd, Styles.textCenter, { marginBottom: 10 }]}>Chest & Back</Text>
-          <View style={styles.historySet}>
-            <Text style={Styles.textBold}>Bench Press</Text>
-            <Text>Top Set: 100kg x 5</Text>
-          </View>
-          <View style={styles.historySet}>
-            <Text style={Styles.textBold}>Chest Supported Row</Text>
-            <Text>Top Set: 60.5kg x 8</Text>
-          </View>
-          <View style={styles.historySet}>
-            <Text style={Styles.textBold}>Machine Fly</Text>
-            <Text>Top Set: 76kg x 12</Text>
-          </View>
-        </View>
+        <Spacer />
+        <ExerciseTemplates templates={templates} />
       </View>
-      <Spacer size={3}/>
+      <Spacer size={3} />
+      <View>
+        <Text
+          style={[
+            Styles.textBold,
+            Styles.textMd,
+            {marginLeft: 5, marginBottom: 10},
+          ]}>
+          PRs
+        </Text>
+        <Row xAlign="space-between" margin={{mb: 8}}>
+          <Text>10/10/22</Text>
+          <Text style={Styles.textBold}>Bench Press (Paused)</Text>
+          <Text style={Styles.textBold}>120kg x 10</Text>
+        </Row>
+        <Row xAlign="space-between">
+          <Text>02/08/22</Text>
+          <Text style={Styles.textBold}>Squat (Paused)</Text>
+          <Text style={Styles.textBold}>180kg x 10</Text>
+        </Row>
+      </View>
     </ScrollView>
   );
 };

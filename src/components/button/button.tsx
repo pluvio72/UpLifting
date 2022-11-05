@@ -10,6 +10,7 @@ interface ButtonProps {
   bold?: boolean;
   borderRadius?: ViewStyle['borderRadius'];
   color: Color;
+  disabled?: boolean;
   elevated?: boolean;
   fontSize?: TextStyle['fontSize'];
   icon?: string;
@@ -27,6 +28,7 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   borderRadius = 10,
   children,
   color,
+  disabled,
   elevated,
   icon,
   iconColor,
@@ -50,7 +52,8 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
         {borderRadius},
         { justifyContent: textAlign },
         { width }
-      ]}>
+      ]}
+      disabled={disabled}>
       <Text
         style={[
           {color: getTextColor(color)},

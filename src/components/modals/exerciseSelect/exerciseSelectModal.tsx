@@ -31,8 +31,10 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
   onSelect,
   show,
 }) => {
+  const keys = Object.keys(ExerciseCategories);
+
   const categories = new Array({name: 'All'}).concat(
-    Object.keys(ExerciseCategories).map(e => ({name: e})),
+    keys.slice(keys.length / 2).map(e => ({name: e})),
   );
 
   const [filter, setFilter] = useState('');
@@ -58,7 +60,10 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
           backgroundColor={colors.black}
           textColor={colors.white}
         />
-        <View>
+        <View
+          style={{
+            marginHorizontal: 20,
+          }}>
           <Dropdown
             style={styles.dropdownWrapper}
             data={categories}
@@ -89,7 +94,7 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
             </TouchableHighlight>
           )}
         />
-        <Button color={colors.accent} onPress={hide}>
+        <Button margin={{mx: 20}} bold textAlign='center' color={colors.accent} onPress={hide}>
           Close
         </Button>
       </SafeAreaView>

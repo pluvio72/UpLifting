@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import {Color} from '../../util/styles';
 
 const styles = StyleSheet.create({
@@ -15,18 +15,26 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: '600',
     fontSize: 14,
-  }
+  },
 });
 
 interface Props {
   color: Color;
+  onPress?: () => void;
   text?: Color;
 }
 
-const Chip: React.FC<PropsWithChildren<Props>> = ({ children, color, text }) => (
-  <View style={[{backgroundColor: color}, styles.container]}>
-    <Text style={[styles.text, { color: text }]}>{children}</Text>
-  </View>
+const Chip: React.FC<PropsWithChildren<Props>> = ({
+  children,
+  color,
+  onPress,
+  text,
+}) => (
+  <TouchableHighlight
+    onPress={onPress}
+    style={[{backgroundColor: color}, styles.container]}>
+    <Text style={[styles.text, {color: text}]}>{children}</Text>
+  </TouchableHighlight>
 );
 
 export default Chip;

@@ -31,14 +31,15 @@ const styles = StyleSheet.create({
   },
   settingsDropdown: {
     width: '30%',
-    backgroundColor: colors.primary,
+    backgroundColor: colors.grey300,
     borderRadius: 8,
   },
   settingsDropdownText: {
     fontSize: 12,
-    color: colors.white,
+    color: colors.black,
     fontWeight: '600',
     paddingLeft: 8,
+    display: 'none',
   },
   settingsDropdownMenu: {
     borderRadius: 8,

@@ -45,6 +45,7 @@ const SetRow: React.FC<SetRowProps> = ({
         maxLength={2}
         placeholder={'Reps'}
         defaultValue={repValue.toString()}
+        borderRadius={6}
       />
       <TextInputWithLabel
         style={styles.weightInput}
@@ -121,7 +122,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
 
   return (
     <View style={styles.exerciseItem}>
-      <Row xAlign="center" yAlign="center" padding={{pb: 10}}>
+      <Row xAlign="center" yAlign="center" padding={{pb: 6}}>
         <Dropdown
           style={styles.settingsDropdown}
           placeholderStyle={styles.settingsDropdownText}
@@ -129,17 +130,24 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           itemTextStyle={styles.settingsDropdownMenuItem}
           selectedTextStyle={styles.settingsDropdownText}
           renderRightIcon={() => (
-            <Icon
-              name="cog"
-              size={16}
-              color={colors.white}
-              style={{marginRight: 8}}
-            />
+            <Row>
+              <Icon
+                name="cog"
+                size={16}
+                color={colors.black}
+                style={{marginRight: 4}}
+              />
+              <Icon
+                name="caret-down"
+                size={16}
+                color={colors.black}
+              />
+            </Row>
           )}
           data={SettingsItems}
           labelField={'name'}
           valueField={'name'}
-          placeholder="Settings"
+
           onChange={onPressSettingsItem}
         />
         <Text style={[styles.exerciseName, Styles.textCenter]}>{name}</Text>
@@ -163,7 +171,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
         />
       }
       <Spacer />
-      <Row xAlign="space-around" margin={{mb: 8}}>
+      <Row xAlign="space-around" margin={{mb: 12}}>
         <Text style={styles.prevBest}>50KG x 10</Text>
         <TextInput
           style={styles.repInput}
@@ -173,6 +181,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           maxLength={2}
           placeholder={'Reps'}
           defaultValue={data[0].reps.toString()}
+          borderRadius={8}
         />
         <TextInputWithLabel
           style={styles.weightInput}
