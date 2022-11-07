@@ -13,9 +13,13 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     fontWeight: '600',
   },
-  item: {
+  itemWrapper: {
+    borderTopColor: colors.grey400,
+    borderTopWidth: 1,
     paddingHorizontal: 6,
-    paddingVertical: 8,
+    paddingVertical: 12,
+  },
+  item: {
   },
   dropdownWrapper: {
     backgroundColor: colors.grey400,

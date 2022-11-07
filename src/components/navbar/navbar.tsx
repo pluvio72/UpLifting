@@ -34,7 +34,7 @@ const Navbar: React.FC = () => {
       <NavbarIcon name="history" text="History" to={Screens.History} />
       <NavbarIcon name="user" text="Profile" to={Screens.Landing} />
       <NavbarIcon name="plus" text="Start" to={Screens.Landing} />
-      <NavbarIcon name="bar-chart" text="Chart" to={Screens.NewWorkout} />
+      <NavbarIcon name="bar-chart" text="Chart" to={Screens.Charts} />
       <NavbarIcon name="md-barbell" text="Exercises" to={Screens.NewWorkout} ionic/>
     </View>
   );

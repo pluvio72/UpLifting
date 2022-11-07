@@ -1,19 +1,19 @@
 export enum ExerciseCategories {
-  'Abs',
-  'Back',
-  'Biceps',
-  'Calves',
-  'Chest',
-  'Compounds',
-  'Forearms',
-  'Full-Body',
-  'Glutes',
-  'Hamstrings',
-  'Legs',
-  'Olympic',
-  'Shoulders',
-  'Triceps',
-  'Quads',
+  Abs = 'Abs',
+  Back = 'Back',
+  Biceps = 'Biceps',
+  Calves = 'Calves',
+  Chest = 'Chest',
+  Compounds = 'Compounds',
+  Forearms = 'Forearms',
+  'Full Body' = 'Full Body',
+  Glutes = 'Glutes',
+  Hamstrings = 'Hamstrings',
+  Legs = 'Legs',
+  Olympic = 'Olympic',
+  Shoulders = 'Shoulders',
+  Triceps = 'Triceps',
+  Quads = 'Quads',
 }
 
 const exercises = [
@@ -50,7 +50,7 @@ const exercises = [
     category: [
       ExerciseCategories.Back,
       ExerciseCategories.Legs,
-      ExerciseCategories['Full-Body'],
+      ExerciseCategories['Full Body'],
       ExerciseCategories.Compounds,
     ],
   },
@@ -59,7 +59,7 @@ const exercises = [
     category: [
       ExerciseCategories.Back,
       ExerciseCategories.Legs,
-      ExerciseCategories['Full-Body'],
+      ExerciseCategories['Full Body'],
       ExerciseCategories.Compounds,
     ],
   },
@@ -68,7 +68,7 @@ const exercises = [
     category: [
       ExerciseCategories.Back,
       ExerciseCategories.Legs,
-      ExerciseCategories['Full-Body'],
+      ExerciseCategories['Full Body'],
       ExerciseCategories.Compounds,
     ],
   },
@@ -77,7 +77,7 @@ const exercises = [
     category: [
       ExerciseCategories.Back,
       ExerciseCategories.Legs,
-      ExerciseCategories['Full-Body'],
+      ExerciseCategories['Full Body'],
       ExerciseCategories.Compounds,
     ],
   },
@@ -97,7 +97,7 @@ const exercises = [
   },
   {
     name: 'T-Bar Row',
-    category: ExerciseCategories.Back,
+    category: [ExerciseCategories.Back],
   },
   {
     name: 'Seated Row (Handle, Single Arm)',

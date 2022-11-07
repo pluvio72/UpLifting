@@ -1,7 +1,7 @@
 import exercises, {ExerciseCategories, ExerciseNames} from "./exercises";
 
 export type Exercise = typeof ExerciseNames[number];
-export type ExerciseData = { name: Exercise, category: ExerciseCategories };
+export type ExerciseData = { name: Exercise, category: ExerciseCategories[] };
 
 export { exercises, ExerciseCategories, ExerciseNames };
 

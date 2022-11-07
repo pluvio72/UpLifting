@@ -13,12 +13,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import allExercises, {
   Exercise,
   ExerciseCategories,
-  ExerciseData,
   exercises,
 } from '../../../data/exercises';
-import {colors} from '../../../util/styles';
+import {colors, Styles} from '../../../util/styles';
 import Button from '../../button';
-import {TextInput} from '../../inputs/TextInput';
 import TextInputWithLabel from '../../inputs/TextInputWithLabel';
 import styles from './exerciseSelectModal.styles';
 
@@ -35,14 +33,12 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
 }) => {
   const keys = Object.keys(ExerciseCategories);
 
-  const categories = new Array({name: 'All'}).concat(
-    keys.slice(keys.length / 2).map(e => ({name: e})),
-  );
+  const categories = keys.map(e => ({name: e}));
 
   const [filter, setFilter] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<
-    typeof categories[number]
-  >(categories[0]);
+  const [selectedCategory, setSelectedCategory] = useState<{
+    name: typeof ExerciseCategories
+  }>();
 
   const hide = () => {
     onHide();
@@ -52,6 +48,8 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
     hide();
     onSelect(item);
   };
+
+  console.log(exercises);
 
   return (
     <Modal visible={show} animationType="slide">
@@ -67,11 +65,15 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
         <View>
           <Dropdown
             style={styles.dropdownWrapper}
+            activeColor={colors.grey400}
             data={categories}
             labelField={'name'}
             valueField={'name'}
             onChange={e => {
-              setSelectedCategory(e);
+              if(selectedCategory?.name === e.name)
+                setSelectedCategory(undefined);
+              else
+                setSelectedCategory(e);
             }}
             value={selectedCategory}
           />
@@ -79,19 +81,21 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
         <FlatList
           style={styles.listWrapper}
           data={
-            selectedCategory.name !== 'All'
+            selectedCategory?.name
               ? exercises.filter(
                   e =>
-                    e.category ===
-                    (selectedCategory.name as unknown as ExerciseCategories),
+                    e.category.includes(selectedCategory.name as never),
                 )
               : allExercises.filter(e => e.name.includes(filter))
           }
-          renderItem={item => (
-            <TouchableHighlight
+          renderItem={item => (<TouchableHighlight
               underlayColor={colors.grey}
-              onPress={() => select(item.item.name)}>
-              <Text style={styles.item}>{item.item.name}</Text>
+              onPress={() => select(item.item.name)}
+              style={styles.itemWrapper}>
+                <>
+                  <Text style={[Styles.textBold, {marginBottom: 4}]}>{item.item.name}</Text>
+                  <Text>{item.item.category[0]}</Text>
+                </>
             </TouchableHighlight>
           )}
         />
