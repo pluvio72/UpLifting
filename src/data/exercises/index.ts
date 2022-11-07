@@ -10,6 +10,8 @@ export type ExerciseSet = {
   data: Set[]
 };
 
+export type Metrics = 'Weight' | 'Volume' | 'Reps';
+
 export type Set = {
   reps: number | string;
   weight: number | string;

@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
+import {Dropdown} from 'react-native-element-dropdown';
+import Button from '../../components/button';
 import Chart from '../../components/chart';
-import { TextInput } from '../../components/inputs/TextInput';
+import {TextInput} from '../../components/inputs/TextInput';
 import Spacer from '../../components/spacer';
-import { ExerciseNames } from '../../data/exercises';
+import {Exercise, ExerciseNames} from '../../data/exercises';
+import {RootStackParamList, Screens} from '../../data/navigation';
 
-import {MarginStylesheet, Styles} from '../../util/styles';
+import {colors, MarginStylesheet, Styles} from '../../util/styles';
 import styles from './Charts.styles';
 
-const Charts = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'charts'>;
+
+const Charts: React.FC<Props> = ({navigation}) => {
   const [filter, setFilter] = useState('');
+
+  const navigateToDetailedView = () =>
+    navigation.navigate(Screens.DetailedChartView, {exerciseName: filter});
 
   return (
     <ScrollView style={Styles.container}>
@@ -24,16 +32,20 @@ const Charts = () => {
         Charts
       </Text>
       <Dropdown
-        data={ExerciseNames.map(e => ({ name: e }))}
+        data={ExerciseNames.map(e => ({name: e}))}
         search={true}
-        labelField={"name"}
-        valueField={"name"}
-        onChange={setFilter}
+        labelField={'name'}
+        valueField={'name'}
+        onChange={(newVal) => setFilter(newVal.name)}
         inputSearchStyle={styles.chartDropdownInput}
         style={styles.chartDropdown}
-        searchPlaceholder='Enter exercise name...'
-        placeholder='Seach specific exercise...'
+        value={filter}
+        searchPlaceholder="Enter exercise name..."
+        placeholder="Seach specific exercise..."
       />
+      <Button margin={{mb: 8}} bold onPress={navigateToDetailedView} color={colors.accentDark}>
+        View
+      </Button>
       <Chart
         data={[
           Math.random() * 100,
@@ -41,9 +53,9 @@ const Charts = () => {
           Math.random() * 100,
           Math.random() * 100,
           Math.random() * 100,
-          Math.random() * 100
+          Math.random() * 100,
         ]}
-        labels={["January", "February", "March", "April", "May", "June"]}
+        labels={['January', 'February', 'March', 'April', 'May', 'June']}
         yAxisInterval={10}
         margin={{mb: 8}}
       />
@@ -54,9 +66,9 @@ const Charts = () => {
           Math.random() * 100,
           Math.random() * 100,
           Math.random() * 100,
-          Math.random() * 100
+          Math.random() * 100,
         ]}
-        labels={["January", "February", "March", "April", "May", "June"]}
+        labels={['January', 'February', 'March', 'April', 'May', 'June']}
         yAxisInterval={10}
         margin={{mb: 8}}
       />
@@ -67,12 +79,12 @@ const Charts = () => {
           Math.random() * 100,
           Math.random() * 100,
           Math.random() * 100,
-          Math.random() * 100
+          Math.random() * 100,
         ]}
-        labels={["January", "February", "March", "April", "May", "June"]}
+        labels={['January', 'February', 'March', 'April', 'May', 'June']}
         yAxisInterval={10}
       />
-      <Spacer size={2}/>
+      <Spacer size={2} />
     </ScrollView>
   );
 };

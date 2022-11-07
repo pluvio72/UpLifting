@@ -40,6 +40,7 @@ const App: FC = () => {
             <Stack.Screen
               name={Screens.DetailedChartView}
               component={DetailedChartView}
+              options={{ headerTitle: 'Detailed View'}}
             />
             <Stack.Screen
               name={Screens.Charts}
