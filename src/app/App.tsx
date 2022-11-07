@@ -6,6 +6,7 @@ import Navbar from '../components/navbar';
 import {RootStackParamList} from '../data/navigation';
 import {Screens} from '../data/navigation';
 import Charts from '../pages/charts';
+import DetailedChartView from '../pages/charts/detailedChartView';
 import History from '../pages/history';
 import LandingPage from '../pages/landing';
 import NewWorkout from '../pages/newWorkout';
@@ -35,6 +36,10 @@ const App: FC = () => {
               name={Screens.History}
               component={History}
               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={Screens.DetailedChartView}
+              component={DetailedChartView}
             />
             <Stack.Screen
               name={Screens.Charts}

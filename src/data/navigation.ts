@@ -3,6 +3,7 @@ export const Screens = {
   NewWorkout: 'new_workout',
   History: 'history',
   Charts: 'charts',
+  DetailedChartView: 'detailed_chart_view',
 } as const;
 
 export type RootStackParamList = {
@@ -10,4 +11,7 @@ export type RootStackParamList = {
   [Screens.NewWorkout]: undefined,
   [Screens.History]: undefined,
   [Screens.Charts]: undefined,
+  [Screens.DetailedChartView]: {
+    exerciseName: string
+  },
 };
