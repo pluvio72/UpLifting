@@ -4,14 +4,16 @@ export const Screens = {
   History: 'history',
   Charts: 'charts',
   DetailedChartView: 'detailed_chart_view',
+  ExerciseList: 'exercise_list',
 } as const;
 
 export type RootStackParamList = {
-  [Screens.Landing]: undefined,
-  [Screens.NewWorkout]: undefined,
-  [Screens.History]: undefined,
-  [Screens.Charts]: undefined,
+  [Screens.Landing]: undefined;
+  [Screens.NewWorkout]: undefined;
+  [Screens.History]: undefined;
+  [Screens.Charts]: undefined;
   [Screens.DetailedChartView]: {
-    exerciseName: string
-  },
+    exerciseName: string;
+  };
+  [Screens.ExerciseList]: undefined;
 };

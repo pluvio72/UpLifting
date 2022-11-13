@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, StyleProp, Text, TextStyle, ViewStyle} from 'react-native';
+import {Pressable, Text, TextStyle, ViewStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Margin, Padding} from '../../types/styles';
 import {Styles, PaddingStylesheet, MarginStylesheet} from '../../util/styles';
@@ -19,12 +19,13 @@ interface ButtonProps {
   margin?: Margin;
   onPress?: () => void;
   padding?: Padding;
+  style?: ViewStyle;
   textAlign?: ViewStyle['justifyContent'];
   width?: ViewStyle['width'];
 }
 
 const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
-  bold,
+  bold = true,
   borderRadius = 10,
   children,
   color,
@@ -33,10 +34,11 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   icon,
   iconColor,
   iconSize,
-  fontSize = 12,
+  fontSize = 14,
   margin,
   onPress,
   padding,
+  style,
   textAlign,
   width,
 }) => {
@@ -50,8 +52,9 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
         MarginStylesheet(margin),
         PaddingStylesheet(padding),
         {borderRadius},
-        { justifyContent: textAlign },
-        { width }
+        {justifyContent: textAlign},
+        {width},
+        style,
       ]}
       disabled={disabled}>
       <Text

@@ -98,7 +98,7 @@ const SettingsItems = [
   },
   {
     name: 'Remove Notes',
-  }
+  },
 ];
 
 const ExerciseItem: React.FC<ExerciseItemProps> = ({
@@ -116,9 +116,12 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   const [notes, setNotes] = useState('');
 
   const onPressSettingsItem = (item: typeof SettingsItems[number]) => {
-    if(item.name === 'Add Notes') setShowNotes(true);
-    else if(item.name === 'Remove Notes') setShowNotes(false);
-  }
+    if (item.name === 'Add Notes') {
+      setShowNotes(true);
+    } else if (item.name === 'Remove Notes') {
+      setShowNotes(false);
+    }
+  };
 
   return (
     <View style={styles.exerciseItem}>
@@ -137,17 +140,12 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
                 color={colors.black}
                 style={{marginRight: 4}}
               />
-              <Icon
-                name="caret-down"
-                size={16}
-                color={colors.black}
-              />
+              <Icon name="caret-down" size={16} color={colors.black} />
             </Row>
           )}
           data={SettingsItems}
           labelField={'name'}
           valueField={'name'}
-
           onChange={onPressSettingsItem}
         />
         <Text style={[styles.exerciseName, Styles.textCenter]}>{name}</Text>
@@ -161,7 +159,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           Metrics
         </Button>
       </Row>
-      {showNotes && 
+      {showNotes && (
         <TextInput
           textArea
           maxLength={150}
@@ -169,7 +167,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           backgroundColor={colors.grey}
           placeholder="Add notes..."
         />
-      }
+      )}
       <Spacer />
       <Row xAlign="space-around" margin={{mb: 12}}>
         <Text style={styles.prevBest}>50KG x 10</Text>
@@ -217,8 +215,8 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
         <SetRow
           key={index}
           index={index}
-          repValue={data[index + 1]['reps']}
-          weightValue={data[index + 1]['weight']}
+          repValue={data[index + 1].reps}
+          weightValue={data[index + 1].weight}
           onUpdate={(type, index, newVal) => onUpdate(type, index + 1, newVal)}
           completed={item.completed}
           toggleComplete={toggleCompleted}

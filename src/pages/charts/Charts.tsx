@@ -46,6 +46,7 @@ const Charts: React.FC<Props> = ({navigation}) => {
       <Button margin={{mb: 8}} bold onPress={navigateToDetailedView} color={colors.accentDark}>
         View
       </Button>
+      <Spacer withDots padding={{pb: 16, pt: 8}}/>
       <Chart
         data={[
           Math.random() * 100,

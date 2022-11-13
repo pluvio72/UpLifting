@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native";
-import { colors } from "../util/styles";
+import {StyleSheet} from 'react-native';
+import {colors} from '../util/styles';
 
 export default StyleSheet.create({
   container: {
@@ -12,5 +12,5 @@ export default StyleSheet.create({
   },
   navbar: {
     flexShrink: 1,
-  }
-})
+  },
+});

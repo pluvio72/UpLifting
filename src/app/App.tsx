@@ -1,12 +1,13 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React, {FC, PropsWithChildren} from 'react';
+import React, {FC} from 'react';
 import {SafeAreaView, View} from 'react-native';
 import Navbar from '../components/navbar';
 import {RootStackParamList} from '../data/navigation';
 import {Screens} from '../data/navigation';
 import Charts from '../pages/charts';
 import DetailedChartView from '../pages/charts/detailedChartView';
+import ExerciseList from '../pages/exerciseList';
 import History from '../pages/history';
 import LandingPage from '../pages/landing';
 import NewWorkout from '../pages/newWorkout';
@@ -29,7 +30,7 @@ const App: FC = () => {
               name={Screens.NewWorkout}
               component={NewWorkout}
               options={{
-                headerTitle: 'New Workout'
+                headerTitle: 'New Workout',
               }}
             />
             <Stack.Screen
@@ -40,11 +41,16 @@ const App: FC = () => {
             <Stack.Screen
               name={Screens.DetailedChartView}
               component={DetailedChartView}
-              options={{ headerTitle: 'Detailed View'}}
+              options={{headerTitle: 'Detailed View'}}
             />
             <Stack.Screen
               name={Screens.Charts}
               component={Charts}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={Screens.ExerciseList}
+              component={ExerciseList}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import {KeyboardAvoidingView, Text, View} from 'react-native';
+import {KeyboardAvoidingView, View} from 'react-native';
 import Button from '../../components/button';
 import ExerciseItem from '../../components/ExerciseItem';
 import {TextInput} from '../../components/inputs/TextInput';
 import ExerciseSelectModal from '../../components/modals/exerciseSelect';
 import Spacer from '../../components/spacer';
-import {Exercise, ExerciseData, ExerciseSet} from '../../data/exercises';
+import {Exercise, ExerciseSet} from '../../data/exercises';
 import {colors, Styles} from '../../util/styles';
 import styles from './NewWorkout.styles';
 
@@ -36,10 +36,12 @@ const NewWorkout = () => {
       let newSet = [...prev];
       // if its completed field which is being updated
       // toggle the value
-      if (type === 'completed')
-        newSet[exerciseIndex]['data'][setIndex]['completed'] =
-          !newSet[exerciseIndex]['data'][setIndex]['completed'];
-      else newSet[exerciseIndex]['data'][setIndex][type] = newValue as number;
+      if (type === 'completed') {
+        newSet[exerciseIndex].data[setIndex].completed =
+          !newSet[exerciseIndex].data[setIndex].completed;
+      } else {
+        newSet[exerciseIndex].data[setIndex][type] = newValue as number;
+      }
       return newSet;
     });
   };
@@ -47,7 +49,7 @@ const NewWorkout = () => {
   const addSet = (exerciseIndex: number) => {
     setExercises(prev => {
       let newSet = [...prev];
-      newSet[exerciseIndex]['data'].push({
+      newSet[exerciseIndex].data.push({
         weight: '',
         reps: '',
         completed: false,
@@ -58,7 +60,7 @@ const NewWorkout = () => {
 
   const removeSet = (exerciseIndex: number, setIndex: number) => {
     setExercises(prev => {
-      let selectedExerciseSet = prev[exerciseIndex]['data'];
+      let selectedExerciseSet = prev[exerciseIndex].data;
       let newSet: ExerciseSet[];
 
       // if set only has one remove the exercise
@@ -69,7 +71,7 @@ const NewWorkout = () => {
         ];
       } else {
         newSet = [...prev];
-        newSet[exerciseIndex]['data'] = [
+        newSet[exerciseIndex].data = [
           ...selectedExerciseSet.slice(0, setIndex),
           ...selectedExerciseSet.slice(setIndex + 1),
         ];
@@ -112,7 +114,7 @@ const NewWorkout = () => {
         <Button
           color={colors.accent}
           bold
-          margin={{mt:8}}
+          margin={{mt: 8}}
           fontSize={16}
           textAlign="center"
           onPress={finishWorkout}>

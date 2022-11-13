@@ -18,11 +18,10 @@ import allExercises, {
 import {colors, Styles} from '../../../util/styles';
 import Button from '../../button';
 import TextInputWithLabel from '../../inputs/TextInputWithLabel';
+import {ModalProps} from '../modalProps';
 import styles from './exerciseSelectModal.styles';
 
-interface ExerciseSelectModalProps {
-  show: boolean;
-  onHide: () => void;
+interface ExerciseSelectModalProps extends ModalProps {
   onSelect: (selectedItem: Exercise) => void;
 }
 
@@ -37,7 +36,7 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
 
   const [filter, setFilter] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<{
-    name: typeof ExerciseCategories
+    name: typeof ExerciseCategories;
   }>();
 
   const hide = () => {
@@ -55,7 +54,13 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
     <Modal visible={show} animationType="slide">
       <SafeAreaView style={styles.container}>
         <TextInputWithLabel
-          label={<Icon name="search" color={colors.grey100} style={{paddingHorizontal: 12}}/>}
+          label={
+            <Icon
+              name="search"
+              color={colors.grey100}
+              style={{paddingHorizontal: 12}}
+            />
+          }
           style={styles.filterWrapper}
           onChange={setFilter}
           backgroundColor={colors.black}
@@ -70,10 +75,11 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
             labelField={'name'}
             valueField={'name'}
             onChange={e => {
-              if(selectedCategory?.name === e.name)
+              if (selectedCategory?.name === e.name) {
                 setSelectedCategory(undefined);
-              else
+              } else {
                 setSelectedCategory(e);
+              }
             }}
             value={selectedCategory}
           />
@@ -82,24 +88,31 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
           style={styles.listWrapper}
           data={
             selectedCategory?.name
-              ? exercises.filter(
-                  e =>
-                    e.category.includes(selectedCategory.name as never),
+              ? exercises.filter(e =>
+                  e.category.includes(selectedCategory.name as never),
                 )
               : allExercises.filter(e => e.name.includes(filter))
           }
-          renderItem={item => (<TouchableHighlight
+          renderItem={item => (
+            <TouchableHighlight
               underlayColor={colors.grey}
               onPress={() => select(item.item.name)}
               style={styles.itemWrapper}>
-                <>
-                  <Text style={[Styles.textBold, {marginBottom: 4}]}>{item.item.name}</Text>
-                  <Text>{item.item.category[0]}</Text>
-                </>
+              <>
+                <Text style={[Styles.textBold, {marginBottom: 4}]}>
+                  {item.item.name}
+                </Text>
+                <Text>{item.item.category[0]}</Text>
+              </>
             </TouchableHighlight>
           )}
         />
-        <Button margin={{mx: 20}} bold textAlign='center' color={colors.accent} onPress={hide}>
+        <Button
+          margin={{mx: 20}}
+          bold
+          textAlign="center"
+          color={colors.accent}
+          onPress={hide}>
           Close
         </Button>
       </SafeAreaView>
