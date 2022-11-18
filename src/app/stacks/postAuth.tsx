@@ -10,11 +10,36 @@ import History from '../../pages/history';
 import LandingPage from '../../pages/landing';
 import NewWorkout from '../../pages/newWorkout';
 
+const HomeStackNav = createNativeStackNavigator();
+
+const HomeStack = () => (
+  <HomeStackNav.Navigator>
+    <HomeStackNav.Screen
+      name={Screens.Landing}
+      component={LandingPage}
+      options={{
+        headerShown: false,
+      }}
+    />
+    <HomeStackNav.Screen
+      name={Screens.NewWorkout}
+      component={NewWorkout}
+      options={{
+        headerTitle: 'New Workout',
+      }}
+    />
+  </HomeStackNav.Navigator>
+);
+
 const ChartsStack = createNativeStackNavigator();
 
 const ChartStack = () => (
   <ChartsStack.Navigator>
-    <ChartsStack.Screen name={Screens.Charts} component={Charts} />
+    <ChartsStack.Screen
+      name={Screens.Charts}
+      component={Charts}
+      options={{headerShown: false}}
+    />
     <ChartsStack.Screen
       name={Screens.DetailedChartView}
       component={DetailedChartView}
@@ -28,8 +53,9 @@ const Tab = createBottomTabNavigator();
 const PostAuthStack = () => {
   return (
     <Tab.Navigator
+      initialRouteName={Screens.Landing}
       screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
+        tabBarIcon: ({focused}) => {
           let iconName;
 
           if (route.name === PostAuthTabs.landing) {
@@ -46,7 +72,7 @@ const PostAuthStack = () => {
           return (
             <Icon
               name={iconName as string}
-              size={24}
+              size={focused ? 26 : 20}
               color={focused ? 'black' : 'grey'}
             />
           );
@@ -59,21 +85,16 @@ const PostAuthStack = () => {
         component={History}
         options={{headerShown: false}}
       />
-      <Tab.Screen name={PostAuthTabs.user_profile} component={History} />
+      <Tab.Screen
+        name={PostAuthTabs.user_profile}
+        component={History}
+        options={{headerShown: false}}
+      />
       <Tab.Screen
         name={PostAuthTabs.landing}
-        component={LandingPage}
-        options={{
-          headerShown: false,
-        }}
+        component={HomeStack}
+        options={{headerShown: false}}
       />
-      {/* <Tab.Screen
-        name={Screens.NewWorkout}
-        component={NewWorkout}
-        options={{
-          headerTitle: 'New Workout',
-        }}
-      /> */}
       <Tab.Screen
         name={PostAuthTabs.charts}
         component={ChartStack}

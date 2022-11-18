@@ -1,6 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import Button from '../../components/button';
 import Chart from '../../components/chart';
@@ -21,72 +21,78 @@ const Charts: React.FC<Props> = ({navigation}) => {
     navigation.navigate(Screens.DetailedChartView, {exerciseName: filter});
 
   return (
-    <ScrollView style={Styles.container}>
-      <Text
-        style={[
-          Styles.textBold,
-          Styles.textCenter,
-          Styles.textLg,
-          MarginStylesheet({mt: 8, mb: 4}),
-        ]}>
-        Charts
-      </Text>
-      <Dropdown
-        data={ExerciseNames.map(e => ({name: e}))}
-        search={true}
-        labelField={'name'}
-        valueField={'name'}
-        onChange={(newVal) => setFilter(newVal.name)}
-        inputSearchStyle={styles.chartDropdownInput}
-        style={styles.chartDropdown}
-        value={filter}
-        searchPlaceholder="Enter exercise name..."
-        placeholder="Seach specific exercise..."
-      />
-      <Button margin={{mb: 8}} bold onPress={navigateToDetailedView} color={colors.accentDark}>
-        View
-      </Button>
-      <Spacer withDots padding={{pb: 16, pt: 8}}/>
-      <Chart
-        data={[
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-        ]}
-        labels={['January', 'February', 'March', 'April', 'May', 'June']}
-        yAxisInterval={10}
-        margin={{mb: 8}}
-      />
-      <Chart
-        data={[
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-        ]}
-        labels={['January', 'February', 'March', 'April', 'May', 'June']}
-        yAxisInterval={10}
-        margin={{mb: 8}}
-      />
-      <Chart
-        data={[
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-          Math.random() * 100,
-        ]}
-        labels={['January', 'February', 'March', 'April', 'May', 'June']}
-        yAxisInterval={10}
-      />
-      <Spacer size={2} />
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView style={Styles.container}>
+        <Text
+          style={[
+            Styles.textBold,
+            Styles.textCenter,
+            Styles.textLg,
+            MarginStylesheet({mt: 8, mb: 4}),
+          ]}>
+          Charts
+        </Text>
+        <Dropdown
+          data={ExerciseNames.map(e => ({name: e}))}
+          search={true}
+          labelField={'name'}
+          valueField={'name'}
+          onChange={newVal => setFilter(newVal.name)}
+          inputSearchStyle={styles.chartDropdownInput}
+          style={styles.chartDropdown}
+          value={filter}
+          searchPlaceholder="Enter exercise name..."
+          placeholder="Seach specific exercise..."
+        />
+        <Button
+          margin={{mb: 8}}
+          bold
+          onPress={navigateToDetailedView}
+          color={colors.accentDark}>
+          View
+        </Button>
+        <Spacer withDots padding={{pb: 16, pt: 8}} />
+        <Chart
+          data={[
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+          ]}
+          labels={['January', 'February', 'March', 'April', 'May', 'June']}
+          yAxisInterval={10}
+          margin={{mb: 8}}
+        />
+        <Chart
+          data={[
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+          ]}
+          labels={['January', 'February', 'March', 'April', 'May', 'June']}
+          yAxisInterval={10}
+          margin={{mb: 8}}
+        />
+        <Chart
+          data={[
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+          ]}
+          labels={['January', 'February', 'March', 'April', 'May', 'June']}
+          yAxisInterval={10}
+        />
+        <Spacer size={2} />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
