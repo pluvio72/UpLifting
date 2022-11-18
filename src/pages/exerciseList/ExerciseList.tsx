@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, ScrollView, Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import Button from '../../components/button';
 import RequestAddExerciseModal from '../../components/modals/requestAddExercise';
 import exercises from '../../data/exercises';
@@ -26,17 +26,15 @@ const ExerciseList = () => {
         onPress={showNewExerciseModal}>
         Request Add Exercise
       </Button>
-      <ScrollView>
-        <FlatList
-          data={exercises}
-          renderItem={item => (
-            <View style={styles.item}>
-              <Text>{item.item.name}</Text>
-              <Text style={styles.category}>{item.item.category[0]}</Text>
-            </View>
-          )}
-        />
-      </ScrollView>
+      <FlatList
+        data={exercises}
+        renderItem={item => (
+          <View style={styles.item}>
+            <Text>{item.item.name}</Text>
+            <Text style={styles.category}>{item.item.category[0]}</Text>
+          </View>
+        )}
+      />
     </View>
   );
 };

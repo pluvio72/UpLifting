@@ -5,6 +5,8 @@ export const Screens = {
   Charts: 'charts',
   DetailedChartView: 'detailed_chart_view',
   ExerciseList: 'exercise_list',
+  SignUp: 'sign_up',
+  Profile: 'user_profile',
 } as const;
 
 export type RootStackParamList = {
@@ -16,4 +18,13 @@ export type RootStackParamList = {
     exerciseName: string;
   };
   [Screens.ExerciseList]: undefined;
+  [Screens.SignUp]: undefined;
+};
+
+export const PostAuthTabs = {
+  [Screens.Landing]: 'Start',
+  [Screens.History]: 'History',
+  [Screens.Charts]: 'Charts',
+  [Screens.ExerciseList]: 'Exercises',
+  [Screens.Profile]: 'Profile',
 };

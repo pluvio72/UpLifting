@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '../util/styles';
 
 export default StyleSheet.create({
   container: {
@@ -9,8 +8,5 @@ export default StyleSheet.create({
   },
   main: {
     flexGrow: 1,
-  },
-  navbar: {
-    flexShrink: 1,
   },
 });
