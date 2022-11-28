@@ -1,12 +1,11 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {SafeAreaView, ScrollView, Text} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import Button from '../../components/button';
 import Chart from '../../components/chart';
-import {TextInput} from '../../components/inputs/TextInput';
 import Spacer from '../../components/spacer';
-import {Exercise, ExerciseNames} from '../../data/exercises';
+import {ExerciseNames} from '../../data/exercises';
 import {RootStackParamList, Screens} from '../../data/navigation';
 
 import {colors, MarginStylesheet, Styles} from '../../util/styles';

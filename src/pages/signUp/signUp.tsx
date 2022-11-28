@@ -1,26 +1,41 @@
-import React, {useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useContext, useState} from 'react';
 import {KeyboardAvoidingView} from 'react-native';
+import registrationContext from '../../contexts/registration';
+import {RootStackParamList, Screens} from '../../data/navigation';
+import {signUp} from '../../services/api/api';
 import {Styles} from '../../util/styles';
 import InitialSignUp from './subSignUpPages';
+import GymSelect from './subSignUpPages/gymSelect';
 import UserDetails from './subSignUpPages/userDetails';
 
-const SignUp = () => {
-  const [loginStep, setLoginStep] = useState<1 | 2>(1);
+type Props = NativeStackScreenProps<RootStackParamList, 'sign_up'>;
 
-  const proceedToDetails = () => setLoginStep(2);
-  const goBackToInitial = () => {
-    setLoginStep(1);
-    console.log('Go Back');
+const SignUp = ({navigation}: Props) => {
+  const {email, gym_details} = useContext(registrationContext).details;
+
+  const [loginStep, setLoginStep] = useState<1 | 2 | 3>(1);
+
+  const proceed = () => {
+    setLoginStep((loginStep + 1) as 1 | 2 | 3);
   };
-  console.log(loginStep);
+
+  const goBack = () => {
+    setLoginStep((loginStep - 1) as 1 | 2 | 3);
+  };
+
+  const submit = async (_username: string, _password: string) => {
+    const result = await signUp(_username!, _password!, email!, gym_details!);
+    if (result) {
+      navigation.navigate(Screens.Landing);
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={Styles.container}>
-      {loginStep === 1 ? (
-        <InitialSignUp onNext={proceedToDetails} />
-      ) : (
-        <UserDetails goBack={goBackToInitial} />
-      )}
+      {loginStep === 1 && <InitialSignUp onNext={proceed} />}
+      {loginStep === 2 && <GymSelect onBack={goBack} onNext={proceed} />}
+      {loginStep === 3 && <UserDetails goBack={goBack} onSubmit={submit} />}
     </KeyboardAvoidingView>
   );
 };

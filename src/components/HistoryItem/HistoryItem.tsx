@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import { ExerciseSet } from '../../data/exercises';
-import { colors, Styles } from '../../util/styles';
+import {ExerciseSet} from '../../data/exercises';
+import {colors, Styles} from '../../util/styles';
 import Button from '../button';
 import Chip from '../chip';
-import { Row } from '../Reusable/reusable';
+import {Row} from '../Reusable/reusable';
 
 const styles = StyleSheet.create({
   historySet: {
@@ -24,16 +24,12 @@ const styles = StyleSheet.create({
 });
 
 interface Props {
-  name: string,
-  sets: ExerciseSet[],
-  total: number,
+  name: string;
+  sets: ExerciseSet[];
+  total: number;
 }
 
-const HistoryItem: React.FC<Props> = ({
-  name,
-  sets,
-  total,
-}) => {
+const HistoryItem: React.FC<Props> = ({name, sets, total}) => {
   return (
     <View style={styles.historyWrapper}>
       <Text style={[Styles.textBold, Styles.textMd]}>{name}</Text>
@@ -44,7 +40,9 @@ const HistoryItem: React.FC<Props> = ({
       {sets.map(set => (
         <View style={styles.historySet}>
           <Text style={Styles.textBold}>{set.name}</Text>
-          <Text>Top Set: {set.data[0].weight} x {set.data[0].reps}</Text>
+          <Text>
+            Top Set: {set.data[0].weight} x {set.data[0].reps}
+          </Text>
         </View>
       ))}
       <Button color={colors.primary} bold padding={{p: 8}} margin={{mt: 4}}>

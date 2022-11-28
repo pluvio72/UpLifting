@@ -1,4 +1,4 @@
-import { Exercise, Set } from "../data/exercises";
+import {Exercise} from '../data/exercises';
 
 type Template = {
   name: string;
@@ -6,4 +6,4 @@ type Template = {
   maxs: Array<string>;
 };
 
-export type { Template };
+export type {Template};

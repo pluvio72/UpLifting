@@ -1,9 +1,19 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import HistoryItem from '../../components/HistoryItem/HistoryItem';
+import Session from '../../contexts/session';
+import {getAllWorkouts} from '../../services/api/workout';
+import {Workout} from '../../types/workouts';
 import {Styles} from '../../util/styles';
 
 const History = () => {
+  const [workouts, setWorkouts] = useState<Array<Workout>>([]);
+  const {token} = useContext(Session);
+
+  useEffect(() => {
+    getAllWorkouts();
+  }, []);
+
   return (
     <SafeAreaView>
       <View style={{padding: 20}}>

@@ -6,6 +6,7 @@ export const Screens = {
   DetailedChartView: 'detailed_chart_view',
   ExerciseList: 'exercise_list',
   SignUp: 'sign_up',
+  SignIn: 'sign_in',
   Profile: 'user_profile',
 } as const;
 
@@ -19,6 +20,7 @@ export type RootStackParamList = {
   };
   [Screens.ExerciseList]: undefined;
   [Screens.SignUp]: undefined;
+  [Screens.SignIn]: undefined;
 };
 
 export const PostAuthTabs = {

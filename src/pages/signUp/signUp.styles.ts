@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {colors} from '../../util/styles';
 
 const styles = StyleSheet.create({
   inputWrapper: {
@@ -14,7 +15,17 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 40,
+    padding: 20,
+  },
+  detailsHeader: {
+    fontSize: 18,
+    fontWeight: '800',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  alreadyHaveAccount: {
+    fontWeight: '500',
+    color: colors.blue,
   },
 });
 

@@ -10,6 +10,7 @@ const colors = {
   borderColor: '#111',
   green: '#32CD32',
   red: 'rgb(180, 34, 20)',
+  blue: '#0000cd',
   grey800: '#343a40',
   grey700: '#495057',
   grey600: '#6c757d',

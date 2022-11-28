@@ -48,8 +48,6 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
     onSelect(item);
   };
 
-  console.log(exercises);
-
   return (
     <Modal visible={show} animationType="slide">
       <SafeAreaView style={styles.container}>

@@ -1,4 +1,4 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleProp,
   TextInput as TextInputComponent,
@@ -6,7 +6,7 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-import { Margin } from '../../../types/styles';
+import {Margin} from '../../../types/styles';
 import {Color, colors, MarginStylesheet} from '../../../util/styles';
 import styles from './TextInput.styles';
 
@@ -24,6 +24,7 @@ export interface TextInputProps {
   maxLength?: number;
   onChange: (newVal: string) => void;
   placeholder?: string;
+  secureTextEntry?: boolean;
   style?: StyleProp<TextStyle>;
   textArea?: boolean;
   textColor?: Color;
@@ -42,9 +43,10 @@ const TextInput: React.FC<TextInputProps> = ({
   defaultValue,
   fontSize,
   margin,
-  maxLength = 10,
+  maxLength,
   onChange,
   placeholder,
+  secureTextEntry,
   style,
   textArea,
   textColor = colors.black,
@@ -55,7 +57,7 @@ const TextInput: React.FC<TextInputProps> = ({
 
   useEffect(() => {
     setValue(defaultValue);
-  }, [defaultValue])
+  }, [defaultValue]);
 
   const onChangeValue = (newVal: string) => {
     setValue(newVal);
@@ -76,21 +78,22 @@ const TextInput: React.FC<TextInputProps> = ({
         {backgroundColor: backgroundColor},
         style,
         {color: textColor},
-        { borderBottomWidth: underlineThickness },
+        {borderBottomWidth: underlineThickness},
         {borderRadius},
         {fontSize},
-        MarginStylesheet(margin)
+        MarginStylesheet(margin),
       ]}
       placeholder={placeholder ?? 'Value'}
       editable={disabled ?? true}
       placeholderTextColor={colors.grey600}
       multiline={textArea}
+      secureTextEntry={secureTextEntry}
     />
   );
 };
 
 TextInput.defaultProps = {
-  backgroundColor: colors.white
+  backgroundColor: colors.white,
 };
 
 export default TextInput;

@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import React, {useContext, useState} from 'react';
 import {Text, View} from 'react-native';
 import Button from '../../../components/button';
 import {TextInput} from '../../../components/inputs/TextInput';
 import Spacer from '../../../components/spacer';
+import registrationContext from '../../../contexts/registration';
+import {Screens} from '../../../data/navigation';
 import {colors, Styles} from '../../../util/styles';
 import styles from '../signUp.styles';
 
@@ -10,8 +13,23 @@ interface Props {
   onNext: () => void;
 }
 
-const InitialSignUp = ({onNext}: Props) => {
+const InitialSignUp: React.FC<Props> = ({onNext}) => {
   const [email, setEmail] = useState('');
+
+  const navigation = useNavigation<NavigationProp<any, any>>();
+
+  const {onChange} = useContext(registrationContext);
+
+  const submit = () => {
+    if (email) {
+      onChange({email});
+      onNext();
+    }
+  };
+
+  const goToSignIn = () => {
+    navigation.navigate(Screens.SignIn);
+  };
 
   return (
     <View style={styles.inputWrapper}>
@@ -23,7 +41,8 @@ const InitialSignUp = ({onNext}: Props) => {
         value={email}
         placeholder="Enter E-Mail"
         borderRadius={8}
-        style={{width: '100%', paddingVertical: 12}}
+        autoCapitalize={'none'}
+        style={{width: '100%', paddingVertical: 10}}
         margin={{mb: 6}}
       />
       <Button
@@ -34,8 +53,7 @@ const InitialSignUp = ({onNext}: Props) => {
         icon="arrow-right"
         iconColor={colors.white}
         iconSize={12}
-        borderRadius={6}
-        onPress={onNext}>
+        onPress={submit}>
         Next
       </Button>
       <Spacer withDots padding={{py: 16}} />
@@ -58,6 +76,10 @@ const InitialSignUp = ({onNext}: Props) => {
         borderRadius={20}>
         Google
       </Button>
+      <Spacer size={3} />
+      <Text style={styles.alreadyHaveAccount} onPress={goToSignIn}>
+        Already have an account? Sign In
+      </Text>
     </View>
   );
 };
