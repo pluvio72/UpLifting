@@ -3,7 +3,7 @@ import React, {useContext, useState} from 'react';
 import {KeyboardAvoidingView} from 'react-native';
 import registrationContext from '../../contexts/registration';
 import {RootStackParamList, Screens} from '../../data/navigation';
-import {signUp} from '../../services/api/api';
+import {signUp} from '../../services/api/user';
 import {Styles} from '../../util/styles';
 import InitialSignUp from './subSignUpPages';
 import GymSelect from './subSignUpPages/gymSelect';
@@ -27,7 +27,7 @@ const SignUp = ({navigation}: Props) => {
   const submit = async (_username: string, _password: string) => {
     const result = await signUp(_username!, _password!, email!, gym_details!);
     if (result) {
-      navigation.navigate(Screens.Landing);
+      navigation.navigate(Screens.SignIn);
     }
   };
 

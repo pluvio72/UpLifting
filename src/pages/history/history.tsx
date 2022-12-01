@@ -8,10 +8,11 @@ import {Styles} from '../../util/styles';
 
 const History = () => {
   const [workouts, setWorkouts] = useState<Array<Workout>>([]);
-  const {token} = useContext(Session);
+  const session = useContext(Session);
 
   useEffect(() => {
-    getAllWorkouts();
+    getAllWorkouts(session!.username, session!.token);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

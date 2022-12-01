@@ -5,11 +5,11 @@ import Button from '../../components/button';
 import BackButton from '../../components/button/backButton';
 import {TextInput} from '../../components/inputs/TextInput';
 import {Screens} from '../../data/navigation';
-import {signIn} from '../../services/api/api';
+import {signIn} from '../../services/api/user';
 import {colors} from '../../util/styles';
 
 interface Props {
-  onLogin: (token: string) => void;
+  onLogin: (token: string, username: string) => void;
 }
 
 const SignIn: React.FC<Props> = ({onLogin}) => {
@@ -26,7 +26,7 @@ const SignIn: React.FC<Props> = ({onLogin}) => {
     const result = await signIn(username, password);
     console.log(result);
     if (result.success) {
-      onLogin(result.token);
+      onLogin(result.token, username);
     }
   };
 

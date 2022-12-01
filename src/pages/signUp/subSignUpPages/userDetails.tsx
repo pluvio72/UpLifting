@@ -20,6 +20,7 @@ const UserDetails = ({goBack, onSubmit}: Props) => {
   const {onChange} = useContext(registrationContext);
 
   const submit = () => {
+    console.log('Submitting');
     if (username && password && confirmPassword) {
       if (password === confirmPassword) {
         onChange({username, password});

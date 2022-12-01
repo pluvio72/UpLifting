@@ -7,8 +7,8 @@ import {PostAuthStack, PreAuthStack} from './stacks';
 const App: FC = () => {
   const [session, setSession] = useState<Session | null>(null);
 
-  const onLogin = (token: string) => {
-    setSession({token});
+  const onLogin = (token: string, username: string) => {
+    setSession({token, username});
   };
 
   return (

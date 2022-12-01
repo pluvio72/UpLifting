@@ -6,7 +6,7 @@ import registrationContext, {Registration} from '../../contexts/registration';
 import SignIn from '../../pages/signIn/SignIn';
 
 interface Props {
-  onLogin: (token: string) => void;
+  onLogin: (token: string, username: string) => void;
 }
 
 const PreAuthStack: React.FC<Props> = ({onLogin}) => {
@@ -41,16 +41,12 @@ const PreAuthStack: React.FC<Props> = ({onLogin}) => {
         onChange: updateRegistrationDetails,
       }}>
       <Stack.Navigator>
-        <Stack.Screen
-          name={Screens.SignUp}
-          component={SignUp}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={Screens.SignIn}
-          component={() => <SignIn onLogin={onLogin} />}
-          options={{headerShown: false}}
-        />
+        <Stack.Screen name={Screens.SignUp} options={{headerShown: false}}>
+          {props => <SignUp navigation={props.navigation} />}
+        </Stack.Screen>
+        <Stack.Screen name={Screens.SignIn} options={{headerShown: false}}>
+          {() => <SignIn onLogin={onLogin} />}
+        </Stack.Screen>
       </Stack.Navigator>
     </registrationContext.Provider>
   );

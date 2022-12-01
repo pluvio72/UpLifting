@@ -6,7 +6,7 @@ import BackButton from '../../../components/button/backButton';
 import RequestAddGym from '../../../components/modals/requestAddGym/RequestAddGym';
 import Spacer from '../../../components/spacer';
 import registrationContext from '../../../contexts/registration';
-import {getGyms} from '../../../services/api/api';
+import {getGyms} from '../../../services/api/gym';
 import {Gym} from '../../../types/gyms';
 // import {ShuffleArray} from '../../../util/format';
 import {colors} from '../../../util/styles';
@@ -30,7 +30,7 @@ const GymSelect = ({onBack, onNext}: Props) => {
   const hideGymModal = () => setShowAddGymModal(false);
 
   useEffect(() => {
-    getGyms().then(_gyms => {
+    getGyms().then((_gyms: Array<Gym> | undefined) => {
       setGyms(_gyms!);
     });
   }, []);
