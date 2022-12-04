@@ -8,9 +8,13 @@ export {exercises, ExerciseCategories, ExerciseNames};
 export type ExerciseSet = {
   name: Exercise;
   data: Set[];
+  metric: {
+    name: Metrics;
+    value: string;
+  };
 };
 
-export type Metrics = 'Weight' | 'Volume' | 'Reps';
+export type Metrics = 'Max Weight' | 'Volume' | 'Reps' | 'Volume Increase';
 
 export type Set = {
   reps: number | string;

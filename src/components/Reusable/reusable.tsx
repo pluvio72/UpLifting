@@ -1,11 +1,11 @@
 import React, {PropsWithChildren} from 'react';
 import {StyleProp, View, ViewStyle} from 'react-native';
-import { Margin, Padding } from '../../types/styles';
-import { MarginStylesheet, PaddingStylesheet } from '../../util/styles';
+import {Margin, Padding} from '../../types/styles';
+import {MarginStylesheet, PaddingStylesheet} from '../../util/styles';
 
 interface Props {
-  margin?: Margin,
-  padding?: Padding,
+  margin?: Margin;
+  padding?: Padding;
   style?: StyleProp<ViewStyle>;
   xAlign?: ViewStyle['justifyContent'];
   yAlign?: ViewStyle['alignItems'];
@@ -28,7 +28,7 @@ const Row: React.FC<PropsWithChildren<Props>> = ({
         justifyContent: xAlign ?? 'space-evenly',
       },
       PaddingStylesheet(padding),
-      MarginStylesheet(margin)
+      MarginStylesheet(margin),
     ]}>
     {children}
   </View>

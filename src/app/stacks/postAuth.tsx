@@ -25,7 +25,7 @@ const HomeStack = () => (
       name={Screens.NewWorkout}
       component={NewWorkout}
       options={{
-        headerTitle: 'New Workout',
+        headerShown: false,
       }}
     />
   </HomeStackNav.Navigator>

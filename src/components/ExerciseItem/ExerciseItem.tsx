@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {Pressable, Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Set} from '../../data/exercises';
+import {ExerciseSet, Set} from '../../data/exercises';
 import {colors, Styles} from '../../util/styles';
 import Button from '../button';
 import {TextInput} from '../inputs/TextInput';
@@ -16,14 +16,21 @@ interface SetRowProps {
   index: number;
   onRemove: (setIndex: number) => void;
   onUpdate: (
-    type: 'reps' | 'weight',
+    type: keyof ExerciseSet['data'][number] | 'metric',
     setIndex: number,
-    newValue: number | string,
+    newValue: number | string | ExerciseSet['metric'],
   ) => void;
   repValue: number | string;
   toggleComplete: (setIndex: number) => void;
   weightValue: number | string;
 }
+
+const TempPrevExercises = [
+  {value: '52KG x 12'},
+  {value: '48KG x 15'},
+  {value: '48KG x 15'},
+  {value: '42KG x 20'},
+];
 
 const SetRow: React.FC<SetRowProps> = ({
   completed,
@@ -36,7 +43,19 @@ const SetRow: React.FC<SetRowProps> = ({
 }) => {
   return (
     <Row margin={{mb: 8}} xAlign="space-around">
-      <View style={{height: 10, width: '50%'}} />
+      {/* <Text style={styles.prevBest}>50KG x 10</Text> */}
+      <Dropdown
+        style={styles.prevBest}
+        selectedTextStyle={styles.prevBestText}
+        itemTextStyle={styles.prevBestDropdownText}
+        itemContainerStyle={styles.prevBestDropdownItem}
+        containerStyle={styles.prevBestDropdown}
+        data={TempPrevExercises}
+        value={TempPrevExercises[0]}
+        activeColor={colors.grey200}
+        valueField={'value'}
+        labelField={'value'}
+      />
       <TextInput
         style={styles.repInput}
         onChange={(val: string) => {
@@ -86,9 +105,9 @@ interface ExerciseItemProps {
   name: string;
   onRemove: (setIndex: number) => void;
   onUpdate: (
-    type: 'reps' | 'weight' | 'completed',
-    setIndex: number,
-    newValue?: number | string,
+    type: keyof ExerciseSet['data'][number] | 'metric',
+    setIndex?: number,
+    newValue?: number | string | ExerciseSet['metric'],
   ) => void;
 }
 
@@ -101,6 +120,13 @@ const SettingsItems = [
   },
 ];
 
+const MetricsItems = [
+  {name: 'Reps', value: '120 Reps'},
+  {name: 'Volume', value: '1503kg'},
+  {name: 'Volume Increase', value: '+50%'},
+  {name: 'Max Weight', value: '53kg'},
+];
+
 const ExerciseItem: React.FC<ExerciseItemProps> = ({
   addSet,
   data,
@@ -111,6 +137,9 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   const toggleCompleted = (setIndex: number) => {
     onUpdate('completed', setIndex);
   };
+  const [metric, setMetric] = useState<typeof MetricsItems[number]>(
+    MetricsItems[0],
+  );
 
   const [showNotes, setShowNotes] = useState(false);
   const [notes, setNotes] = useState('');
@@ -123,9 +152,16 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
     }
   };
 
+  const onUpdateMetric = (newVal: ExerciseSet['metric']) => {
+    onUpdate('metric', undefined, {
+      name: newVal.name,
+      value: newVal.value,
+    });
+  };
+
   return (
     <View style={styles.exerciseItem}>
-      <Row xAlign="center" yAlign="center" padding={{pb: 6}}>
+      <Row yAlign="center" padding={{pb: 6}}>
         <Dropdown
           style={styles.settingsDropdown}
           placeholderStyle={styles.settingsDropdownText}
@@ -146,18 +182,29 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           data={SettingsItems}
           labelField={'name'}
           valueField={'name'}
-          onChange={onPressSettingsItem}
+          onChange={newVal => onPressSettingsItem(newVal.name)}
+        />
+        <Dropdown
+          style={styles.metricsDropdown}
+          placeholderStyle={styles.metricsDropdownPlaceholder}
+          containerStyle={styles.metricsDropdownMenu}
+          itemTextStyle={styles.metricsDropdownText}
+          selectedTextStyle={styles.metricsDropdownButtonText}
+          renderRightIcon={() => (
+            <Icon
+              name="caret-down"
+              size={16}
+              color={colors.black}
+              style={{marginRight: 8}}
+            />
+          )}
+          data={MetricsItems}
+          labelField={'value'}
+          valueField={'value'}
+          onChange={newVal => onUpdateMetric(newVal)}
+          value={metric}
         />
         <Text style={[styles.exerciseName, Styles.textCenter]}>{name}</Text>
-        <Button
-          color={colors.primary}
-          bold
-          padding={{px: 8, py: 4}}
-          margin={{ml: 'auto'}}
-          textAlign="center"
-          borderRadius={6}>
-          Metrics
-        </Button>
       </Row>
       {showNotes && (
         <TextInput
@@ -169,7 +216,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
         />
       )}
       <Spacer />
-      <Row xAlign="space-around" margin={{mb: 12}}>
+      {/* <Row xAlign="space-around" margin={{mb: 12}}>
         <Text style={styles.prevBest}>50KG x 10</Text>
         <TextInput
           style={styles.repInput}
@@ -210,14 +257,14 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
         {/* <Pressable onPress={() => onRemove(0)}>
           <Text>RM</Text>
         </Pressable> */}
-      </Row>
-      {data.slice(1).map((item, index) => (
+      {/* </Row> */}
+      {data.map((item, index) => (
         <SetRow
           key={index}
           index={index}
-          repValue={data[index + 1].reps}
-          weightValue={data[index + 1].weight}
-          onUpdate={(type, index, newVal) => onUpdate(type, index + 1, newVal)}
+          repValue={data[index].reps}
+          weightValue={data[index].weight}
+          onUpdate={(type, index, newVal) => onUpdate(type, index, newVal)}
           completed={item.completed}
           toggleComplete={toggleCompleted}
           onRemove={onRemove}

@@ -38,7 +38,7 @@ const HistoryItem: React.FC<Props> = ({name, sets, total}) => {
         <Chip color={colors.accentDark}>Sets {sets.length}</Chip>
       </Row>
       {sets.map(set => (
-        <View style={styles.historySet}>
+        <View style={styles.historySet} key={set.name}>
           <Text style={Styles.textBold}>{set.name}</Text>
           <Text>
             Top Set: {set.data[0].weight} x {set.data[0].reps}

@@ -1,11 +1,21 @@
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {KeyboardAvoidingView, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Button from '../../components/button';
 import ExerciseItem from '../../components/ExerciseItem';
 import {TextInput} from '../../components/inputs/TextInput';
 import ExerciseSelectModal from '../../components/modals/exerciseSelect';
+import {Row} from '../../components/Reusable/reusable';
 import Spacer from '../../components/spacer';
 import {Exercise, ExerciseSet} from '../../data/exercises';
+import {Screens} from '../../data/navigation';
 import {colors, Styles} from '../../util/styles';
 import styles from './NewWorkout.styles';
 
@@ -14,33 +24,41 @@ const NewWorkout = () => {
   const [exercises, setExercises] = useState<Array<ExerciseSet>>([]);
 
   const [showExerciseSelect, setShowExerciseSelect] = useState(false);
-
   const toggleExerciseSelect = () => setShowExerciseSelect(!showExerciseSelect);
 
-  // console.log(exercises[0] ? exercises[0]['data'] : 'empt');
+  const navigate = useNavigation<NavigationProp<any, any>>();
+  const goBack = () => {
+    navigate.navigate(Screens.Landing);
+  };
 
   const addExercise = (name: Exercise) => {
     setExercises(prev => [
       ...prev,
-      {data: [{weight: '', reps: '', completed: false}], name},
+      {
+        data: [{weight: '', reps: '', completed: false}],
+        name,
+        metric: {name: 'Reps', value: '0'},
+      },
     ]);
   };
 
   const updateSet = (
     exerciseIndex: number,
-    type: 'reps' | 'weight' | 'completed',
-    setIndex: number,
-    newValue?: string | number,
+    type: keyof ExerciseSet['data'][number] | 'metric',
+    setIndex?: number,
+    newValue?: string | number | ExerciseSet['metric'],
   ) => {
     setExercises(prev => {
       let newSet = [...prev];
       // if its completed field which is being updated
       // toggle the value
       if (type === 'completed') {
-        newSet[exerciseIndex].data[setIndex].completed =
-          !newSet[exerciseIndex].data[setIndex].completed;
+        newSet[exerciseIndex].data[setIndex!].completed =
+          !newSet[exerciseIndex].data[setIndex!].completed;
+      } else if (type === 'reps' || type === 'weight') {
+        newSet[exerciseIndex].data[setIndex!][type] = newValue as number;
       } else {
-        newSet[exerciseIndex].data[setIndex][type] = newValue as number;
+        newSet[exerciseIndex].metric = newValue as ExerciseSet['metric'];
       }
       return newSet;
     });
@@ -81,55 +99,69 @@ const NewWorkout = () => {
     });
   };
 
-  const finishWorkout = () => {};
+  const finishWorkout = () => {
+    console.log(exercises[0]);
+  };
 
   return (
-    <KeyboardAvoidingView style={Styles.container}>
-      <TextInput
-        onChange={setTitle}
-        defaultValue="New Workout"
-        backgroundColor={colors.grey100}
-        underlineThickness={3}
-        fontSize={16}
-        maxLength={30}
-      />
-      <Spacer size={1} />
-      <Button bold color={colors.primary} onPress={toggleExerciseSelect}>
-        Add Exercise
-      </Button>
-      <View style={styles.exercisesWrapper}>
-        {exercises.map((exercise, index) => (
-          <ExerciseItem
-            addSet={() => addSet(index)}
-            name={exercise.name}
-            onUpdate={(type, setIndex, newValue) =>
-              updateSet(index, type, setIndex, newValue)
-            }
-            data={exercise.data}
-            onRemove={setIndex => removeSet(index, setIndex)}
+    <SafeAreaView>
+      <KeyboardAvoidingView style={Styles.container}>
+        <Row>
+          <TouchableOpacity style={styles.backArrowContainer} onPress={goBack}>
+            <Icon name="arrow-back-circle" size={32} />
+          </TouchableOpacity>
+          <TextInput
+            onChange={setTitle}
+            placeholder="New Workout"
+            style={styles.titleInput}
+            backgroundColor={colors.grey400}
+            underlineThickness={0}
+            fontSize={16}
+            maxLength={30}
           />
-        ))}
-      </View>
-      {exercises.length > 0 && (
-        <Button
-          color={colors.accent}
-          bold
-          margin={{mt: 8}}
-          fontSize={16}
-          textAlign="center"
-          onPress={finishWorkout}>
-          Finish
+        </Row>
+        <Spacer size={1} />
+        <Button bold color={colors.primary} onPress={toggleExerciseSelect}>
+          Add Exercise
         </Button>
-      )}
-      <Button color={colors.grey300} bold margin={{mt: 8}}>
-        Cancel Workout
-      </Button>
-      <ExerciseSelectModal
-        show={showExerciseSelect}
-        onHide={toggleExerciseSelect}
-        onSelect={addExercise}
-      />
-    </KeyboardAvoidingView>
+        <ScrollView style={styles.exercisesWrapper}>
+          <View>
+            {exercises.map((exercise, index) => (
+              <ExerciseItem
+                addSet={() => addSet(index)}
+                name={exercise.name}
+                onUpdate={(type, setIndex, newValue) =>
+                  updateSet(index, type, setIndex, newValue)
+                }
+                data={exercise.data}
+                onRemove={setIndex => removeSet(index, setIndex)}
+              />
+            ))}
+          </View>
+        </ScrollView>
+        <View style={styles.workoutActionsContainer}>
+          {exercises.length > 0 && (
+            <Button
+              color={colors.accent}
+              bold
+              margin={{mt: 8}}
+              fontSize={16}
+              textAlign="center"
+              onPress={finishWorkout}>
+              Finish
+            </Button>
+          )}
+          <Button color={colors.grey300} bold margin={{mt: 8}}>
+            Cancel Workout
+          </Button>
+        </View>
+        <ExerciseSelectModal
+          show={showExerciseSelect}
+          onHide={toggleExerciseSelect}
+          onSelect={addExercise}
+        />
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
