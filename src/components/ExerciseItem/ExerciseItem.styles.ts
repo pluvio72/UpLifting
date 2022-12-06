@@ -41,6 +41,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 14,
   },
+  note: {
+    marginTop: 6,
+  },
   prevBestDropdown: {
     backgroundColor: colors.grey200,
     borderRadius: 8,
@@ -59,7 +62,7 @@ const styles = StyleSheet.create({
   metricsDropdownPlaceholder: {
     fontSize: 12,
     fontWeight: '600',
-    marginLeft: 4,
+    marginLeft: 8,
   },
   metricsDropdownButtonText: {
     fontSize: 12,
@@ -72,6 +75,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontWeight: '600',
     paddingLeft: 8,
+    marginVertical: -6,
   },
   settingsDropdown: {
     backgroundColor: colors.secondary,

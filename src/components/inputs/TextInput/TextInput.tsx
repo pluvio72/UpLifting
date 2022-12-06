@@ -14,6 +14,7 @@ export interface TextInputProps {
   autoCapitalize?: TInputProps['autoCapitalize'];
   autoComplete?: TInputProps['autoComplete'];
   autoCorrect?: boolean;
+  autoFocus?: boolean;
   backgroundColor?: Color;
   borderRadius?: ViewStyle['borderRadius'];
   disabled?: boolean;
@@ -37,6 +38,7 @@ const TextInput: React.FC<TextInputProps> = ({
   autoCapitalize,
   autoComplete,
   autoCorrect,
+  autoFocus,
   backgroundColor = colors.grey,
   borderRadius,
   disabled,
@@ -69,6 +71,7 @@ const TextInput: React.FC<TextInputProps> = ({
       autoComplete={autoComplete}
       autoCorrect={autoCorrect}
       autoCapitalize={autoCapitalize}
+      autoFocus={autoFocus}
       maxLength={maxLength}
       keyboardType={type === 'string' ? 'default' : 'number-pad'}
       value={value}

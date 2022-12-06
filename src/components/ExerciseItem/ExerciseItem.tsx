@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {ExerciseSet, Set} from '../../data/exercises';
+import {ExerciseSet, Set} from '../../types/workouts';
 import {colors, Styles} from '../../util/styles';
 import Button from '../button';
 import {TextInput} from '../inputs/TextInput';
@@ -11,18 +11,28 @@ import {Row} from '../Reusable/reusable';
 import Spacer from '../spacer';
 import styles from './ExerciseItem.styles';
 
+type onUpdate = (
+  type: keyof ExerciseSet['sets'][number] | 'metric' | 'note',
+  setIndex?: number,
+  newValue?: string | number | ExerciseSet['metric'],
+) => void;
+
 interface SetRowProps {
   completed: boolean;
   index: number;
   onRemove: (setIndex: number) => void;
-  onUpdate: (
-    type: keyof ExerciseSet['data'][number] | 'metric',
-    setIndex: number,
-    newValue: number | string | ExerciseSet['metric'],
-  ) => void;
+  onUpdate: onUpdate;
   repValue: number | string;
   toggleComplete: (setIndex: number) => void;
   weightValue: number | string;
+}
+
+interface ExerciseItemProps {
+  addSet: () => void;
+  data: Set[];
+  name: string;
+  onRemove: (setIndex: number) => void;
+  onUpdate: onUpdate;
 }
 
 const TempPrevExercises = [
@@ -99,18 +109,6 @@ const SetRow: React.FC<SetRowProps> = ({
   );
 };
 
-interface ExerciseItemProps {
-  addSet: () => void;
-  data: Set[];
-  name: string;
-  onRemove: (setIndex: number) => void;
-  onUpdate: (
-    type: keyof ExerciseSet['data'][number] | 'metric',
-    setIndex?: number,
-    newValue?: number | string | ExerciseSet['metric'],
-  ) => void;
-}
-
 const SettingsItems = [
   {
     name: 'Add Notes',
@@ -121,10 +119,10 @@ const SettingsItems = [
 ];
 
 const MetricsItems = [
-  {name: 'Reps', value: '120 Reps'},
-  {name: 'Volume', value: '1503kg'},
-  {name: 'Volume Increase', value: '+50%'},
-  {name: 'Max Weight', value: '53kg'},
+  {name: 'Reps', value: '0 Reps'},
+  {name: 'Volume', value: '0kg'},
+  {name: 'Volume Increase', value: '+0%'},
+  {name: 'Max Weight', value: '0kg'},
 ];
 
 const ExerciseItem: React.FC<ExerciseItemProps> = ({
@@ -142,12 +140,38 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   );
 
   const [showNotes, setShowNotes] = useState(false);
-  const [notes, setNotes] = useState('');
+  const [note, setNote] = useState('');
 
-  const onPressSettingsItem = (item: typeof SettingsItems[number]) => {
-    if (item.name === 'Add Notes') {
+  const updateMetricsValues = () => {
+    MetricsItems[0].value =
+      data
+        .reduce((total, curVal) => {
+          return total + (curVal.reps as number);
+        }, 0)
+        .toString() + ' Reps';
+
+    MetricsItems[1].value =
+      data
+        .reduce((total, curVal) => {
+          return total + (curVal.reps as number) * (curVal.weight as number);
+        }, 0)
+        .toString() + 'kg';
+
+    // TODO:
+    // last exercise vol
+    MetricsItems[2].value = '+NA';
+
+    MetricsItems[3].value = data
+      .reduce((total, curVal) => {
+        return total > curVal.weight ? total : (curVal.weight as number);
+      }, 0)
+      .toString();
+  };
+
+  const onPressSettingsItem = (item: string) => {
+    if (item === 'Add Notes') {
       setShowNotes(true);
-    } else if (item.name === 'Remove Notes') {
+    } else if (item === 'Remove Notes') {
       setShowNotes(false);
     }
   };
@@ -157,6 +181,20 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
       name: newVal.name,
       value: newVal.value,
     });
+  };
+
+  const onUpdateNote = (newVal: string) => {
+    setNote(newVal);
+    onUpdate('note', undefined, newVal);
+  };
+
+  const onUpdateData = (
+    type: keyof ExerciseSet['sets'][number] | 'metric' | 'note',
+    setIndex?: number,
+    newValue?: number | string | ExerciseSet['metric'],
+  ) => {
+    onUpdate(type, setIndex, newValue);
+    updateMetricsValues();
   };
 
   return (
@@ -190,6 +228,10 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           containerStyle={styles.metricsDropdownMenu}
           itemTextStyle={styles.metricsDropdownText}
           selectedTextStyle={styles.metricsDropdownButtonText}
+          itemContainerStyle={{
+            borderTopColor: 'rgb(180,180,180)',
+            borderTopWidth: 1,
+          }}
           renderRightIcon={() => (
             <Icon
               name="caret-down"
@@ -203,70 +245,31 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           valueField={'value'}
           onChange={newVal => onUpdateMetric(newVal)}
           value={metric}
+          placeholder="Metric"
         />
         <Text style={[styles.exerciseName, Styles.textCenter]}>{name}</Text>
       </Row>
       {showNotes && (
         <TextInput
           textArea
+          autoFocus
           maxLength={150}
-          onChange={setNotes}
+          onChange={newVal => onUpdateNote(newVal)}
           backgroundColor={colors.grey}
+          style={styles.note}
           placeholder="Add notes..."
         />
       )}
       <Spacer />
-      {/* <Row xAlign="space-around" margin={{mb: 12}}>
-        <Text style={styles.prevBest}>50KG x 10</Text>
-        <TextInput
-          style={styles.repInput}
-          onChange={(val: string) =>
-            onUpdate('reps', 0, val ? parseInt(val, 10) : '')
-          }
-          maxLength={2}
-          placeholder={'Reps'}
-          defaultValue={data[0].reps.toString()}
-          borderRadius={8}
-        />
-        <TextInputWithLabel
-          style={styles.weightInput}
-          onChange={(val: string) =>
-            onUpdate('weight', 0, val ? parseInt(val, 10) : '')
-          }
-          maxLength={2}
-          placeholder={'0'}
-          backgroundColor={colors.white}
-          label="kg"
-          defaultValue={data[0].weight.toString()}
-        />
-        {data[0].completed === false ? (
-          <Icon
-            name="circle"
-            style={styles.notDone}
-            size={20}
-            onPress={() => toggleCompleted(0)}
-          />
-        ) : (
-          <Icon
-            name="check"
-            style={styles.done}
-            size={24}
-            onPress={() => toggleCompleted(0)}
-          />
-        )}
-        {/* <Pressable onPress={() => onRemove(0)}>
-          <Text>RM</Text>
-        </Pressable> */}
-      {/* </Row> */}
       {data.map((item, index) => (
         <SetRow
           key={index}
           index={index}
           repValue={data[index].reps}
           weightValue={data[index].weight}
-          onUpdate={(type, index, newVal) => onUpdate(type, index, newVal)}
+          onUpdate={(type, index2, newVal) => onUpdateData(type, index, newVal)}
           completed={item.completed}
-          toggleComplete={toggleCompleted}
+          toggleComplete={() => toggleCompleted(index)}
           onRemove={onRemove}
         />
       ))}

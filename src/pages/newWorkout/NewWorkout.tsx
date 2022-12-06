@@ -1,5 +1,5 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   KeyboardAvoidingView,
   SafeAreaView,
@@ -14,8 +14,10 @@ import {TextInput} from '../../components/inputs/TextInput';
 import ExerciseSelectModal from '../../components/modals/exerciseSelect';
 import {Row} from '../../components/Reusable/reusable';
 import Spacer from '../../components/spacer';
-import {Exercise, ExerciseSet} from '../../data/exercises';
+import Session from '../../contexts/session';
+import {Exercise, ExerciseSet} from '../../types/workouts';
 import {Screens} from '../../data/navigation';
+import {saveNewWorkout} from '../../services/api/workout';
 import {colors, Styles} from '../../util/styles';
 import styles from './NewWorkout.styles';
 
@@ -26,6 +28,8 @@ const NewWorkout = () => {
   const [showExerciseSelect, setShowExerciseSelect] = useState(false);
   const toggleExerciseSelect = () => setShowExerciseSelect(!showExerciseSelect);
 
+  const session = useContext(Session);
+
   const navigate = useNavigation<NavigationProp<any, any>>();
   const goBack = () => {
     navigate.navigate(Screens.Landing);
@@ -35,7 +39,7 @@ const NewWorkout = () => {
     setExercises(prev => [
       ...prev,
       {
-        data: [{weight: '', reps: '', completed: false}],
+        sets: [{weight: '', reps: '', completed: false}],
         name,
         metric: {name: 'Reps', value: '0'},
       },
@@ -44,7 +48,7 @@ const NewWorkout = () => {
 
   const updateSet = (
     exerciseIndex: number,
-    type: keyof ExerciseSet['data'][number] | 'metric',
+    type: keyof ExerciseSet['sets'][number] | 'metric' | 'note',
     setIndex?: number,
     newValue?: string | number | ExerciseSet['metric'],
   ) => {
@@ -53,10 +57,12 @@ const NewWorkout = () => {
       // if its completed field which is being updated
       // toggle the value
       if (type === 'completed') {
-        newSet[exerciseIndex].data[setIndex!].completed =
-          !newSet[exerciseIndex].data[setIndex!].completed;
+        newSet[exerciseIndex].sets[setIndex!].completed =
+          !newSet[exerciseIndex].sets[setIndex!].completed;
       } else if (type === 'reps' || type === 'weight') {
-        newSet[exerciseIndex].data[setIndex!][type] = newValue as number;
+        newSet[exerciseIndex].sets[setIndex!][type] = newValue as number;
+      } else if (type === 'note') {
+        newSet[exerciseIndex].note = newValue as string;
       } else {
         newSet[exerciseIndex].metric = newValue as ExerciseSet['metric'];
       }
@@ -67,7 +73,7 @@ const NewWorkout = () => {
   const addSet = (exerciseIndex: number) => {
     setExercises(prev => {
       let newSet = [...prev];
-      newSet[exerciseIndex].data.push({
+      newSet[exerciseIndex].sets.push({
         weight: '',
         reps: '',
         completed: false,
@@ -78,7 +84,7 @@ const NewWorkout = () => {
 
   const removeSet = (exerciseIndex: number, setIndex: number) => {
     setExercises(prev => {
-      let selectedExerciseSet = prev[exerciseIndex].data;
+      let selectedExerciseSet = prev[exerciseIndex].sets;
       let newSet: ExerciseSet[];
 
       // if set only has one remove the exercise
@@ -89,7 +95,7 @@ const NewWorkout = () => {
         ];
       } else {
         newSet = [...prev];
-        newSet[exerciseIndex].data = [
+        newSet[exerciseIndex].sets = [
           ...selectedExerciseSet.slice(0, setIndex),
           ...selectedExerciseSet.slice(setIndex + 1),
         ];
@@ -100,7 +106,33 @@ const NewWorkout = () => {
   };
 
   const finishWorkout = () => {
-    console.log(exercises[0]);
+    const metrics = [
+      {
+        name: 'Volume',
+        value:
+          exercises
+            .reduce((total, cur) => {
+              return (
+                total +
+                cur.sets.reduce((subTotal, subCur) => {
+                  return (
+                    subTotal +
+                    (subCur.reps as number) * (subCur.weight as number)
+                  );
+                }, 0)
+              );
+            }, 0)
+            .toString() + 'kg',
+      },
+    ];
+
+    saveNewWorkout(
+      session?.username!,
+      session?.token!,
+      title,
+      exercises,
+      metrics,
+    );
   };
 
   return (
@@ -133,7 +165,7 @@ const NewWorkout = () => {
                 onUpdate={(type, setIndex, newValue) =>
                   updateSet(index, type, setIndex, newValue)
                 }
-                data={exercise.data}
+                data={exercise.sets}
                 onRemove={setIndex => removeSet(index, setIndex)}
               />
             ))}

@@ -11,7 +11,9 @@ const History = () => {
   const session = useContext(Session);
 
   useEffect(() => {
-    getAllWorkouts(session!.username, session!.token);
+    getAllWorkouts(session!.username, session!.token).then(_workouts => {
+      setWorkouts(_workouts);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -21,7 +23,14 @@ const History = () => {
         <Text style={[Styles.textBold, Styles.textLg, {marginBottom: 12}]}>
           History
         </Text>
-        <HistoryItem
+        {workouts.map(workout => (
+          <HistoryItem
+            total={1000}
+            name={workout.title}
+            sets={workout.exercises}
+          />
+        ))}
+        {/* <HistoryItem
           total={7549}
           name={'Chest & Back'}
           sets={[
@@ -36,7 +45,7 @@ const History = () => {
               ],
             },
           ]}
-        />
+        /> */}
       </View>
     </SafeAreaView>
   );
