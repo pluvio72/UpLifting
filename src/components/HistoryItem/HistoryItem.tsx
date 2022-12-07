@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {ExerciseSet} from '../../data/exercises';
+import {ExerciseSet} from '../../types/workouts';
+import {WorkoutMetric} from '../../types/workouts';
 import {colors, Styles} from '../../util/styles';
 import Button from '../button';
 import Chip from '../chip';
@@ -25,31 +26,39 @@ const styles = StyleSheet.create({
 
 interface Props {
   name: string;
-  sets: ExerciseSet[];
-  total: number;
+  exercises: ExerciseSet[];
+  metrics: WorkoutMetric[];
 }
 
-const HistoryItem: React.FC<Props> = ({name, sets, total}) => {
-  return (
-    <View style={styles.historyWrapper}>
-      <Text style={[Styles.textBold, Styles.textMd]}>{name}</Text>
-      <Row style={{marginRight: 'auto'}}>
-        <Chip color={colors.accent}>Total {total} kg</Chip>
-        <Chip color={colors.accentDark}>Sets {sets.length}</Chip>
-      </Row>
-      {sets.map(set => (
-        <View style={styles.historySet} key={set.name}>
-          <Text style={Styles.textBold}>{set.name}</Text>
-          <Text>
-            Top Set: {set.data[0].weight} x {set.data[0].reps}
-          </Text>
-        </View>
-      ))}
-      <Button color={colors.primary} bold padding={{p: 8}} margin={{mt: 4}}>
-        Click To View More...
-      </Button>
-    </View>
-  );
+const HistoryItem: React.FC<Props> = ({name, exercises, metrics}) => {
+  if (exercises) {
+    return (
+      <View style={styles.historyWrapper}>
+        <Text style={[Styles.textBold, Styles.textMd]}>{name}</Text>
+        <Row style={{marginRight: 'auto'}}>
+          <Chip color={colors.accent}>Total {metrics[0].value}</Chip>
+          <Chip color={colors.accentDark}>
+            Sets {exercises.reduce((total, cur) => total + cur.sets.length, 0)}
+          </Chip>
+        </Row>
+        {exercises.map(exercise => {
+          return (
+            <View style={styles.historySet} key={exercise.name}>
+              <Text style={Styles.textBold}>{exercise.name}</Text>
+              <Text>
+                Top Set: {exercise.sets[0].weight} x {exercise.sets[0].reps}
+              </Text>
+            </View>
+          );
+        })}
+        <Button color={colors.primary} bold padding={{p: 8}} margin={{mt: 4}}>
+          Click To View More...
+        </Button>
+      </View>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default HistoryItem;

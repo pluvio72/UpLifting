@@ -12,7 +12,11 @@ const RequestAddExerciseModal: React.FC<Props> = ({show, onHide}) => {
   const [name, setName] = useState('');
 
   return (
-    <Modal isVisible={show} animationIn="slideInUp" style={styles.container}>
+    <Modal
+      isVisible={show}
+      animationIn="slideInUp"
+      style={styles.container}
+      onBackdropPress={onHide}>
       <TextInput
         onChange={setName}
         value={name}

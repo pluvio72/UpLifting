@@ -9,6 +9,7 @@ import ExerciseList from '../../pages/exerciseList';
 import History from '../../pages/history';
 import LandingPage from '../../pages/landing';
 import NewWorkout from '../../pages/newWorkout';
+import Profile from '../../pages/profile';
 
 const HomeStackNav = createNativeStackNavigator();
 
@@ -83,12 +84,12 @@ const PostAuthStack = () => {
       <Tab.Screen
         name={PostAuthTabs.history}
         component={History}
-        options={{headerShown: false}}
+        options={{headerShown: false, unmountOnBlur: true}}
       />
       <Tab.Screen
         name={PostAuthTabs.user_profile}
-        component={History}
-        options={{headerShown: false}}
+        component={Profile}
+        options={{headerShown: false, unmountOnBlur: true}}
       />
       <Tab.Screen
         name={PostAuthTabs.landing}

@@ -21,6 +21,26 @@ export const getAllWorkouts = async (
   }
 };
 
+export const getRecentWorkouts = async (
+  username: string,
+  token: string,
+  limit: number = 3,
+): Promise<Array<Workout>> => {
+  try {
+    const response = await fetch(uri(`/workouts/${username}/recent/${limit}`), {
+      method: 'GET',
+      headers: {
+        authorization: `${token} ${username}`,
+      },
+    });
+    const json: any = await response.json();
+    return json.workouts;
+  } catch (error: any) {
+    console.warn(`Error in getRecentWorkouts, ${error.message}.`);
+    return [];
+  }
+};
+
 export const saveNewWorkout = async (
   username: string,
   token: string,

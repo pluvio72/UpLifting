@@ -19,6 +19,7 @@ interface Props {
   smooth?: boolean;
   strokeColor?: CSSProperties['color'];
   strokeWidth?: number;
+  title: string;
   yAxisSuffix?: string;
   yAxisInterval?: number;
 }
@@ -33,6 +34,7 @@ const Chart: React.FC<Props> = ({
   smooth = true,
   strokeColor = colors.white,
   strokeWidth = 2,
+  title,
   yAxisSuffix,
   yAxisInterval = 1,
 }) => {
@@ -50,7 +52,7 @@ const Chart: React.FC<Props> = ({
           {paddingVertical: 10},
           {color: colors.white},
         ]}>
-        HELLO
+        {title}
       </Text>
       <LineChart
         data={{

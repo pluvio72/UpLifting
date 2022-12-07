@@ -160,6 +160,7 @@ const NewWorkout = () => {
           <View>
             {exercises.map((exercise, index) => (
               <ExerciseItem
+                key={exercise.name}
                 addSet={() => addSet(index)}
                 name={exercise.name}
                 onUpdate={(type, setIndex, newValue) =>

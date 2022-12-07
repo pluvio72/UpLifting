@@ -21,7 +21,6 @@ const ExerciseList = () => {
         <Button
           fontSize={14}
           bold
-          elevated
           color={colors.primary}
           padding={{py: 14, px: 12}}
           onPress={showNewExerciseModal}>

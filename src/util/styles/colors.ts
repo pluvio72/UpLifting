@@ -14,6 +14,7 @@ const colors = {
   grey800: '#343a40',
   grey700: '#495057',
   grey600: '#6c757d',
+  tierchary: '#595959',
   grey400: '#ced4da',
   grey300: '#dee2e6',
   grey200: '#e9ecef',

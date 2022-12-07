@@ -25,9 +25,9 @@ const History = () => {
         </Text>
         {workouts.map(workout => (
           <HistoryItem
-            total={1000}
+            metrics={workout.metrics}
             name={workout.title}
-            sets={workout.exercises}
+            exercises={workout.exercises}
           />
         ))}
         {/* <HistoryItem
