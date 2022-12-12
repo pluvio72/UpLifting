@@ -36,7 +36,7 @@ export type Set = {
 };
 
 export type Workout = {
-  title: Exercise;
+  title: string;
   exercises: ExerciseSet[];
   metrics: [WorkoutMetric];
 };
