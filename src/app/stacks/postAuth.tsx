@@ -54,7 +54,7 @@ const Tab = createBottomTabNavigator();
 const PostAuthStack = () => {
   return (
     <Tab.Navigator
-      initialRouteName={Screens.Landing}
+      initialRouteName={PostAuthTabs.landing}
       screenOptions={({route}) => ({
         tabBarIcon: ({focused}) => {
           let iconName;

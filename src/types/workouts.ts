@@ -22,6 +22,13 @@ export type ExerciseSet = {
 
 export type Metrics = 'Max Weight' | 'Volume' | 'Reps' | 'Volume Increase';
 
+export type PR = {
+  name: Exercise;
+  reps: string;
+  weight: string;
+  date_completed: string;
+};
+
 export type Set = {
   reps: number | string;
   weight: number | string;

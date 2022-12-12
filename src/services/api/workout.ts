@@ -1,4 +1,4 @@
-import {ExerciseSet, WorkoutMetric} from '../../types/workouts';
+import {ExerciseSet, PR, WorkoutMetric} from '../../types/workouts';
 import {Workout} from '../../types/workouts';
 import {uri} from './api';
 
@@ -37,6 +37,26 @@ export const getRecentWorkouts = async (
     return json.workouts;
   } catch (error: any) {
     console.warn(`Error in getRecentWorkouts, ${error.message}.`);
+    return [];
+  }
+};
+
+export const getRecentPRs = async (
+  username: string,
+  token: string,
+  limit = 5,
+): Promise<Array<PR>> => {
+  try {
+    const response = await fetch(uri(`/workouts/${username}/prs/${limit}`), {
+      method: 'GET',
+      headers: {
+        authorization: `${token} ${username}`,
+      },
+    });
+    const json: any = await response.json();
+    return json.prs;
+  } catch (error: any) {
+    console.warn(`Error in getRecentPRs, ${error.message}.`);
     return [];
   }
 };

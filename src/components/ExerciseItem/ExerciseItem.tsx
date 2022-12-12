@@ -75,6 +75,7 @@ const SetRow: React.FC<SetRowProps> = ({
         placeholder={'Reps'}
         defaultValue={repValue.toString()}
         borderRadius={6}
+        backgroundColor={colors.white}
       />
       <TextInputWithLabel
         style={styles.weightInput}

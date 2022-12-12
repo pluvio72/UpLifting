@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {StyleSheet, Text, TouchableHighlight, ViewStyle} from 'react-native';
 import {Color} from '../../util/styles';
 
 const styles = StyleSheet.create({
@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     height: 25,
     display: 'flex',
     justifyContent: 'center',
-    margin: 6,
   },
   text: {
     fontWeight: '600',
@@ -22,6 +21,7 @@ interface Props {
   color: Color;
   onPress?: () => void;
   text?: Color;
+  style?: ViewStyle;
 }
 
 const Chip: React.FC<PropsWithChildren<Props>> = ({
@@ -29,10 +29,11 @@ const Chip: React.FC<PropsWithChildren<Props>> = ({
   color,
   onPress,
   text,
+  style,
 }) => (
   <TouchableHighlight
     onPress={onPress}
-    style={[{backgroundColor: color}, styles.container]}>
+    style={[{backgroundColor: color}, styles.container, style]}>
     <Text style={[styles.text, {color: text}]}>{children}</Text>
   </TouchableHighlight>
 );

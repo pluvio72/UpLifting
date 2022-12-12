@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     padding: 10,
     backgroundColor: colors.secondary,
+    marginBottom: 4,
   },
 });
 
@@ -37,7 +38,7 @@ const HistoryItem: React.FC<Props> = ({name, exercises, metrics}) => {
         <Text style={[Styles.textBold, Styles.textMd]}>{name}</Text>
         <Row style={{marginRight: 'auto'}}>
           <Chip color={colors.accent}>Total {metrics[0].value}</Chip>
-          <Chip color={colors.accentDark}>
+          <Chip color={colors.accentDark} style={{margin: 6}}>
             Sets {exercises.reduce((total, cur) => total + cur.sets.length, 0)}
           </Chip>
         </Row>

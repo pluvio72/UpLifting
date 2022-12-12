@@ -35,10 +35,17 @@ const Profile: React.FC = () => {
       </View>
       <View style={styles.detailsContainer}>
         <ProfileItem
-          text={'Account Details'}
+          text={'Gym Progress'}
+          subText={'Body measurements: weight, size etc.'}
+        />
+        <ProfileItem
+          text={'Account'}
           subText={'Change username / password etc..'}
         />
-        <ProfileItem text={'Gym'} subText={'Change gym, request add gym.'} />
+        <ProfileItem
+          text={'Gym Details'}
+          subText={'Change gym, request add gym.'}
+        />
         {/* <TouchableOpacity>
           <Text>Log Out</Text>
         </TouchableOpacity> */}

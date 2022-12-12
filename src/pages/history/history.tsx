@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import HistoryItem from '../../components/HistoryItem/HistoryItem';
 import Session from '../../contexts/session';
 import {getAllWorkouts} from '../../services/api/workout';
@@ -19,34 +19,36 @@ const History = () => {
 
   return (
     <SafeAreaView>
-      <View style={{padding: 20}}>
-        <Text style={[Styles.textBold, Styles.textLg, {marginBottom: 12}]}>
-          History
-        </Text>
-        {workouts.map(workout => (
-          <HistoryItem
-            metrics={workout.metrics}
-            name={workout.title}
-            exercises={workout.exercises}
-          />
-        ))}
-        {/* <HistoryItem
-          total={7549}
-          name={'Chest & Back'}
-          sets={[
-            {
-              name: 'Bench Press (Barbell)',
-              data: [
-                {
-                  reps: 8,
-                  weight: 90,
-                  completed: true,
-                },
-              ],
-            },
-          ]}
-        /> */}
-      </View>
+      <ScrollView>
+        <View style={{padding: 20}}>
+          <Text style={[Styles.textBold, Styles.textLg, {marginBottom: 12}]}>
+            History
+          </Text>
+          {workouts.map(workout => (
+            <HistoryItem
+              metrics={workout.metrics}
+              name={workout.title}
+              exercises={workout.exercises}
+            />
+          ))}
+          {/* <HistoryItem
+            total={7549}
+            name={'Chest & Back'}
+            sets={[
+              {
+                name: 'Bench Press (Barbell)',
+                data: [
+                  {
+                    reps: 8,
+                    weight: 90,
+                    completed: true,
+                  },
+                ],
+              },
+            ]}
+          /> */}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

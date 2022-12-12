@@ -95,8 +95,4 @@ const TextInput: React.FC<TextInputProps> = ({
   );
 };
 
-TextInput.defaultProps = {
-  backgroundColor: colors.white,
-};
-
 export default TextInput;
