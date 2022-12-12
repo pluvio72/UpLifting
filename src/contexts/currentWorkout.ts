@@ -1,8 +1,19 @@
 import {createContext} from 'react';
 import {Workout} from '../types/workouts';
 
-export const CurrentWorkout = createContext<Workout>({
+type CurrentWorkout = Workout & {isTemplate: boolean};
+
+export const CurrentWorkout = createContext<
+  CurrentWorkout & {
+    onChange: <T extends keyof CurrentWorkout>(
+      key: T,
+      value: CurrentWorkout[T],
+    ) => void;
+  }
+>({
+  title: 'New Workout',
   exercises: [],
   metrics: [{name: 'Volume', value: '0kg'}],
-  title: 'New Workout',
+  isTemplate: false,
+  onChange: () => {},
 });
