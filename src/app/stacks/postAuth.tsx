@@ -2,6 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {CurrentWorkoutProvider} from '../../contexts/currentWorkout';
 import {Screens, PostAuthTabs} from '../../data/navigation';
 import Charts from '../../pages/charts';
 import DetailedChartView from '../../pages/charts/detailedChartView';
@@ -14,22 +15,24 @@ import Profile from '../../pages/profile';
 const HomeStackNav = createNativeStackNavigator();
 
 const HomeStack = () => (
-  <HomeStackNav.Navigator>
-    <HomeStackNav.Screen
-      name={Screens.Landing}
-      component={LandingPage}
-      options={{
-        headerShown: false,
-      }}
-    />
-    <HomeStackNav.Screen
-      name={Screens.NewWorkout}
-      component={NewWorkout}
-      options={{
-        headerShown: false,
-      }}
-    />
-  </HomeStackNav.Navigator>
+  <CurrentWorkoutProvider>
+    <HomeStackNav.Navigator>
+      <HomeStackNav.Screen
+        name={Screens.Landing}
+        component={LandingPage}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <HomeStackNav.Screen
+        name={Screens.NewWorkout}
+        component={NewWorkout}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </HomeStackNav.Navigator>
+  </CurrentWorkoutProvider>
 );
 
 const ChartsStack = createNativeStackNavigator();
