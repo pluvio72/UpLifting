@@ -117,6 +117,7 @@ const SettingsItems = [
   {
     name: 'Remove Notes',
   },
+  {name: 'Remove Exercise'},
 ];
 
 const MetricsItems = [

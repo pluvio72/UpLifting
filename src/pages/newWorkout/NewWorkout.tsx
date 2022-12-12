@@ -20,15 +20,14 @@ import {Screens} from '../../data/navigation';
 import {saveNewWorkout} from '../../services/api/workout';
 import {colors, Styles} from '../../util/styles';
 import styles from './NewWorkout.styles';
+import {CurrentWorkout} from '../../contexts/currentWorkout';
 
 const NewWorkout = () => {
-  const [title, setTitle] = useState('New Workout');
-  const [exercises, setExercises] = useState<Array<ExerciseSet>>([]);
-
   const [showExerciseSelect, setShowExerciseSelect] = useState(false);
   const toggleExerciseSelect = () => setShowExerciseSelect(!showExerciseSelect);
 
   const session = useContext(Session);
+  const currentWorkout = useContext(CurrentWorkout);
 
   const navigate = useNavigation<NavigationProp<any, any>>();
   const goBack = () => {
@@ -36,8 +35,8 @@ const NewWorkout = () => {
   };
 
   const addExercise = (name: Exercise) => {
-    setExercises(prev => [
-      ...prev,
+    currentWorkout.onChange('exercises', [
+      ...currentWorkout.exercises,
       {
         sets: [{weight: '', reps: '', completed: false}],
         name,
@@ -52,57 +51,49 @@ const NewWorkout = () => {
     setIndex?: number,
     newValue?: string | number | ExerciseSet['metric'],
   ) => {
-    setExercises(prev => {
-      let newSet = [...prev];
-      // if its completed field which is being updated
-      // toggle the value
-      if (type === 'completed') {
-        newSet[exerciseIndex].sets[setIndex!].completed =
-          !newSet[exerciseIndex].sets[setIndex!].completed;
-      } else if (type === 'reps' || type === 'weight') {
-        newSet[exerciseIndex].sets[setIndex!][type] = newValue as number;
-      } else if (type === 'note') {
-        newSet[exerciseIndex].note = newValue as string;
-      } else {
-        newSet[exerciseIndex].metric = newValue as ExerciseSet['metric'];
-      }
-      return newSet;
-    });
+    let value = [...currentWorkout.exercises];
+    if (type === 'completed') {
+      value[exerciseIndex].sets[setIndex!].completed =
+        !value[exerciseIndex].sets[setIndex!].completed;
+    } else if (type === 'reps' || type === 'weight') {
+      value[exerciseIndex].sets[setIndex!][type] = newValue as number;
+    } else if (type === 'note') {
+      value[exerciseIndex].note = newValue as string;
+    } else {
+      value[exerciseIndex].metric = newValue as ExerciseSet['metric'];
+    }
+    currentWorkout.onChange('exercises', value);
   };
 
   const addSet = (exerciseIndex: number) => {
-    setExercises(prev => {
-      let newSet = [...prev];
-      newSet[exerciseIndex].sets.push({
-        weight: '',
-        reps: '',
-        completed: false,
-      });
-      return newSet;
+    let value = [...currentWorkout.exercises];
+    value[exerciseIndex].sets.push({
+      weight: '',
+      reps: '',
+      completed: false,
     });
+    console.log('Value:', value);
+    currentWorkout.onChange('exercises', value);
   };
 
   const removeSet = (exerciseIndex: number, setIndex: number) => {
-    setExercises(prev => {
-      let selectedExerciseSet = prev[exerciseIndex].sets;
-      let newSet: ExerciseSet[];
+    let selectedExerciseSet = currentWorkout.exercises[exerciseIndex].sets;
+    let value: ExerciseSet[] = [];
 
-      // if set only has one remove the exercise
-      if (selectedExerciseSet.length === 1) {
-        newSet = [
-          ...prev.slice(0, exerciseIndex),
-          ...prev.slice(exerciseIndex + 1),
-        ];
-      } else {
-        newSet = [...prev];
-        newSet[exerciseIndex].sets = [
-          ...selectedExerciseSet.slice(0, setIndex),
-          ...selectedExerciseSet.slice(setIndex + 1),
-        ];
-      }
-
-      return [...newSet];
-    });
+    // if set only has one remove the exercise
+    if (selectedExerciseSet.length === 1) {
+      value = [
+        ...currentWorkout.exercises.slice(0, exerciseIndex),
+        ...currentWorkout.exercises.slice(exerciseIndex + 1),
+      ];
+    } else {
+      value = [...currentWorkout.exercises];
+      currentWorkout.exercises[exerciseIndex].sets = [
+        ...selectedExerciseSet.slice(0, setIndex),
+        ...selectedExerciseSet.slice(setIndex + 1),
+      ];
+    }
+    currentWorkout.onChange('exercises', value);
   };
 
   const finishWorkout = () => {
@@ -110,7 +101,7 @@ const NewWorkout = () => {
       {
         name: 'Volume',
         value:
-          exercises
+          currentWorkout.exercises
             .reduce((total, cur) => {
               return (
                 total +
@@ -129,11 +120,14 @@ const NewWorkout = () => {
     saveNewWorkout(
       session?.username!,
       session?.token!,
-      title,
-      exercises,
+      currentWorkout.title,
+      currentWorkout.exercises,
       metrics,
     );
   };
+
+  const onChangeTitle = (newVal: string) =>
+    currentWorkout.onChange('title', newVal);
 
   return (
     <SafeAreaView>
@@ -143,13 +137,14 @@ const NewWorkout = () => {
             <Icon name="arrow-back-circle" size={32} />
           </TouchableOpacity>
           <TextInput
-            onChange={setTitle}
+            onChange={onChangeTitle}
             placeholder="New Workout"
             style={styles.titleInput}
             backgroundColor={colors.grey400}
             underlineThickness={0}
             fontSize={16}
             maxLength={30}
+            value={currentWorkout.title}
           />
         </Row>
         <Spacer size={1} />
@@ -158,7 +153,7 @@ const NewWorkout = () => {
         </Button>
         <ScrollView style={styles.exercisesWrapper}>
           <View>
-            {exercises.map((exercise, index) => (
+            {currentWorkout.exercises.map((exercise, index) => (
               <ExerciseItem
                 key={exercise.name}
                 addSet={() => addSet(index)}
@@ -173,7 +168,7 @@ const NewWorkout = () => {
           </View>
         </ScrollView>
         <View style={styles.workoutActionsContainer}>
-          {exercises.length > 0 && (
+          {currentWorkout.exercises.length > 0 && (
             <Button
               color={colors.accent}
               bold
