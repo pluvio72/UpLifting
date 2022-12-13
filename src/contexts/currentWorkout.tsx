@@ -1,0 +1,45 @@
+import React, {createContext, PropsWithChildren, useState} from 'react';
+import {Workout} from '../types/workouts';
+
+export type CurrentWorkout = Workout & {isTemplate: boolean};
+
+export const CurrentWorkout = createContext<
+  CurrentWorkout & {
+    onChange: <T extends keyof CurrentWorkout>(
+      key: T,
+      value: CurrentWorkout[T],
+    ) => void;
+  }
+>({
+  title: '',
+  exercises: [],
+  metrics: [{name: 'Volume', value: '0kg'}],
+  isTemplate: false,
+  onChange: () => {},
+});
+
+export const CurrentWorkoutProvider: React.FC<PropsWithChildren> = ({
+  children,
+}) => {
+  const [currentWorkout, setCurrentWorkout] = useState<CurrentWorkout>({
+    exercises: [],
+    isTemplate: false,
+    metrics: [{name: 'Volume', value: '0kg'}],
+    title: '',
+  });
+
+  return (
+    <CurrentWorkout.Provider
+      value={{
+        ...currentWorkout,
+        onChange: (key, value) => {
+          setCurrentWorkout(prev => ({
+            ...prev,
+            [key]: value,
+          }));
+        },
+      }}>
+      {children}
+    </CurrentWorkout.Provider>
+  );
+};

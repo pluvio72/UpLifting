@@ -12,11 +12,14 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     paddingHorizontal: 6,
     paddingVertical: 4,
+    width: 45,
+    textAlign: 'center',
   },
   weightInput: {
     borderWidth: 0,
-    paddingHorizontal: 4,
-    paddingVertical: 2,
+    paddingHorizontal: 6,
+    paddingVertical: 4,
+    width: 60,
   },
   exerciseName: {
     fontWeight: '600',

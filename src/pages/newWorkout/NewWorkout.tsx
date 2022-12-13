@@ -18,7 +18,7 @@ import Session from '../../contexts/session';
 import {Exercise, ExerciseSet} from '../../types/workouts';
 import {Screens} from '../../data/navigation';
 import {saveNewWorkout} from '../../services/api/workout';
-import {colors, Styles} from '../../util/styles';
+import {colors} from '../../util/styles';
 import styles from './NewWorkout.styles';
 import {CurrentWorkout} from '../../contexts/currentWorkout';
 
@@ -144,6 +144,7 @@ const NewWorkout = () => {
             underlineThickness={0}
             fontSize={16}
             maxLength={30}
+            borderRadius={8}
             value={currentWorkout.title}
           />
         </Row>

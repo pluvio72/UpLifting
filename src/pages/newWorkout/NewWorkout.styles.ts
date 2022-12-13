@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
-    paddingTop: 4,
   },
   exercisesWrapper: {
     paddingTop: 12,
@@ -11,6 +10,8 @@ const styles = StyleSheet.create({
   },
   workoutActionsContainer: {
     marginTop: 'auto',
+    paddingHorizontal: 10,
+    paddingBottom: 10,
   },
   titleInput: {
     textAlign: 'center',

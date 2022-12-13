@@ -57,7 +57,7 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
         maxLength={2}
         placeholder={'Reps'}
         defaultValue={repValue.toString()}
-        borderRadius={6}
+        borderRadius={8}
         backgroundColor={colors.white}
       />
       <TextInputWithLabel
@@ -65,7 +65,7 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
         onChange={(val: string) =>
           onUpdate('weight', index, val ? parseInt(val, 10) : '')
         }
-        maxLength={2}
+        maxLength={3}
         placeholder={'0'}
         backgroundColor={colors.white}
         label="kg"

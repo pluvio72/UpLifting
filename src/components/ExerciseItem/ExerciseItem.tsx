@@ -74,11 +74,14 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
     // last exercise vol
     MetricsItems[2].value = '+NA';
 
-    MetricsItems[3].value = data
-      .reduce((total, curVal) => {
-        return total > curVal.weight ? total : (curVal.weight as number);
-      }, 0)
-      .toString();
+    MetricsItems[3].value =
+      data
+        .reduce((total, curVal) => {
+          console.log('Tota:', total);
+          console.log('Current Value:', curVal);
+          return total > curVal.weight ? total : (curVal.weight as number);
+        }, 0)
+        .toString() + 'kg';
   };
 
   const onPressSettingsItem = (item: string) => {
@@ -109,8 +112,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
     updateMetricsValues();
   };
 
-  console.log('Metric:', metric);
-
+  // console.log('Metric:', metric);
   return (
     <View style={styles.exerciseItem}>
       <Row yAlign="center" padding={{pb: 6}}>
