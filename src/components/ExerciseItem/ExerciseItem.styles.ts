@@ -104,6 +104,14 @@ const styles = StyleSheet.create({
   notDone: {
     color: colors.grey600,
   },
+  swipeDeleteContainer: {
+    backgroundColor: colors.accent,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 60,
+    marginBottom: 0,
+  },
 });
 
 export default styles;

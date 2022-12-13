@@ -3,6 +3,7 @@ import React, {FC, useEffect, useState} from 'react';
 import SessionContext, {Session} from '../contexts/session';
 import {PostAuthStack, PreAuthStack} from './stacks';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const USER_SESSION = 'user_session';
 
@@ -43,11 +44,13 @@ const App: FC = () => {
   };
 
   return (
-    <SessionContext.Provider value={session}>
-      <NavigationContainer>
-        {session ? <PostAuthStack /> : <PreAuthStack onLogin={onLogin} />}
-      </NavigationContainer>
-    </SessionContext.Provider>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <SessionContext.Provider value={session}>
+        <NavigationContainer>
+          {session ? <PostAuthStack /> : <PreAuthStack onLogin={onLogin} />}
+        </NavigationContainer>
+      </SessionContext.Provider>
+    </GestureHandlerRootView>
   );
 };
 

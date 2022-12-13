@@ -192,7 +192,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
       <Button
         color={colors.secondary}
         padding={{px: 8, py: 4}}
-        margin={{mx: 12, mb: 12}}
+        margin={{mx: 12, mb: 12, mt: 8}}
         bold={true}
         textAlign="center"
         borderRadius={6}
