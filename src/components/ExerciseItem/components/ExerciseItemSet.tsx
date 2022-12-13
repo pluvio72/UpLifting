@@ -1,6 +1,6 @@
 import React from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {colors} from '../../../util/styles';
 import {Row} from '../../Reusable/reusable';
 import {TextInput} from '../../inputs/TextInput';
@@ -35,7 +35,10 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
   weightValue,
 }) => {
   return (
-    <Row margin={{mb: 8}} xAlign="space-around">
+    <Row
+      margin={{mb: 8}}
+      xAlign="space-around"
+      style={completed && {backgroundColor: colors.fadedGreen}}>
       {/* <Text style={styles.prevBest}>50KG x 10</Text> */}
       <Dropdown
         style={styles.prevBest}
@@ -58,7 +61,7 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
         placeholder={'Reps'}
         defaultValue={repValue.toString()}
         borderRadius={8}
-        backgroundColor={colors.white}
+        backgroundColor={completed ? 'transparent' : colors.white}
       />
       <TextInputWithLabel
         style={styles.weightInput}
@@ -67,25 +70,17 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
         }
         maxLength={3}
         placeholder={'0'}
-        backgroundColor={colors.white}
+        backgroundColor={completed ? 'transparent' : colors.white}
         label="kg"
         defaultValue={weightValue.toString()}
       />
-      {completed === false ? (
-        <Icon
-          onPress={() => toggleComplete(index + 1)}
-          name="circle"
-          style={styles.notDone}
-          size={20}
-        />
-      ) : (
-        <Icon
-          onPress={() => toggleComplete(index + 1)}
-          name="check"
-          style={styles.done}
-          size={24}
-        />
-      )}
+      <Icon
+        onPress={() => toggleComplete(index + 1)}
+        name={completed ? 'md-checkmark-circle' : 'md-checkmark-circle-outline'}
+        style={completed === false ? styles.notDone : styles.done}
+        size={26}
+      />
+
       {/* <Pressable onPress={() => onRemove(index + 1)}>
         <Text>RM</Text>
       </Pressable> */}

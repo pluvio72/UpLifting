@@ -115,7 +115,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   // console.log('Metric:', metric);
   return (
     <View style={styles.exerciseItem}>
-      <Row yAlign="center" padding={{pb: 6}}>
+      <Row yAlign="center" padding={{pb: 6, px: 12, pt: 12}}>
         <Dropdown
           style={styles.settingsDropdown}
           placeholderStyle={styles.settingsDropdownText}
@@ -192,6 +192,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
       <Button
         color={colors.secondary}
         padding={{px: 8, py: 4}}
+        margin={{mx: 12, mb: 12}}
         bold={true}
         textAlign="center"
         borderRadius={6}

@@ -3,10 +3,8 @@ import {colors} from '../../util/styles';
 
 const styles = StyleSheet.create({
   exerciseItem: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
     backgroundColor: colors.grey,
-    marginBottom: 4,
+    marginBottom: 8,
   },
   repInput: {
     borderWidth: 0,
@@ -104,7 +102,7 @@ const styles = StyleSheet.create({
     color: colors.green,
   },
   notDone: {
-    color: colors.red,
+    color: colors.grey600,
   },
 });
 

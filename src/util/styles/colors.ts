@@ -9,6 +9,7 @@ const colors = {
   shadowColor: 'rgb(30,30,30)',
   borderColor: '#111',
   green: '#32CD32',
+  fadedGreen: 'rgba(181, 237, 181, 0.5)',
   red: 'rgb(180, 34, 20)',
   blue: '#0000cd',
   grey800: '#343a40',
@@ -19,6 +20,7 @@ const colors = {
   grey300: '#dee2e6',
   grey200: '#e9ecef',
   grey100: '#EDF2F4',
+  transparent: 'transparent',
 } as const;
 
 export type Color = typeof colors[keyof typeof colors];
