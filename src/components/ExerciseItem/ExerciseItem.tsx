@@ -54,7 +54,6 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   );
 
   const [showNotes, setShowNotes] = useState(false);
-  const [note, setNote] = useState('');
 
   const updateMetricsValues = () => {
     MetricsItems[0].value =
@@ -98,7 +97,6 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   };
 
   const onUpdateNote = (newVal: string) => {
-    setNote(newVal);
     onUpdate('note', undefined, newVal);
   };
 
@@ -110,6 +108,8 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
     onUpdate(type, setIndex, newValue);
     updateMetricsValues();
   };
+
+  console.log('Metric:', metric);
 
   return (
     <View style={styles.exerciseItem}>

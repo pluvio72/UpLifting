@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     backgroundColor: colors.grey,
-    borderRadius: 6,
     marginBottom: 4,
   },
   repInput: {

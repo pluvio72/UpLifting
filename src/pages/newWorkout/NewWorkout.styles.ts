@@ -1,6 +1,10 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 15,
+    paddingTop: 4,
+  },
   exercisesWrapper: {
     paddingTop: 12,
     height: '100%',

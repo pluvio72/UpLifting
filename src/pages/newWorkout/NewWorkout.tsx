@@ -131,8 +131,8 @@ const NewWorkout = () => {
 
   return (
     <SafeAreaView>
-      <KeyboardAvoidingView style={Styles.container}>
-        <Row>
+      <KeyboardAvoidingView>
+        <Row style={styles.container}>
           <TouchableOpacity style={styles.backArrowContainer} onPress={goBack}>
             <Icon name="arrow-back-circle" size={32} />
           </TouchableOpacity>
@@ -147,10 +147,12 @@ const NewWorkout = () => {
             value={currentWorkout.title}
           />
         </Row>
-        <Spacer size={1} />
-        <Button bold color={colors.primary} onPress={toggleExerciseSelect}>
-          Add Exercise
-        </Button>
+        <View style={styles.container}>
+          <Spacer size={1} />
+          <Button bold color={colors.primary} onPress={toggleExerciseSelect}>
+            Add Exercise
+          </Button>
+        </View>
         <ScrollView style={styles.exercisesWrapper}>
           <View>
             {currentWorkout.exercises.map((exercise, index) => (
