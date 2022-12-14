@@ -15,14 +15,17 @@ export const AuthenticatedRoute = async <T>(
   body?: BodyInit_,
 ): Promise<GenericResponse & T> => {
   try {
-    const res = await fetch(url, {
+    let headers: HeadersInit_ = {authorization: `${token} ${username}`};
+    if (verb === 'POST') {
+      headers['Content-Type'] = 'application/json';
+    }
+
+    const res = await fetch(uri(url), {
       method: verb,
-      headers: {
-        authorization: `${token} ${username}`,
-        'Content-Type': 'application/json',
-      },
+      headers,
       body,
     });
+    console.log('REs:', res);
     return await res.json();
   } catch (error: any) {
     console.warn(`Error in ${verb} ${url}, ${error.message}.`);
