@@ -1,3 +1,4 @@
+import {Session} from '../../contexts/session';
 import {Template} from '../../types';
 import {ExerciseSet, PR, WorkoutMetric} from '../../types/workouts';
 import {Workout} from '../../types/workouts';
@@ -52,10 +53,11 @@ export const getTemplates: AuthenticatedRoute<Array<Template>> = async (
   return response.templates;
 };
 
-export const saveNewWorkout: AuthenticatedRoute<GenericResponse> = async (
-  session,
+export const saveNewWorkout = async (
+  session: Session,
   title: string,
   workout: Array<ExerciseSet>,
+  isTemplate: boolean,
   metrics: Array<WorkoutMetric>,
 ) => {
   const body = JSON.stringify({
@@ -63,6 +65,7 @@ export const saveNewWorkout: AuthenticatedRoute<GenericResponse> = async (
     title,
     username: session.username,
     metrics,
+    isTemplate,
   });
   return await AuthenticatedRoute(session, 'POST', '/workouts/new', body);
 };

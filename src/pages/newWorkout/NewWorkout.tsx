@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -21,8 +22,10 @@ import {saveNewWorkout} from '../../services/api/workout';
 import {colors} from '../../util/styles';
 import styles from './NewWorkout.styles';
 import {CurrentWorkout} from '../../contexts/currentWorkout';
+import GenericModal from '../../components/modals/genericModal/GenericModal';
 
 const NewWorkout = () => {
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showExerciseSelect, setShowExerciseSelect] = useState(false);
   const toggleExerciseSelect = () => setShowExerciseSelect(!showExerciseSelect);
 
@@ -111,7 +114,14 @@ const NewWorkout = () => {
     navigate.navigate(Screens.Landing);
   };
 
-  const finishWorkout = () => {
+  const showModal = () => setShowConfirmModal(true);
+  const hideModal = () => setShowConfirmModal(false);
+
+  const saveAsTemplate = () => {
+    currentWorkout.onChange('isTemplate', true);
+    save();
+  };
+  const save = () => {
     const metrics = [
       {
         name: 'Volume',
@@ -133,10 +143,10 @@ const NewWorkout = () => {
     ];
 
     saveNewWorkout(
-      session?.username!,
-      session?.token!,
+      session!,
       currentWorkout.title,
       currentWorkout.exercises,
+      currentWorkout.isTemplate,
       metrics,
     );
   };
@@ -144,9 +154,32 @@ const NewWorkout = () => {
   const onChangeTitle = (newVal: string) =>
     currentWorkout.onChange('title', newVal);
 
+  const confirmSave = () => (
+    <View>
+      <Text style={{fontSize: 18, fontWeight: '600'}}>Confirm Save?</Text>
+    </View>
+  );
+
+  let confirmModalContent = confirmSave;
+
   return (
     <SafeAreaView>
       <KeyboardAvoidingView>
+        <GenericModal
+          isVisible={showConfirmModal}
+          onHide={hideModal}
+          content={confirmModalContent}
+          firstAction={{
+            color: colors.green,
+            text: 'Save',
+            onPress: save,
+          }}
+          secondAction={{
+            color: colors.grey400,
+            text: 'Save as Template',
+            onPress: saveAsTemplate,
+          }}
+        />
         <Row style={styles.container}>
           <TouchableOpacity style={styles.backArrowContainer} onPress={goBack}>
             <Icon name="arrow-back-circle" size={32} />
@@ -194,7 +227,7 @@ const NewWorkout = () => {
               margin={{mt: 8}}
               fontSize={16}
               textAlign="center"
-              onPress={finishWorkout}>
+              onPress={showModal}>
               Finish
             </Button>
           )}

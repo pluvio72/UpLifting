@@ -1,7 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import HistoryItem from '../../components/HistoryItem/HistoryItem';
 import Session from '../../contexts/session';
+import useStartup from '../../hooks/useStartup';
 import {getAllWorkouts} from '../../services/api/workout';
 import {Workout} from '../../types/workouts';
 import {Styles} from '../../util/styles';
@@ -10,12 +11,11 @@ const History = () => {
   const [workouts, setWorkouts] = useState<Array<Workout>>([]);
   const session = useContext(Session);
 
-  useEffect(() => {
-    getAllWorkouts(session!.username, session!.token).then(_workouts => {
+  useStartup(() => {
+    getAllWorkouts(session!).then(_workouts => {
       setWorkouts(_workouts);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <SafeAreaView>
@@ -24,11 +24,12 @@ const History = () => {
           <Text style={[Styles.textBold, Styles.textLg, {marginBottom: 12}]}>
             History
           </Text>
-          {workouts.map(workout => (
+          {workouts.map((workout, index) => (
             <HistoryItem
               metrics={workout.metrics}
               name={workout.title}
               exercises={workout.exercises}
+              key={workout.title + ' ' + index}
             />
           ))}
           {/* <HistoryItem

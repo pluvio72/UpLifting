@@ -14,14 +14,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 4,
+    marginBottom: 8,
   },
   historyWrapper: {
     borderRadius: 16,
     display: 'flex',
     padding: 10,
     backgroundColor: colors.secondary,
-    marginBottom: 4,
+    marginBottom: 8,
   },
 });
 

@@ -24,56 +24,63 @@ const ExerciseTemplates: React.FC<Props> = ({templates}) => {
     });
 
   const selectTemplate = (name: string) => {
-    if (selectedTemplate === name) setSelectedTemplate(undefined);
-    else setSelectedTemplate(name);
+    if (selectedTemplate === name) {
+      setSelectedTemplate(undefined);
+    } else {
+      setSelectedTemplate(name);
+    }
   };
 
   return (
     <View style={styles.container}>
-      {templates.map((template, mainIndex) => (
-        <TouchableHighlight
-          underlayColor={colors.secondary}
-          style={[styles.wrapper]}
-          key={template.name}
-          onPress={() => selectTemplate(template.name)}>
-          <>
-            <Row style={Styles.w100}>
-              <Icon
-                name="circle"
-                color={
-                  selectedTemplate === template.name
-                    ? colors.accentDark
-                    : colors.white
-                }
-                size={18}
-                style={styles.select}
-              />
-              <Text style={styles.header}>{template.name}</Text>
-              <Icon
-                name={expandedView[mainIndex] ? 'caret-up' : 'caret-down'}
-                size={22}
-                style={styles.iconDown}
-                onPress={() => toggleExpanded(mainIndex)}
-              />
-            </Row>
-            <View
-              style={{
-                display: expandedView[mainIndex] ? 'flex' : 'none',
-                marginTop: 6,
-              }}>
-              {template.exercises.map((exercise, index) => (
-                <Row
-                  key={exercise}
-                  style={styles.exercise}
-                  xAlign="space-between">
-                  <Text style={styles.exerciseName}>{exercise}</Text>
-                  <Text>{template.maxs[index]}</Text>
-                </Row>
-              ))}
-            </View>
-          </>
-        </TouchableHighlight>
-      ))}
+      {templates.length > 0 ? (
+        templates.map((template, mainIndex) => (
+          <TouchableHighlight
+            underlayColor={colors.secondary}
+            style={[styles.wrapper]}
+            key={template.name}
+            onPress={() => selectTemplate(template.name)}>
+            <>
+              <Row style={Styles.w100}>
+                <Icon
+                  name="circle"
+                  color={
+                    selectedTemplate === template.name
+                      ? colors.accentDark
+                      : colors.white
+                  }
+                  size={18}
+                  style={styles.select}
+                />
+                <Text style={styles.header}>{template.name}</Text>
+                <Icon
+                  name={expandedView[mainIndex] ? 'caret-up' : 'caret-down'}
+                  size={22}
+                  style={styles.iconDown}
+                  onPress={() => toggleExpanded(mainIndex)}
+                />
+              </Row>
+              <View
+                style={{
+                  display: expandedView[mainIndex] ? 'flex' : 'none',
+                  marginTop: 6,
+                }}>
+                {template.exercises.map((exercise, index) => (
+                  <Row
+                    key={exercise}
+                    style={styles.exercise}
+                    xAlign="space-between">
+                    <Text style={styles.exerciseName}>{exercise}</Text>
+                    <Text>{template.maxs[index]}</Text>
+                  </Row>
+                ))}
+              </View>
+            </>
+          </TouchableHighlight>
+        ))
+      ) : (
+        <Text style={styles.noTemplates}>No Templates</Text>
+      )}
       <Button
         color={selectedTemplate ? colors.primary : colors.secondary}
         disabled={selectedTemplate === undefined}
@@ -125,6 +132,12 @@ const styles = StyleSheet.create({
   select: {
     position: 'absolute',
     left: 5,
+  },
+  noTemplates: {
+    fontSize: 14,
+    textAlign: 'center',
+    width: '100%',
+    marginBottom: 12,
   },
 });
 
