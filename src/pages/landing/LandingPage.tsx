@@ -1,7 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useContext, useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, Text, View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../components/button';
 import Chip from '../../components/chip';
 import HistoryItem from '../../components/HistoryItem/HistoryItem';

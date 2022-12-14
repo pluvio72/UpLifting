@@ -22,15 +22,17 @@ interface ExerciseItemProps {
   data: Set[];
   name: string;
   onRemove: (setIndex: number) => void;
+  onRemoveExercise: () => void;
   onUpdate: onUpdate;
 }
 
-const SettingsItems = [
-  {name: 'Add Photo/Video'},
-  {name: 'Add Notes'},
-  {name: 'Remove Notes'},
-  {name: 'Remove Exercise'},
-];
+const Settings = [
+  'Add Photo/Video',
+  'Add Notes',
+  'Remove Notes',
+  'Remove Exercise',
+] as const;
+const SettingsItems = Settings.map(e => ({name: e}));
 
 const MetricsItems = [
   {name: 'Reps', value: '0 Reps'},
@@ -45,6 +47,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   name,
   onRemove,
   onUpdate,
+  onRemoveExercise,
 }) => {
   const toggleCompleted = (setIndex: number) => {
     onUpdate('completed', setIndex);
@@ -58,16 +61,16 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   const updateMetricsValues = () => {
     MetricsItems[0].value =
       data
-        .reduce((total, curVal) => {
-          return total + (curVal.reps as number);
-        }, 0)
+        .reduce((total, curVal) => total + (curVal.reps as number), 0)
         .toString() + ' Reps';
 
     MetricsItems[1].value =
       data
-        .reduce((total, curVal) => {
-          return total + (curVal.reps as number) * (curVal.weight as number);
-        }, 0)
+        .reduce(
+          (total, curVal) =>
+            total + (curVal.reps as number) * (curVal.weight as number),
+          0,
+        )
         .toString() + 'kg';
 
     // TODO:
@@ -76,19 +79,25 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
 
     MetricsItems[3].value =
       data
-        .reduce((total, curVal) => {
-          console.log('Tota:', total);
-          console.log('Current Value:', curVal);
-          return total > curVal.weight ? total : (curVal.weight as number);
-        }, 0)
+        .reduce(
+          (total, curVal) =>
+            total > curVal.weight ? total : (curVal.weight as number),
+          0,
+        )
         .toString() + 'kg';
   };
 
-  const onPressSettingsItem = (item: string) => {
-    if (item === 'Add Notes') {
-      setShowNotes(true);
-    } else if (item === 'Remove Notes') {
-      setShowNotes(false);
+  const onPressSettingsItem = (item: typeof Settings[number]) => {
+    switch (item) {
+      case 'Add Notes':
+        setShowNotes(true);
+        break;
+      case 'Remove Notes':
+        setShowNotes(false);
+        break;
+      case 'Remove Exercise':
+        onRemoveExercise();
+        break;
     }
   };
 

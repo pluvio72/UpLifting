@@ -9,6 +9,7 @@ export const CurrentWorkout = createContext<
       key: T,
       value: CurrentWorkout[T],
     ) => void;
+    clear: () => void;
   }
 >({
   title: '',
@@ -16,6 +17,7 @@ export const CurrentWorkout = createContext<
   metrics: [{name: 'Volume', value: '0kg'}],
   isTemplate: false,
   onChange: () => {},
+  clear: () => {},
 });
 
 export const CurrentWorkoutProvider: React.FC<PropsWithChildren> = ({
@@ -38,6 +40,13 @@ export const CurrentWorkoutProvider: React.FC<PropsWithChildren> = ({
             [key]: value,
           }));
         },
+        clear: () =>
+          setCurrentWorkout({
+            exercises: [],
+            metrics: [{name: 'Volume', value: '0kg'}],
+            isTemplate: false,
+            title: '',
+          }),
       }}>
       {children}
     </CurrentWorkout.Provider>

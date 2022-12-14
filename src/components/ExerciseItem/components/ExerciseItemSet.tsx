@@ -8,7 +8,7 @@ import TextInputWithLabel from '../../inputs/TextInputWithLabel';
 import {onUpdate as OnUpdate} from '../ExerciseItem';
 import styles from '../ExerciseItem.styles';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import {Animated, Text, View} from 'react-native';
+import {Animated} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface SetRowProps {

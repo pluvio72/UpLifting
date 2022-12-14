@@ -1,89 +1,83 @@
+import {Template} from '../../types';
 import {ExerciseSet, PR, WorkoutMetric} from '../../types/workouts';
 import {Workout} from '../../types/workouts';
-import {uri} from './api';
+import {AuthenticatedRoute, GenericResponse} from './api';
 
-export const getAllWorkouts = async (
-  username: string,
-  token: string,
-): Promise<Array<Workout>> => {
-  try {
-    const response = await fetch(uri(`/workouts/${username}`), {
-      method: 'GET',
-      headers: {
-        authorization: `${token} ${username}`,
-      },
-    });
-    const json: any = await response.json();
-    return json.workouts;
-  } catch (error: any) {
-    console.warn(`Error in getAllWorkouts, ${error.message}.`);
-    return [];
-  }
+export const getAllWorkouts: AuthenticatedRoute<Array<Workout>> = async (
+  username,
+  token,
+) => {
+  return (
+    await AuthenticatedRoute<{workouts: Workout[]}>(
+      username,
+      token,
+      'GET',
+      `/workouts/${username}`,
+    )
+  ).workouts;
 };
 
-export const getRecentWorkouts = async (
-  username: string,
-  token: string,
+export const getRecentWorkouts: AuthenticatedRoute<Array<Workout>> = async (
+  username,
+  token,
   limit: number = 3,
-): Promise<Array<Workout>> => {
-  try {
-    const response = await fetch(uri(`/workouts/${username}/recent/${limit}`), {
-      method: 'GET',
-      headers: {
-        authorization: `${token} ${username}`,
-      },
-    });
-    const json: any = await response.json();
-    return json.workouts;
-  } catch (error: any) {
-    console.warn(`Error in getRecentWorkouts, ${error.message}.`);
-    return [];
-  }
+) => {
+  return (
+    await AuthenticatedRoute<{workouts: Workout[]}>(
+      username,
+      token,
+      'GET',
+      `/workouts/${username}/recent/${limit}`,
+    )
+  ).workouts;
 };
 
-export const getRecentPRs = async (
-  username: string,
-  token: string,
+export const getRecentPRs: AuthenticatedRoute<Array<PR>> = async (
+  username,
+  token,
   limit = 5,
-): Promise<Array<PR>> => {
-  try {
-    const response = await fetch(uri(`/workouts/${username}/prs/${limit}`), {
-      method: 'GET',
-      headers: {
-        authorization: `${token} ${username}`,
-      },
-    });
-    const json: any = await response.json();
-    return json.prs;
-  } catch (error: any) {
-    console.warn(`Error in getRecentPRs, ${error.message}.`);
-    return [];
-  }
+) => {
+  return (
+    await AuthenticatedRoute<{prs: Array<PR>}>(
+      username,
+      token,
+      'GET',
+      `/workouts/${username}/prs/${limit}`,
+    )
+  ).prs;
 };
 
-export const saveNewWorkout = async (
-  username: string,
-  token: string,
+export const getTemplates: AuthenticatedRoute<Array<Template>> = async (
+  username,
+  token,
+): Promise<Array<Template>> => {
+  const response = await AuthenticatedRoute<{templates: Array<Template>}>(
+    username,
+    token,
+    'GET',
+    `/workouts/${username}/templates`,
+  );
+  return response.templates;
+};
+
+export const saveNewWorkout: AuthenticatedRoute<GenericResponse> = async (
+  username,
+  token,
   title: string,
   workout: Array<ExerciseSet>,
   metrics: Array<WorkoutMetric>,
 ) => {
-  try {
-    const response = await fetch(uri('/workouts/new'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `${token} ${username}`,
-      },
-      body: JSON.stringify({
-        workout,
-        title,
-        username,
-        metrics,
-      }),
-    });
-    return await response.json();
-  } catch (error: any) {
-    console.warn(`Error in saveNewWorkout, ${error.message}.`);
-  }
+  const body = JSON.stringify({
+    workout,
+    title,
+    username,
+    metrics,
+  });
+  return await AuthenticatedRoute(
+    username,
+    token,
+    'POST',
+    '/workouts/new',
+    body,
+  );
 };

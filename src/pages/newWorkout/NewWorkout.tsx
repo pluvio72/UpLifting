@@ -96,6 +96,21 @@ const NewWorkout = () => {
     currentWorkout.onChange('exercises', value);
   };
 
+  const removeExercise = (exerciseIndex: number) => {
+    let value: ExerciseSet[] = [];
+    for (let i = 0; i < currentWorkout.exercises.length; i += 1) {
+      if (i !== exerciseIndex) {
+        value.push(currentWorkout.exercises[i]);
+      }
+    }
+    currentWorkout.onChange('exercises', value);
+  };
+
+  const cancelWorkout = () => {
+    currentWorkout.clear();
+    navigate.navigate(Screens.Landing);
+  };
+
   const finishWorkout = () => {
     const metrics = [
       {
@@ -166,6 +181,7 @@ const NewWorkout = () => {
                 }
                 data={exercise.sets}
                 onRemove={setIndex => removeSet(index, setIndex)}
+                onRemoveExercise={() => removeExercise(index)}
               />
             ))}
           </View>
@@ -182,7 +198,11 @@ const NewWorkout = () => {
               Finish
             </Button>
           )}
-          <Button color={colors.grey300} bold margin={{mt: 8}}>
+          <Button
+            color={colors.grey300}
+            bold
+            margin={{mt: 8}}
+            onPress={cancelWorkout}>
             Cancel Workout
           </Button>
         </View>
