@@ -1,21 +1,23 @@
+import {Session} from '../../contexts/session';
+
 const BACKEND_URI = 'http://localhost:3000';
 export const uri = (path: string) => BACKEND_URI + path;
 
 export type AuthenticatedRoute<T> = (
-  username: string,
-  token: string,
+  session: Session,
   ...params: any[]
 ) => Promise<T>;
 
 export const AuthenticatedRoute = async <T>(
-  username: string,
-  token: string,
+  session: Session,
   verb: 'GET' | 'POST',
   url: string,
   body?: BodyInit_,
 ): Promise<GenericResponse & T> => {
   try {
-    let headers: HeadersInit_ = {authorization: `${token} ${username}`};
+    let headers: HeadersInit_ = {
+      authorization: `${session.token} ${session.username}`,
+    };
     if (verb === 'POST') {
       headers['Content-Type'] = 'application/json';
     }

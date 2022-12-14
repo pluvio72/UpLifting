@@ -3,66 +3,57 @@ import {ExerciseSet, PR, WorkoutMetric} from '../../types/workouts';
 import {Workout} from '../../types/workouts';
 import {AuthenticatedRoute, GenericResponse} from './api';
 
-export const getAllWorkouts: AuthenticatedRoute<Array<Workout>> = async (
-  username,
-  token,
-) => {
+export const getAllWorkouts: AuthenticatedRoute<
+  Array<Workout>
+> = async session => {
   return (
     await AuthenticatedRoute<{workouts: Workout[]}>(
-      username,
-      token,
+      session,
       'GET',
-      `/workouts/${username}`,
+      `/workouts/${session.username}`,
     )
   ).workouts;
 };
 
 export const getRecentWorkouts: AuthenticatedRoute<Array<Workout>> = async (
-  username,
-  token,
+  session,
   limit: number = 3,
 ) => {
   return (
     await AuthenticatedRoute<{workouts: Workout[]}>(
-      username,
-      token,
+      session,
       'GET',
-      `/workouts/${username}/recent/${limit}`,
+      `/workouts/${session.username}/recent/${limit}`,
     )
   ).workouts;
 };
 
 export const getRecentPRs: AuthenticatedRoute<Array<PR>> = async (
-  username,
-  token,
+  session,
   limit = 5,
 ) => {
   return (
     await AuthenticatedRoute<{prs: Array<PR>}>(
-      username,
-      token,
+      session,
       'GET',
-      `/workouts/${username}/prs/${limit}`,
+      `/workouts/${session.username}/prs/${limit}`,
     )
   ).prs;
 };
 
 export const getTemplates: AuthenticatedRoute<Array<Template>> = async (
-  username,
-  token,
+  session,
 ): Promise<Array<Template>> => {
   const response = await AuthenticatedRoute<{templates: Array<Template>}>(
-    username,
-    token,
+    session,
     'GET',
-    `/workouts/${username}/templates`,
+    `/workouts/${session.username}/templates`,
   );
   return response.templates;
 };
 
 export const saveNewWorkout: AuthenticatedRoute<GenericResponse> = async (
-  username,
-  token,
+  session,
   title: string,
   workout: Array<ExerciseSet>,
   metrics: Array<WorkoutMetric>,
@@ -70,14 +61,8 @@ export const saveNewWorkout: AuthenticatedRoute<GenericResponse> = async (
   const body = JSON.stringify({
     workout,
     title,
-    username,
+    username: session.username,
     metrics,
   });
-  return await AuthenticatedRoute(
-    username,
-    token,
-    'POST',
-    '/workouts/new',
-    body,
-  );
+  return await AuthenticatedRoute(session, 'POST', '/workouts/new', body);
 };

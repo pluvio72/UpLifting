@@ -7,9 +7,14 @@ import HistoryItem from '../../components/HistoryItem/HistoryItem';
 import {Row} from '../../components/Reusable/reusable';
 import Spacer from '../../components/spacer';
 import Session from '../../contexts/session';
-import templates from '../../data/mock';
 import {PostAuthTabs, RootStackParamList, Screens} from '../../data/navigation';
-import {getRecentPRs, getRecentWorkouts} from '../../services/api/workout';
+import useStartup from '../../hooks/useStartup';
+import {
+  getRecentPRs,
+  getRecentWorkouts,
+  getTemplates,
+} from '../../services/api/workout';
+import {Template} from '../../types';
 import {PR, Workout} from '../../types/workouts';
 import {Styles} from '../../util/styles';
 import colors from '../../util/styles/colors';
@@ -21,22 +26,23 @@ type Props = NativeStackScreenProps<RootStackParamList, 'landing'>;
 const LandingPage: React.FC<Props> = ({navigation}) => {
   const [recentWorksouts, setRecentWorkouts] = useState<Array<Workout>>([]);
   const [recentPRs, setRecentPRs] = useState<Array<PR>>([]);
+  const [templates, setTemplates] = useState<Array<Template>>([]);
 
   const session = useContext(Session);
 
-  useEffect(() => {
-    getRecentWorkouts(session!.username, session!.token, 2).then(workouts => {
-      setRecentWorkouts(workouts);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useStartup(() => {
+    getRecentWorkouts(session!, 2).then(workouts =>
+      setRecentWorkouts(workouts),
+    );
+  });
 
-  useEffect(() => {
-    getRecentPRs(session!.username, session!.token).then(prs => {
-      setRecentPRs(prs);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useStartup(() => {
+    getRecentPRs(session!).then(prs => setRecentPRs(prs));
+  });
+
+  useStartup(() => {
+    getTemplates(session!).then(_templates => setTemplates(_templates));
+  });
 
   const ClickStartNewWorkout = () => {
     navigation.navigate(Screens.NewWorkout);
