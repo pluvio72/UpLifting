@@ -25,7 +25,6 @@ export const AuthenticatedRoute = async <T>(
       headers,
       body,
     });
-    console.log('REs:', res);
     return await res.json();
   } catch (error: any) {
     console.warn(`Error in ${verb} ${url}, ${error.message}.`);
