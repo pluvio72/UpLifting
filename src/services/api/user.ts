@@ -1,20 +1,18 @@
+import {Session} from '../../contexts/session';
 import {Gym} from '../../types/gyms';
-import {uri} from './api';
+import {AuthenticatedRoute, UnauthenticatedRoute} from './api';
 
 export const signUp = async (
   username: string,
   password: string,
   email: string,
   gym_details: Gym,
-): Promise<{success: boolean; token: string}> => {
-  try {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    const response = await fetch(uri('/users/sign-up'), {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
+) => {
+  return (
+    await UnauthenticatedRoute(
+      'POST',
+      '/users/sign-up',
+      JSON.stringify({
         username: username,
         password: password,
         email: email,
@@ -25,32 +23,34 @@ export const signUp = async (
           post_code: gym_details.post_code,
         },
       }),
-    });
-    const json = await response.json();
-    return json;
-  } catch (error: any) {
-    console.warn(`Error signing up, ${error.message}.`);
-    return {success: false, token: ''};
-  }
+    )
+  ).success;
 };
 
-export const signIn = async (
-  username: string,
-  password: string,
-): Promise<{success: boolean; token: string}> => {
-  try {
-    const response = await fetch(uri('/users/sign-in'), {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        username,
-        password,
+export const signIn = async (username: string, password: string) => {
+  return await UnauthenticatedRoute<{token: string}>(
+    'POST',
+    '/users/sign-in',
+    JSON.stringify({
+      username,
+      password,
+    }),
+  );
+};
+
+export const updateUserSettings = async (
+  session: Session,
+  data: {useKilos: boolean},
+) => {
+  return (
+    await AuthenticatedRoute(
+      session,
+      'POST',
+      '/users/update/settings',
+      JSON.stringify({
+        username: session.username,
+        data,
       }),
-    });
-    const json = await response.json();
-    return json;
-  } catch (error: any) {
-    console.warn(`Error signing in, ${error.message}.`);
-    return {success: false, token: ''};
-  }
+    )
+  ).success;
 };

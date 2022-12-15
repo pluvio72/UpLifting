@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     color: colors.white,
+    marginBottom: 4,
   },
   profileItemSubText: {
     fontSize: 13,

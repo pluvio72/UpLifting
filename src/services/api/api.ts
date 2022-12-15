@@ -34,6 +34,26 @@ export const AuthenticatedRoute = async <T>(
   }
 };
 
+export const UnauthenticatedRoute = async <T>(
+  verb: 'GET' | 'POST',
+  url: string,
+  body?: BodyInit_,
+): Promise<GenericResponse & T> => {
+  try {
+    const res = await fetch(uri(url), {
+      method: verb,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body,
+    });
+    return await res.json();
+  } catch (error: any) {
+    console.warn(`Error in ${verb} in route ${url}, ${error.message}.`);
+    throw new Error('API_ERROR');
+  }
+};
+
 export type GenericResponse = {
   success: boolean;
 };
