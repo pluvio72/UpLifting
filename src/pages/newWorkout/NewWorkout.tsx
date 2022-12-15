@@ -22,7 +22,7 @@ import {saveNewWorkout} from '../../services/api/workout';
 import {colors} from '../../util/styles';
 import styles from './NewWorkout.styles';
 import {CurrentWorkout} from '../../contexts/currentWorkout';
-import GenericModal from '../../components/modals/genericModal/GenericModal';
+import GenericModal from '../../components/modals/genericModal';
 
 const NewWorkout = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -149,6 +149,7 @@ const NewWorkout = () => {
       currentWorkout.isTemplate,
       metrics,
     );
+    hideModal();
   };
 
   const onChangeTitle = (newVal: string) =>
