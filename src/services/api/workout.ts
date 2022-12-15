@@ -2,7 +2,7 @@ import {Session} from '../../contexts/session';
 import {Template} from '../../types';
 import {ExerciseSet, PR, WorkoutMetric} from '../../types/workouts';
 import {Workout} from '../../types/workouts';
-import {AuthenticatedRoute, GenericResponse} from './api';
+import {AuthenticatedRoute} from './api';
 
 export const getAllWorkouts: AuthenticatedRoute<
   Array<Workout>

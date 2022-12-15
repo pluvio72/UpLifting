@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {ExerciseSet} from '../../types/workouts';
 import {WorkoutMetric} from '../../types/workouts';
+import {formatWeightValue} from '../../util/format';
 import {colors, Styles} from '../../util/styles';
 import Button from '../button';
 import Chip from '../chip';
@@ -47,7 +48,8 @@ const HistoryItem: React.FC<Props> = ({name, exercises, metrics}) => {
             <View style={styles.historySet} key={exercise.name}>
               <Text style={Styles.textBold}>{exercise.name}</Text>
               <Text>
-                Top Set: {exercise.sets[0].weight} x {exercise.sets[0].reps}
+                Top Set: {formatWeightValue(exercise.sets[0].weight)} x{' '}
+                {exercise.sets[0].reps}
               </Text>
             </View>
           );

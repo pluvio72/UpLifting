@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react';
 import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Row} from '../../components/Reusable/reusable';
-import Spacer from '../../components/spacer';
 import Session from '../../contexts/session';
 import {colors} from '../../util/styles';
 import UserSettings from './components/profilePages/userSettings';

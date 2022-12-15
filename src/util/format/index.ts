@@ -22,3 +22,7 @@ export const ShuffleArray = <T>(_array: Array<T>) => {
 
   return array;
 };
+
+export const formatWeightValue = (value: number) => {
+  return Math.round(value * 10) / 10;
+};
