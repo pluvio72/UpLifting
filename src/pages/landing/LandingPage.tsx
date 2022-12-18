@@ -4,6 +4,7 @@ import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import Button from '../../components/button';
 import Chip from '../../components/chip';
 import HistoryItem from '../../components/HistoryItem/HistoryItem';
+import WorkoutHistoryModal from '../../components/modals/workoutHistoryModal';
 import {Row} from '../../components/Reusable/reusable';
 import Spacer from '../../components/spacer';
 import Session from '../../contexts/session';
@@ -27,6 +28,7 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
   const [recentWorksouts, setRecentWorkouts] = useState<Array<Workout>>([]);
   const [recentPRs, setRecentPRs] = useState<Array<PR>>([]);
   const [templates, setTemplates] = useState<Array<Template>>([]);
+  const [selectedWorkout, setSelectedWorkout] = useState<Workout>();
 
   const session = useContext(Session);
 
@@ -52,8 +54,16 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
     navigation.navigate(PostAuthTabs.history as any);
   };
 
+  const openModal = (selected: Workout) => setSelectedWorkout(selected);
+  const closeModal = () => setSelectedWorkout(undefined);
+
   return (
     <SafeAreaView>
+      <WorkoutHistoryModal
+        workout={selectedWorkout!}
+        show={selectedWorkout !== undefined}
+        onHide={closeModal}
+      />
       <ScrollView style={styles.container}>
         <Button
           color={colors.primary}
@@ -74,9 +84,8 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
           <Spacer />
           {recentWorksouts.map((workout, index) => (
             <HistoryItem
-              name={workout.title}
-              exercises={workout.exercises}
-              metrics={workout.metrics}
+              workout={workout}
+              onPressShowMore={openModal}
               key={workout.title + index}
             />
           ))}

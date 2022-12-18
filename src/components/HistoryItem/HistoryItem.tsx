@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {ExerciseSet} from '../../types/workouts';
-import {WorkoutMetric} from '../../types/workouts';
+import {Workout} from '../../types/workouts';
 import {formatWeightValue} from '../../util/format';
 import {colors, Styles} from '../../util/styles';
 import Button from '../button';
@@ -27,23 +26,28 @@ const styles = StyleSheet.create({
 });
 
 interface Props {
-  name: string;
-  exercises: ExerciseSet[];
-  metrics: WorkoutMetric[];
+  workout: Workout;
+  onPressShowMore: (workout: Workout) => void;
 }
 
-const HistoryItem: React.FC<Props> = ({name, exercises, metrics}) => {
-  if (exercises) {
+const HistoryItem: React.FC<Props> = ({workout, onPressShowMore}) => {
+  if (workout) {
     return (
       <View style={styles.historyWrapper}>
-        <Text style={[Styles.textBold, Styles.textMd]}>{name}</Text>
+        <Text style={[Styles.textBold, Styles.textMd, Styles.textCenter]}>
+          {workout.title}
+        </Text>
         <Row style={{marginRight: 'auto'}}>
-          <Chip color={colors.accent}>Total {metrics[0].value}</Chip>
+          <Chip color={colors.accent}>Total {workout.metrics[0].value}</Chip>
           <Chip color={colors.accentDark} style={{margin: 6}}>
-            Sets {exercises.reduce((total, cur) => total + cur.sets.length, 0)}
+            Sets{' '}
+            {workout.exercises.reduce(
+              (total, cur) => total + cur.sets.length,
+              0,
+            )}
           </Chip>
         </Row>
-        {exercises.map(exercise => {
+        {workout.exercises.map(exercise => {
           return (
             <View style={styles.historySet} key={exercise.name}>
               <Text style={Styles.textBold}>{exercise.name}</Text>
@@ -54,7 +58,13 @@ const HistoryItem: React.FC<Props> = ({name, exercises, metrics}) => {
             </View>
           );
         })}
-        <Button color={colors.primary} bold padding={{p: 8}} margin={{mt: 4}}>
+        <Button
+          color={colors.primary}
+          fontSize={12}
+          bold
+          padding={{p: 8}}
+          margin={{mt: 4}}
+          onPress={() => onPressShowMore(workout)}>
           Click To View More...
         </Button>
       </View>
