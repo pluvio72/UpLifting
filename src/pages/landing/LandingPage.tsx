@@ -77,8 +77,8 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
           Start New Workout
         </Button>
         <Spacer size={2} />
-        <View style={styles.historyItemContainer}>
-          <Text style={[Styles.textBold, Styles.textMd, {marginLeft: 5}]}>
+        <View>
+          <Text style={[Styles.textBold, Styles.textMd, styles.historyTitle]}>
             History
           </Text>
           <Spacer />
@@ -90,7 +90,6 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
             />
           ))}
         </View>
-        <Spacer />
         {recentWorksouts.length > 0 ? (
           <Button
             color={colors.accent}

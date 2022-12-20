@@ -9,27 +9,36 @@ import {Row} from '../Reusable/reusable';
 
 const styles = StyleSheet.create({
   historySet: {
-    backgroundColor: colors.grey100,
+    backgroundColor: colors.primary,
     padding: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: 4,
+    marginHorizontal: 8,
+    borderRadius: 8
   },
   title: {
-    paddingTop: 12,
-    paddingBottom: 6,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   historyWrapper: {
     display: 'flex',
-    backgroundColor: 'rgba(150,150,150,0.4)',
-    marginBottom: 16,
+    backgroundColor: colors.secondary,
+    marginBottom: 10,
+    borderRadius: 8,
+    shadowColor: colors.black,
+    shadowOffset: { height: 4, width: 0 },
+    shadowRadius: 4,
+    shadowOpacity: 0.15
   },
   detailsWrapper: {
-    marginRight: 'auto',
-    marginLeft: 'auto',
     paddingHorizontal: 8,
-    paddingBottom: 4,
+    paddingTop: 10,
+    paddingBottom: 6,
   },
+  text: {
+    color: colors.grey200,
+  }
 });
 
 interface Props {
@@ -41,15 +50,6 @@ const HistoryItem: React.FC<Props> = ({workout, onPressShowMore}) => {
   if (workout) {
     return (
       <View style={styles.historyWrapper}>
-        <Text
-          style={[
-            Styles.textBold,
-            Styles.textMd,
-            Styles.textCenter,
-            styles.title,
-          ]}>
-          {workout.title}
-        </Text>
         <Row style={styles.detailsWrapper}>
           <Chip color={colors.grey200}>Total {workout.metrics[0].value}</Chip>
           <Chip color={colors.grey200} style={{margin: 6}}>
@@ -59,12 +59,21 @@ const HistoryItem: React.FC<Props> = ({workout, onPressShowMore}) => {
               0,
             )}
           </Chip>
+          <Text
+            style={[
+              Styles.textBold,
+              Styles.textMd,
+              Styles.textCenter,
+              styles.title,
+            ]}>
+            {workout.title}
+          </Text>
         </Row>
         {workout.exercises.map(exercise => {
           return (
             <View style={styles.historySet} key={exercise.name}>
-              <Text style={Styles.textBold}>{exercise.name}</Text>
-              <Text>
+              <Text style={[Styles.textBold, styles.text]}>{exercise.name}</Text>
+              <Text style={styles.text}>
                 Top Set: {formatWeightValue(exercise.sets[0].weight)} x{' '}
                 {exercise.sets[0].reps}
               </Text>
@@ -72,7 +81,7 @@ const HistoryItem: React.FC<Props> = ({workout, onPressShowMore}) => {
           );
         })}
         <Button
-          color={colors.secondary}
+          color={colors.grey600}
           fontSize={12}
           bold
           padding={{p: 8}}

@@ -32,7 +32,7 @@ const History = () => {
         />
       )}
       <ScrollView>
-        <View>
+        <View style={{padding: 12}}>
           <Text
             style={[
               Styles.textBold,
@@ -48,22 +48,6 @@ const History = () => {
               onPressShowMore={openModal}
             />
           ))}
-          {/* <HistoryItem
-            total={7549}
-            name={'Chest & Back'}
-            sets={[
-              {
-                name: 'Bench Press (Barbell)',
-                data: [
-                  {
-                    reps: 8,
-                    weight: 90,
-                    completed: true,
-                  },
-                ],
-              },
-            ]}
-          /> */}
         </View>
       </ScrollView>
     </SafeAreaView>
