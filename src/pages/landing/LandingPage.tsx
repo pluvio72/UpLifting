@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import Button from '../../components/button';
 import Chip from '../../components/chip';
@@ -77,7 +77,7 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
           Start New Workout
         </Button>
         <Spacer size={2} />
-        <View>
+        <View style={styles.historyItemContainer}>
           <Text style={[Styles.textBold, Styles.textMd, {marginLeft: 5}]}>
             History
           </Text>

@@ -32,8 +32,13 @@ const History = () => {
         />
       )}
       <ScrollView>
-        <View style={{padding: 20}}>
-          <Text style={[Styles.textBold, Styles.textLg, {marginBottom: 12}]}>
+        <View>
+          <Text
+            style={[
+              Styles.textBold,
+              Styles.textLg,
+              {marginBottom: 12, paddingLeft: 12},
+            ]}>
             History
           </Text>
           {workouts.map((workout, index) => (

@@ -9,19 +9,26 @@ import {Row} from '../Reusable/reusable';
 
 const styles = StyleSheet.create({
   historySet: {
-    backgroundColor: colors.grey,
+    backgroundColor: colors.grey100,
     padding: 8,
-    borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 8,
   },
+  title: {
+    paddingTop: 12,
+    paddingBottom: 6,
+  },
   historyWrapper: {
-    borderRadius: 16,
     display: 'flex',
-    padding: 10,
-    backgroundColor: colors.secondary,
-    marginBottom: 8,
+    backgroundColor: 'rgba(150,150,150,0.4)',
+    marginBottom: 16,
+  },
+  detailsWrapper: {
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    paddingHorizontal: 8,
+    paddingBottom: 4,
   },
 });
 
@@ -34,12 +41,18 @@ const HistoryItem: React.FC<Props> = ({workout, onPressShowMore}) => {
   if (workout) {
     return (
       <View style={styles.historyWrapper}>
-        <Text style={[Styles.textBold, Styles.textMd, Styles.textCenter]}>
+        <Text
+          style={[
+            Styles.textBold,
+            Styles.textMd,
+            Styles.textCenter,
+            styles.title,
+          ]}>
           {workout.title}
         </Text>
-        <Row style={{marginRight: 'auto'}}>
-          <Chip color={colors.accent}>Total {workout.metrics[0].value}</Chip>
-          <Chip color={colors.accentDark} style={{margin: 6}}>
+        <Row style={styles.detailsWrapper}>
+          <Chip color={colors.grey200}>Total {workout.metrics[0].value}</Chip>
+          <Chip color={colors.grey200} style={{margin: 6}}>
             Sets{' '}
             {workout.exercises.reduce(
               (total, cur) => total + cur.sets.length,
@@ -59,11 +72,11 @@ const HistoryItem: React.FC<Props> = ({workout, onPressShowMore}) => {
           );
         })}
         <Button
-          color={colors.primary}
+          color={colors.secondary}
           fontSize={12}
           bold
           padding={{p: 8}}
-          margin={{mt: 4}}
+          margin={{m: 8, mt: 4, mb: 14}}
           onPress={() => onPressShowMore(workout)}>
           Click To View More...
         </Button>
