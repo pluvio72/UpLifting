@@ -23,6 +23,7 @@ import {colors} from '../../util/styles';
 import styles from './NewWorkout.styles';
 import {CurrentWorkout} from '../../contexts/currentWorkout';
 import GenericModal from '../../components/modals/genericModal';
+import CameraRollModal from '../../components/modals/cameraRollModal';
 
 const NewWorkout = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -41,7 +42,7 @@ const NewWorkout = () => {
     currentWorkout.onChange('exercises', [
       ...currentWorkout.exercises,
       {
-        sets: [{weight: '', reps: '', completed: false}],
+        sets: [{weight: 0, reps: 0, completed: false}],
         name,
         metric: {name: 'Reps', value: '0'},
       },
@@ -71,8 +72,8 @@ const NewWorkout = () => {
   const addSet = (exerciseIndex: number) => {
     let value = [...currentWorkout.exercises];
     value[exerciseIndex].sets.push({
-      weight: '',
-      reps: '',
+      weight: 0,
+      reps: 0,
       completed: false,
     });
     console.log('Value:', value);
@@ -164,89 +165,92 @@ const NewWorkout = () => {
   let confirmModalContent = confirmSave;
 
   return (
-    <SafeAreaView>
-      <KeyboardAvoidingView>
-        <GenericModal
-          isVisible={showConfirmModal}
-          onHide={hideModal}
-          content={confirmModalContent}
-          firstAction={{
-            color: colors.green,
-            text: 'Save',
-            onPress: save,
-          }}
-          secondAction={{
-            color: colors.grey400,
-            text: 'Save as Template',
-            onPress: saveAsTemplate,
-          }}
-        />
-        <Row style={styles.container}>
-          <TouchableOpacity style={styles.backArrowContainer} onPress={goBack}>
-            <Icon name="arrow-back-circle" size={32} />
-          </TouchableOpacity>
-          <TextInput
-            onChange={onChangeTitle}
-            placeholder="New Workout"
-            style={styles.titleInput}
-            backgroundColor={colors.grey400}
-            underlineThickness={0}
-            fontSize={16}
-            maxLength={30}
-            borderRadius={8}
-            value={currentWorkout.title}
+    <View style={{flex: 1}}>
+      <CameraRollModal show={true} onHide={() => {}}/>
+      <SafeAreaView>
+        <KeyboardAvoidingView>
+          <GenericModal
+            isVisible={showConfirmModal}
+            onHide={hideModal}
+            content={confirmModalContent}
+            firstAction={{
+              color: colors.green,
+              text: 'Save',
+              onPress: save,
+            }}
+            secondAction={{
+              color: colors.grey400,
+              text: 'Save as Template',
+              onPress: saveAsTemplate,
+            }}
           />
-        </Row>
-        <View style={styles.container}>
-          <Spacer size={1} />
-          <Button bold color={colors.primary} onPress={toggleExerciseSelect}>
-            Add Exercise
-          </Button>
-        </View>
-        <ScrollView style={styles.exercisesWrapper}>
-          <View>
-            {currentWorkout.exercises.map((exercise, index) => (
-              <ExerciseItem
-                key={exercise.name}
-                addSet={() => addSet(index)}
-                name={exercise.name}
-                onUpdate={(type, setIndex, newValue) =>
-                  updateSet(index, type, setIndex, newValue)
-                }
-                data={exercise.sets}
-                onRemove={setIndex => removeSet(index, setIndex)}
-                onRemoveExercise={() => removeExercise(index)}
-              />
-            ))}
+          <Row style={styles.container}>
+            <TouchableOpacity style={styles.backArrowContainer} onPress={goBack}>
+              <Icon name="arrow-back-circle" size={32} />
+            </TouchableOpacity>
+            <TextInput
+              onChange={onChangeTitle}
+              placeholder="New Workout"
+              style={styles.titleInput}
+              backgroundColor={colors.grey400}
+              underlineThickness={0}
+              fontSize={16}
+              maxLength={30}
+              borderRadius={8}
+              value={currentWorkout.title}
+            />
+          </Row>
+          <View style={styles.container}>
+            <Spacer size={1} />
+            <Button bold color={colors.primary} onPress={toggleExerciseSelect}>
+              Add Exercise
+            </Button>
           </View>
-        </ScrollView>
-        <View style={styles.workoutActionsContainer}>
-          {currentWorkout.exercises.length > 0 && (
+          <ScrollView style={styles.exercisesWrapper}>
+            <View>
+              {currentWorkout.exercises.map((exercise, index) => (
+                <ExerciseItem
+                  key={exercise.name}
+                  addSet={() => addSet(index)}
+                  name={exercise.name}
+                  onUpdate={(type, setIndex, newValue) =>
+                    updateSet(index, type, setIndex, newValue)
+                  }
+                  data={exercise.sets}
+                  onRemove={setIndex => removeSet(index, setIndex)}
+                  onRemoveExercise={() => removeExercise(index)}
+                />
+              ))}
+            </View>
+          </ScrollView>
+          <View style={styles.workoutActionsContainer}>
+            {currentWorkout.exercises.length > 0 && (
+              <Button
+                color={colors.accent}
+                bold
+                margin={{mt: 8}}
+                fontSize={16}
+                textAlign="center"
+                onPress={showModal}>
+                Finish
+              </Button>
+            )}
             <Button
-              color={colors.accent}
+              color={colors.grey300}
               bold
               margin={{mt: 8}}
-              fontSize={16}
-              textAlign="center"
-              onPress={showModal}>
-              Finish
+              onPress={cancelWorkout}>
+              Cancel Workout
             </Button>
-          )}
-          <Button
-            color={colors.grey300}
-            bold
-            margin={{mt: 8}}
-            onPress={cancelWorkout}>
-            Cancel Workout
-          </Button>
-        </View>
-        <ExerciseSelectModal
-          show={showExerciseSelect}
-          onHide={toggleExerciseSelect}
-          onSelect={addExercise}
-        />
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+          </View>
+          <ExerciseSelectModal
+            show={showExerciseSelect}
+            onHide={toggleExerciseSelect}
+            onSelect={addExercise}
+          />
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </View>
   );
 };
 

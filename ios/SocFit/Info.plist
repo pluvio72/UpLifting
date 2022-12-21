@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Upload profile pictures, pictures or videos of workouts.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Upload profile pictures, pictures or videos of workouts.</string>
 	<key>CFBundleDisplayName</key>
 	<string>SocFit</string>
 	<key>CFBundleExecutable</key>
