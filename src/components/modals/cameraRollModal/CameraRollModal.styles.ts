@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native";
-import { colors } from "../../../util/styles";
+import {StyleSheet} from 'react-native';
+import {colors} from '../../../util/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,15 +10,32 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   closeContainer: {
-    marginLeft: 'auto',
-    paddingTop: 8,
-    paddingBottom: 4,
-    paddingRight: 12,
+    flexDirection: 'row',
+    padding: 4,
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  close: {},
+  close: {
+    marginLeft: 'auto',
+    marginRight: 8,
+  },
   image: {
     marginBottom: 2,
-  }
+  },
+  selectText: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginRight: 'auto',
+    marginLeft: 20,
+  },
+  selectedItem: {
+    borderColor: colors.green,
+    borderWidth: 3,
+  },
+  unselectedItem: {
+    borderColor: colors.transparent,
+    borderWidth: 4,
+  },
 });
 
 export default styles;

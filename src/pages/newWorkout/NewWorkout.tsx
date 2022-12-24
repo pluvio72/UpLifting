@@ -23,7 +23,6 @@ import {colors} from '../../util/styles';
 import styles from './NewWorkout.styles';
 import {CurrentWorkout} from '../../contexts/currentWorkout';
 import GenericModal from '../../components/modals/genericModal';
-import CameraRollModal from '../../components/modals/cameraRollModal';
 
 const NewWorkout = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -166,7 +165,6 @@ const NewWorkout = () => {
 
   return (
     <View style={{flex: 1}}>
-      <CameraRollModal show={true} onHide={() => {}}/>
       <SafeAreaView>
         <KeyboardAvoidingView>
           <GenericModal
@@ -185,7 +183,9 @@ const NewWorkout = () => {
             }}
           />
           <Row style={styles.container}>
-            <TouchableOpacity style={styles.backArrowContainer} onPress={goBack}>
+            <TouchableOpacity
+              style={styles.backArrowContainer}
+              onPress={goBack}>
               <Icon name="arrow-back-circle" size={32} />
             </TouchableOpacity>
             <TextInput

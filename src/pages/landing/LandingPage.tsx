@@ -78,9 +78,7 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
         </Button>
         <Spacer size={2} />
         <View>
-          <Text style={[Styles.textBold, Styles.textMd, styles.historyTitle]}>
-            History
-          </Text>
+          <Text style={[Styles.textBold, Styles.textMd]}>History</Text>
           <Spacer />
           {recentWorksouts.map((workout, index) => (
             <HistoryItem
