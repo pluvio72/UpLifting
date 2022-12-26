@@ -51,30 +51,10 @@ const NewWorkout = () => {
   const addSet = (exerciseIndex: number) => {
     let value = [...currentWorkout.exercises];
     value[exerciseIndex].sets.push({
-      weight: 0,
-      reps: 0,
+      weight: undefined,
+      reps: undefined,
       completed: false,
     });
-    currentWorkout.onChange('exercises', value);
-  };
-
-  const removeSet = (exerciseIndex: number, setIndex: number) => {
-    let selectedExerciseSet = currentWorkout.exercises[exerciseIndex].sets;
-    let value: ExerciseSet[] = [];
-
-    // if set only has one remove the exercise
-    if (selectedExerciseSet.length === 1) {
-      value = [
-        ...currentWorkout.exercises.slice(0, exerciseIndex),
-        ...currentWorkout.exercises.slice(exerciseIndex + 1),
-      ];
-    } else {
-      value = [...currentWorkout.exercises];
-      currentWorkout.exercises[exerciseIndex].sets = [
-        ...selectedExerciseSet.slice(0, setIndex),
-        ...selectedExerciseSet.slice(setIndex + 1),
-      ];
-    }
     currentWorkout.onChange('exercises', value);
   };
 
@@ -192,7 +172,7 @@ const NewWorkout = () => {
                   addSet={() => addSet(index)}
                   data={exercise.sets}
                   exerciseIndex={index}
-                  key={exercise.name}
+                  key={exercise.name + index}
                   name={exercise.name}
                   onRemoveExercise={() => removeExercise(index)}
                 />

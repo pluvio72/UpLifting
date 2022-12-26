@@ -30,8 +30,8 @@ export type PR = {
 };
 
 export type Set = {
-  reps: number;
-  weight: number;
+  reps?: number;
+  weight?: number;
   completed: boolean;
 };
 

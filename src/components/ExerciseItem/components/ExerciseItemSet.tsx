@@ -13,10 +13,10 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 interface SetRowProps {
   completed: boolean;
   index: number;
-  repValue: number | string;
-  weightValue: number | string;
+  repValue?: number;
+  weightValue?: number;
   onRemove: (setIndex: number) => void;
-  onUpdate: (type: 'reps' | 'weight', index: number, value: number) => void;
+  onUpdate: (type: 'reps' | 'weight', index: number, value?: number) => void;
   toggleComplete: (setIndex: number) => void;
 }
 
@@ -30,11 +30,11 @@ const TempPrevExercises = [
 const ExerciseItemSet: React.FC<SetRowProps> = ({
   completed,
   index,
+  repValue,
+  weightValue,
   onRemove,
   onUpdate,
-  repValue,
   toggleComplete,
-  weightValue,
 }) => {
   const updateRef = useRef<Swipeable>(null);
 
@@ -84,22 +84,26 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
         <TextInput
           style={styles.repInput}
           onChange={(val: string) => {
-            onUpdate('reps', index, val ? parseFloat(val) : 0);
+            onUpdate('reps', index, val ? parseFloat(val) : undefined);
           }}
           maxLength={2}
+          focusOnPress
           placeholder={'Reps'}
-          defaultValue={repValue.toString()}
+          defaultValue={repValue?.toString()}
           borderRadius={8}
           backgroundColor={completed ? 'transparent' : colors.white}
         />
         <TextInputWithLabel
           style={styles.weightInput}
-          onChange={(val: string) => onUpdate('weight', index, parseFloat(val))}
+          onChange={(val: string) =>
+            onUpdate('weight', index, val ? parseFloat(val) : undefined)
+          }
           maxLength={3}
+          focusOnPress
           placeholder={'0'}
           backgroundColor={completed ? 'transparent' : colors.white}
           label="kg"
-          defaultValue={weightValue.toString()}
+          defaultValue={weightValue?.toString()}
         />
         <Icon
           onPress={() => toggleComplete(index + 1)}

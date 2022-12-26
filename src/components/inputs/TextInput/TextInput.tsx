@@ -20,6 +20,7 @@ export interface TextInputProps {
   disabled?: boolean;
   defaultValue?: string;
   editable?: boolean;
+  focusOnPress?: boolean;
   fontSize?: TextStyle['fontSize'];
   margin?: Margin;
   maxLength?: number;
@@ -43,6 +44,7 @@ const TextInput: React.FC<TextInputProps> = ({
   borderRadius,
   disabled,
   defaultValue,
+  focusOnPress = false,
   fontSize,
   margin,
   maxLength,
@@ -72,10 +74,15 @@ const TextInput: React.FC<TextInputProps> = ({
       autoCorrect={autoCorrect}
       autoCapitalize={autoCapitalize}
       autoFocus={autoFocus}
-      maxLength={maxLength}
+      editable={disabled ?? true}
       keyboardType={type === 'string' ? 'default' : 'number-pad'}
-      value={value}
+      maxLength={maxLength}
       onChangeText={onChangeValue}
+      multiline={textArea}
+      placeholder={placeholder ?? 'Value'}
+      placeholderTextColor={colors.grey600}
+      secureTextEntry={secureTextEntry}
+      selectTextOnFocus={focusOnPress}
       style={[
         styles.container,
         {backgroundColor: backgroundColor},
@@ -86,11 +93,7 @@ const TextInput: React.FC<TextInputProps> = ({
         {fontSize},
         MarginStylesheet(margin),
       ]}
-      placeholder={placeholder ?? 'Value'}
-      editable={disabled ?? true}
-      placeholderTextColor={colors.grey600}
-      multiline={textArea}
-      secureTextEntry={secureTextEntry}
+      value={value}
     />
   );
 };

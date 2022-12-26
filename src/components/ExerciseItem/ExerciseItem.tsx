@@ -43,16 +43,19 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   const updateMetricsValues = () => {
     MetricsItems[0].value =
       data
-        .reduce((total, curVal) => total + (curVal.reps as number), 0)
+        .reduce((total, curVal) => {
+          return total + (curVal.reps as number);
+        }, 0)
         .toString() + ' Reps';
 
     MetricsItems[1].value =
       data
-        .reduce(
-          (total, curVal) =>
-            total + (curVal.reps as number) * (curVal.weight as number),
-          0,
-        )
+        .reduce((total, curVal) => {
+          if (curVal.reps && curVal.weight) {
+            return total + (curVal.reps as number) * (curVal.weight as number);
+          }
+          return total;
+        }, 0)
         .toString() + 'kg';
 
     // TODO:
@@ -61,11 +64,13 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
 
     MetricsItems[3].value =
       data
-        .reduce(
-          (total, curVal) =>
-            total > curVal.weight ? total : (curVal.weight as number),
-          0,
-        )
+        .reduce((total, curVal) => {
+          if (curVal.weight) {
+            return total > curVal.weight ? total : (curVal.weight as number);
+          } else {
+            return total;
+          }
+        }, 0)
         .toString() + 'kg';
   };
 
@@ -101,7 +106,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   const onUpdateRepsOrWeight = (
     type: 'reps' | 'weight',
     setIndex: number,
-    newValue: number,
+    newValue?: number,
   ) => {
     let newExercises = [...currentWorkout.exercises];
     newExercises[exerciseIndex].sets[setIndex][type] = newValue;
@@ -115,10 +120,10 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
       newExercises[exerciseIndex].sets = newExercises[
         exerciseIndex
       ].sets.splice(setIndex, 1);
+      currentWorkout.onChange('exercises', newExercises);
     } else {
       onRemoveExercise();
     }
-    currentWorkout.onChange('exercises', newExercises);
   };
 
   return (

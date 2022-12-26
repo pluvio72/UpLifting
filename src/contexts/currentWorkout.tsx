@@ -35,6 +35,8 @@ export const CurrentWorkoutProvider: React.FC<PropsWithChildren> = ({
       value={{
         ...currentWorkout,
         onChange: (key, value) => {
+          console.log('Key:', key);
+          console.log('Value:', value);
           setCurrentWorkout(prev => ({
             ...prev,
             [key]: value,

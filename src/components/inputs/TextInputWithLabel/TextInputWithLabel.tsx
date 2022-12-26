@@ -25,6 +25,11 @@ const TextInputWithLabel = (props: Props) => {
       ]}>
       {Label}
       <TextInput
+        defaultValue={props.defaultValue}
+        selectTextOnFocus={props.focusOnPress}
+        onChangeText={props.onChange}
+        maxLength={3}
+        placeholder={props.placeholder}
         style={[
           {
             textAlign: 'center',
@@ -32,11 +37,7 @@ const TextInputWithLabel = (props: Props) => {
           },
           props.textInputStyle,
         ]}
-        maxLength={3}
-        placeholder={props.placeholder}
-        defaultValue={props.defaultValue}
         value={props.value}
-        onChangeText={props.onChange}
       />
     </View>
   );
