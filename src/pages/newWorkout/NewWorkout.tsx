@@ -23,10 +23,12 @@ import {colors} from '../../util/styles';
 import styles from './NewWorkout.styles';
 import {CurrentWorkout} from '../../contexts/currentWorkout';
 import GenericModal from '../../components/modals/genericModal';
+import CameraRollModal from '../../components/modals/cameraRollModal';
 
 const NewWorkout = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showExerciseSelect, setShowExerciseSelect] = useState(false);
+  const [showPhotoSelect, setShowPhotoSelect] = useState(false);
   const toggleExerciseSelect = () => setShowExerciseSelect(!showExerciseSelect);
 
   const session = useContext(Session);
@@ -126,6 +128,13 @@ const NewWorkout = () => {
     <View style={{flex: 1}}>
       <SafeAreaView>
         <KeyboardAvoidingView>
+          <CameraRollModal
+            onSelect={() => {}}
+            onHide={() => {
+              setShowPhotoSelect(false);
+            }}
+            show={showPhotoSelect}
+          />
           <GenericModal
             isVisible={showConfirmModal}
             onHide={hideModal}
@@ -175,6 +184,7 @@ const NewWorkout = () => {
                   key={exercise.name + index}
                   name={exercise.name}
                   onRemoveExercise={() => removeExercise(index)}
+                  onSelectAddMedia={() => setShowPhotoSelect(true)}
                 />
               ))}
             </View>
