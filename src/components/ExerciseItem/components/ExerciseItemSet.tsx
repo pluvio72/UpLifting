@@ -5,7 +5,6 @@ import {colors} from '../../../util/styles';
 import {Row} from '../../Reusable/reusable';
 import {TextInput} from '../../inputs/TextInput';
 import TextInputWithLabel from '../../inputs/TextInputWithLabel';
-import {onUpdate as OnUpdate} from '../ExerciseItem';
 import styles from '../ExerciseItem.styles';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {Animated} from 'react-native';
@@ -14,11 +13,11 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 interface SetRowProps {
   completed: boolean;
   index: number;
-  onRemove: (setIndex: number) => void;
-  onUpdate: OnUpdate;
   repValue: number | string;
-  toggleComplete: (setIndex: number) => void;
   weightValue: number | string;
+  onRemove: (setIndex: number) => void;
+  onUpdate: (type: 'reps' | 'weight', index: number, value: number) => void;
+  toggleComplete: (setIndex: number) => void;
 }
 
 const TempPrevExercises = [
@@ -39,7 +38,7 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
 }) => {
   const updateRef = useRef<Swipeable>(null);
 
-  const SwipeItems = (progress, dragX: Animated.Value) => {
+  const SwipeItems = (progress: any, dragX: Animated.Value) => {
     const trans = dragX.interpolate({
       inputRange: [0, 100],
       outputRange: [-100, 65],
@@ -80,11 +79,12 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
           activeColor={colors.grey200}
           valueField={'value'}
           labelField={'value'}
+          onChange={() => {}}
         />
         <TextInput
           style={styles.repInput}
           onChange={(val: string) => {
-            onUpdate('reps', index, val ? parseInt(val, 10) : '');
+            onUpdate('reps', index, val ? parseFloat(val) : 0);
           }}
           maxLength={2}
           placeholder={'Reps'}
@@ -94,9 +94,7 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
         />
         <TextInputWithLabel
           style={styles.weightInput}
-          onChange={(val: string) =>
-            onUpdate('weight', index, val ? parseInt(val, 10) : '')
-          }
+          onChange={(val: string) => onUpdate('weight', index, parseFloat(val))}
           maxLength={3}
           placeholder={'0'}
           backgroundColor={completed ? 'transparent' : colors.white}

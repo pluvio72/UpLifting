@@ -48,26 +48,6 @@ const NewWorkout = () => {
     ]);
   };
 
-  const updateSet = (
-    exerciseIndex: number,
-    type: keyof ExerciseSet['sets'][number] | 'metric' | 'note',
-    setIndex?: number,
-    newValue?: string | number | ExerciseSet['metric'],
-  ) => {
-    let value = [...currentWorkout.exercises];
-    if (type === 'completed') {
-      value[exerciseIndex].sets[setIndex!].completed =
-        !value[exerciseIndex].sets[setIndex!].completed;
-    } else if (type === 'reps' || type === 'weight') {
-      value[exerciseIndex].sets[setIndex!][type] = newValue as number;
-    } else if (type === 'note') {
-      value[exerciseIndex].note = newValue as string;
-    } else {
-      value[exerciseIndex].metric = newValue as ExerciseSet['metric'];
-    }
-    currentWorkout.onChange('exercises', value);
-  };
-
   const addSet = (exerciseIndex: number) => {
     let value = [...currentWorkout.exercises];
     value[exerciseIndex].sets.push({
@@ -75,7 +55,6 @@ const NewWorkout = () => {
       reps: 0,
       completed: false,
     });
-    console.log('Value:', value);
     currentWorkout.onChange('exercises', value);
   };
 
@@ -210,14 +189,11 @@ const NewWorkout = () => {
             <View>
               {currentWorkout.exercises.map((exercise, index) => (
                 <ExerciseItem
-                  key={exercise.name}
                   addSet={() => addSet(index)}
-                  name={exercise.name}
-                  onUpdate={(type, setIndex, newValue) =>
-                    updateSet(index, type, setIndex, newValue)
-                  }
                   data={exercise.sets}
-                  onRemove={setIndex => removeSet(index, setIndex)}
+                  exerciseIndex={index}
+                  key={exercise.name}
+                  name={exercise.name}
                   onRemoveExercise={() => removeExercise(index)}
                 />
               ))}

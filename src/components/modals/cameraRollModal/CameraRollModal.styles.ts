@@ -21,20 +21,13 @@ const styles = StyleSheet.create({
   },
   image: {
     marginBottom: 2,
+    borderWidth: 3,
   },
   selectText: {
     fontSize: 20,
     fontWeight: '600',
     marginRight: 'auto',
     marginLeft: 20,
-  },
-  selectedItem: {
-    borderColor: colors.green,
-    borderWidth: 3,
-  },
-  unselectedItem: {
-    borderColor: colors.transparent,
-    borderWidth: 4,
   },
 });
 

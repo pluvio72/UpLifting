@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Text, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {MetricsItems, Settings} from '../../constants/workout';
+import {CurrentWorkout} from '../../contexts/currentWorkout';
 import {ExerciseSet, Set} from '../../types/workouts';
 import {colors, Styles} from '../../util/styles';
 import Button from '../button';
@@ -11,52 +13,32 @@ import Spacer from '../spacer';
 import ExerciseItemSet from './components/ExerciseItemSet';
 import styles from './ExerciseItem.styles';
 
-export type onUpdate = (
-  type: keyof ExerciseSet['sets'][number] | 'metric' | 'note',
-  setIndex?: number,
-  newValue?: string | number | ExerciseSet['metric'],
-) => void;
-
-interface ExerciseItemProps {
-  addSet: () => void;
-  data: Set[];
-  name: string;
-  onRemove: (setIndex: number) => void;
-  onRemoveExercise: () => void;
-  onUpdate: onUpdate;
-}
-
-const Settings = [
-  'Add Photo/Video',
-  'Add Notes',
-  'Remove Notes',
-  'Remove Exercise',
-] as const;
 const SettingsItems = Settings.map(e => ({name: e}));
 
-const MetricsItems = [
-  {name: 'Reps', value: '0 Reps'},
-  {name: 'Volume', value: '0kg'},
-  {name: 'Volume Increase', value: '+0%'},
-  {name: 'Max Weight', value: '0kg'},
-];
+interface ExerciseItemProps {
+  data: Set[];
+  exerciseIndex: number;
+  name: string;
+  addSet: () => void;
+  onRemoveExercise: () => void;
+}
 
 const ExerciseItem: React.FC<ExerciseItemProps> = ({
-  addSet,
   data,
+  exerciseIndex,
   name,
-  onRemove,
-  onUpdate,
+  addSet,
   onRemoveExercise,
 }) => {
-  const toggleCompleted = (setIndex: number) => {
-    onUpdate('completed', setIndex);
-  };
-  const [metric, setMetric] = useState<typeof MetricsItems[number]>(
-    MetricsItems[0],
-  );
-
   const [showNotes, setShowNotes] = useState(false);
+  const currentWorkout = useContext(CurrentWorkout);
+
+  const toggleCompleted = (setIndex: number) => {
+    let newExercises = [...currentWorkout.exercises];
+    newExercises[exerciseIndex].sets[setIndex].completed =
+      !newExercises[exerciseIndex].sets[setIndex].completed;
+    currentWorkout.onChange('exercises', newExercises);
+  };
 
   const updateMetricsValues = () => {
     MetricsItems[0].value =
@@ -102,26 +84,43 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   };
 
   const onUpdateMetric = (newVal: ExerciseSet['metric']) => {
-    onUpdate('metric', undefined, {
+    let newExercises = [...currentWorkout.exercises];
+    newExercises[exerciseIndex].metric = {
       name: newVal.name,
       value: newVal.value,
-    });
+    };
+    currentWorkout.onChange('exercises', newExercises);
   };
 
   const onUpdateNote = (newVal: string) => {
-    onUpdate('note', undefined, newVal);
+    let newExercises = [...currentWorkout.exercises];
+    newExercises[exerciseIndex].note = newVal;
+    currentWorkout.onChange('exercises', newExercises);
   };
 
-  const onUpdateData = (
-    type: keyof ExerciseSet['sets'][number] | 'metric' | 'note',
-    setIndex?: number,
-    newValue?: number | string | ExerciseSet['metric'],
+  const onUpdateRepsOrWeight = (
+    type: 'reps' | 'weight',
+    setIndex: number,
+    newValue: number,
   ) => {
-    onUpdate(type, setIndex, newValue);
+    let newExercises = [...currentWorkout.exercises];
+    newExercises[exerciseIndex].sets[setIndex][type] = newValue;
+    currentWorkout.onChange('exercises', newExercises);
     updateMetricsValues();
   };
 
-  // console.log('Metric:', metric);
+  const onRemoveSet = (setIndex: number) => {
+    let newExercises = [...currentWorkout.exercises];
+    if (newExercises[exerciseIndex].sets.length > 1) {
+      newExercises[exerciseIndex].sets = newExercises[
+        exerciseIndex
+      ].sets.splice(setIndex, 1);
+    } else {
+      onRemoveExercise();
+    }
+    currentWorkout.onChange('exercises', newExercises);
+  };
+
   return (
     <View style={styles.exerciseItem}>
       <Row yAlign="center" padding={{pb: 6, px: 12, pt: 12}}>
@@ -137,7 +136,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
                 name="cog"
                 size={16}
                 color={colors.black}
-                style={{marginRight: 4}}
+                style={styles.settingsDropdownIcon}
               />
               <Icon name="caret-down" size={16} color={colors.black} />
             </Row>
@@ -153,23 +152,19 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           containerStyle={styles.metricsDropdownMenu}
           itemTextStyle={styles.metricsDropdownText}
           selectedTextStyle={styles.metricsDropdownButtonText}
-          itemContainerStyle={{
-            borderTopColor: 'rgb(180,180,180)',
-            borderTopWidth: 1,
-          }}
+          itemContainerStyle={styles.metricsDropdownItemContainer}
           renderRightIcon={() => (
             <Icon
               name="caret-down"
               size={16}
               color={colors.black}
-              style={{marginRight: 8}}
+              style={styles.metricsDropdownIcon}
             />
           )}
           data={MetricsItems}
           labelField={'value'}
           valueField={'value'}
           onChange={newVal => onUpdateMetric(newVal)}
-          value={metric}
           placeholder="Metric"
         />
         <Text style={[styles.exerciseName, Styles.textCenter]}>{name}</Text>
@@ -192,10 +187,12 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           index={index}
           repValue={data[index].reps}
           weightValue={data[index].weight}
-          onUpdate={(type, index2, newVal) => onUpdateData(type, index, newVal)}
+          onUpdate={(type, index2, newVal) =>
+            onUpdateRepsOrWeight(type, index, newVal)
+          }
           completed={item.completed}
           toggleComplete={() => toggleCompleted(index)}
-          onRemove={onRemove}
+          onRemove={() => onRemoveSet(index)}
         />
       ))}
       <Button

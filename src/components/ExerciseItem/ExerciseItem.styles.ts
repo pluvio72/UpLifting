@@ -112,6 +112,16 @@ const styles = StyleSheet.create({
     width: 60,
     marginBottom: 0,
   },
+  metricsDropdownItemContainer: {
+    borderTopColor: 'rgb(180,180,180)',
+    borderTopWidth: 1,
+  },
+  metricsDropdownIcon: {
+    marginRight: 8,
+  },
+  settingsDropdownIcon: {
+    marginRight: 4,
+  },
 });
 
 export default styles;
