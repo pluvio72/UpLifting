@@ -47,6 +47,19 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     color: colors.white,
   },
+  backContainer: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  backIcon: {
+    marginVertical: 'auto',
+  },
+  backText: {
+    color: colors.white,
+    fontSize: 16,
+    marginVertical: 'auto',
+  },
 });
 
 export default styles;

@@ -95,6 +95,7 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
         />
         <TextInputWithLabel
           style={styles.weightInput}
+          textInputStyle={styles.weightInputTextInput}
           onChange={(val: string) =>
             onUpdate('weight', index, val ? parseFloat(val) : undefined)
           }

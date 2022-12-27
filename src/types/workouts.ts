@@ -1,3 +1,4 @@
+import {PhotoIdentifier} from '@react-native-camera-roll/camera-roll';
 import {ExerciseCategories, ExerciseNames} from '../data/exercises/exercises';
 
 export type Exercise = typeof ExerciseNames[number];
@@ -18,6 +19,7 @@ export type ExerciseSet = {
   sets: Set[];
   metric: Metric;
   note?: string;
+  media?: PhotoIdentifier['node'];
 };
 
 export type Metrics = 'Max Weight' | 'Volume' | 'Reps' | 'Volume Increase';

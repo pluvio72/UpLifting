@@ -17,6 +17,10 @@ export interface TextInputProps {
   autoFocus?: boolean;
   backgroundColor?: Color;
   borderRadius?: ViewStyle['borderRadius'];
+  borderTopLeftRadius?: ViewStyle['borderRadius'];
+  borderTopRightRadius?: ViewStyle['borderRadius'];
+  borderBottomLeftRadius?: ViewStyle['borderRadius'];
+  borderBottomRightRadius?: ViewStyle['borderRadius'];
   disabled?: boolean;
   defaultValue?: string;
   editable?: boolean;
@@ -42,6 +46,10 @@ const TextInput: React.FC<TextInputProps> = ({
   autoFocus,
   backgroundColor = colors.grey,
   borderRadius,
+  borderTopRightRadius,
+  borderBottomLeftRadius,
+  borderBottomRightRadius,
+  borderTopLeftRadius,
   disabled,
   defaultValue,
   focusOnPress = false,
@@ -92,6 +100,12 @@ const TextInput: React.FC<TextInputProps> = ({
         {borderRadius},
         {fontSize},
         MarginStylesheet(margin),
+        {
+          borderTopLeftRadius,
+          borderBottomLeftRadius,
+          borderTopRightRadius,
+          borderBottomRightRadius,
+        },
       ]}
       value={value}
     />

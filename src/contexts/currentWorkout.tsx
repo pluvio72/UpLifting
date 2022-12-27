@@ -1,5 +1,5 @@
 import React, {createContext, PropsWithChildren, useState} from 'react';
-import {Workout} from '../types/workouts';
+import {Workout, ExerciseSet} from '../types/workouts';
 
 export type CurrentWorkout = Workout & {isTemplate: boolean};
 
@@ -53,4 +53,12 @@ export const CurrentWorkoutProvider: React.FC<PropsWithChildren> = ({
       {children}
     </CurrentWorkout.Provider>
   );
+};
+
+export const UpdateExerciseData = (
+  exercises: ExerciseSet[],
+  exerciseIndex: number,
+) => {
+  var newExercises = [...exercises];
+  newExercises[exerciseIndex];
 };

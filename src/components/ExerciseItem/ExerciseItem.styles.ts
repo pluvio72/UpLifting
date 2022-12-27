@@ -15,9 +15,11 @@ const styles = StyleSheet.create({
   },
   weightInput: {
     borderWidth: 0,
+    width: 60,
+  },
+  weightInputTextInput: {
     paddingHorizontal: 6,
     paddingVertical: 4,
-    width: 60,
   },
   exerciseName: {
     fontWeight: '600',
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   metricsDropdownItemContainer: {
-    borderTopColor: 'rgb(180,180,180)',
+    borderTopColor: 'rgb(240,240,240)',
     borderTopWidth: 1,
   },
   metricsDropdownIcon: {

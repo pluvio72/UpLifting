@@ -24,11 +24,15 @@ import styles from './NewWorkout.styles';
 import {CurrentWorkout} from '../../contexts/currentWorkout';
 import GenericModal from '../../components/modals/genericModal';
 import CameraRollModal from '../../components/modals/cameraRollModal';
+import {PhotoIdentifier} from '@react-native-camera-roll/camera-roll';
 
 const NewWorkout = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showExerciseSelect, setShowExerciseSelect] = useState(false);
+
   const [showPhotoSelect, setShowPhotoSelect] = useState(false);
+  const [exerciseToAddPhotoTo, setExerciseToAddPhotoTo] = useState<number>();
+
   const toggleExerciseSelect = () => setShowExerciseSelect(!showExerciseSelect);
 
   const session = useContext(Session);
@@ -37,6 +41,12 @@ const NewWorkout = () => {
   const navigate = useNavigation<NavigationProp<any, any>>();
   const goBack = () => {
     navigate.navigate(Screens.Landing);
+  };
+
+  const onAddPhoto = (item: PhotoIdentifier['node']) => {
+    let newExercises = [...currentWorkout.exercises];
+    newExercises[exerciseToAddPhotoTo!].media = item;
+    currentWorkout.onChange('exercises', newExercises);
   };
 
   const addExercise = (name: Exercise) => {
@@ -129,7 +139,7 @@ const NewWorkout = () => {
       <SafeAreaView>
         <KeyboardAvoidingView>
           <CameraRollModal
-            onSelect={() => {}}
+            onSelect={onAddPhoto}
             onHide={() => {
               setShowPhotoSelect(false);
             }}
@@ -184,7 +194,10 @@ const NewWorkout = () => {
                   key={exercise.name + index}
                   name={exercise.name}
                   onRemoveExercise={() => removeExercise(index)}
-                  onSelectAddMedia={() => setShowPhotoSelect(true)}
+                  onSelectAddMedia={exerciseIndex => {
+                    setShowPhotoSelect(true);
+                    setExerciseToAddPhotoTo(exerciseIndex);
+                  }}
                 />
               ))}
             </View>

@@ -54,3 +54,29 @@ export const updateUserSettings = async (
     )
   ).success;
 };
+
+export const updateUserStats = async (
+  session: Session,
+  data: {
+    height: {
+      unit: string;
+      value: number;
+    };
+    weight: {
+      unit: string;
+      value: number;
+    };
+  },
+) => {
+  return (
+    await AuthenticatedRoute(
+      session,
+      'POST',
+      '/users/update/stats',
+      JSON.stringify({
+        username: session.username,
+        data,
+      }),
+    )
+  ).success;
+};

@@ -6,7 +6,7 @@ export const MetricsItems = [
 ];
 
 export const Settings = [
-  'Add Photo/Video',
+  // 'Add Photo/Video',
   'Add Notes',
   'Remove Notes',
   'Remove Exercise',

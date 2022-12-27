@@ -21,7 +21,7 @@ interface ExerciseItemProps {
   name: string;
   addSet: () => void;
   onRemoveExercise: () => void;
-  onSelectAddMedia: () => void;
+  onSelectAddMedia: (exerciseIndex: number) => void;
 }
 
 const ExerciseItem: React.FC<ExerciseItemProps> = ({
@@ -30,7 +30,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   name,
   addSet,
   onRemoveExercise,
-  onSelectAddMedia,
+  // onSelectAddMedia,
 }) => {
   const [showNotes, setShowNotes] = useState(false);
   const currentWorkout = useContext(CurrentWorkout);
@@ -87,9 +87,9 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
       case 'Remove Exercise':
         onRemoveExercise();
         break;
-      case 'Add Photo/Video':
-        onSelectAddMedia();
-        break;
+      // case 'Add Photo/Video':
+      //   onSelectAddMedia(exerciseIndex);
+      //   break;
     }
   };
 

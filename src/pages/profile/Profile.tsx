@@ -5,6 +5,7 @@ import {Row} from '../../components/Reusable/reusable';
 import Session from '../../contexts/session';
 import {colors} from '../../util/styles';
 import UserSettings from './components/profilePages/userSettings';
+import UserStats from './components/profilePages/userStats';
 import ProfilePicture from './components/profilePicture';
 import styles from './Profile.styles';
 
@@ -24,7 +25,7 @@ const ProfileItem: React.FC<{
   </TouchableOpacity>
 );
 
-type Pages = 'userSettings';
+type Pages = 'settings' | 'stats';
 
 const Profile: React.FC = () => {
   const session = useContext(Session);
@@ -39,12 +40,12 @@ const Profile: React.FC = () => {
         <Text style={styles.underUsername}>The Gym Kensington</Text>
       </View>
       <View style={styles.detailsContainer}>
-        {currentView === undefined && (
+        {currentView === undefined ? (
           <>
             <ProfileItem
               text={'Gym Progress'}
               subText={'Body measurements: weight, size etc.'}
-              onPress={() => {}}
+              onPress={() => setCurrentView('stats')}
             />
             <ProfileItem
               text={'Account'}
@@ -59,14 +60,27 @@ const Profile: React.FC = () => {
             <ProfileItem
               text={'Settings'}
               subText={'Kilos/Pounds'}
-              onPress={() => setCurrentView('userSettings')}
+              onPress={() => setCurrentView('settings')}
             />
             {/* <TouchableOpacity>
                 <Text>Log Out</Text>
               </TouchableOpacity> */}
           </>
+        ) : (
+          <TouchableOpacity
+            style={styles.backContainer}
+            onPress={() => setCurrentView(undefined)}>
+            <Icon
+              name="arrow-back"
+              color={colors.white}
+              size={26}
+              style={styles.backIcon}
+            />
+            <Text style={styles.backText}>Back</Text>
+          </TouchableOpacity>
         )}
-        {currentView === 'userSettings' && <UserSettings />}
+        {currentView === 'settings' && <UserSettings />}
+        {currentView === 'stats' && <UserStats />}
       </View>
     </SafeAreaView>
   );
