@@ -45,7 +45,11 @@ const UserAccount = () => {
           />
         </View>
       </Row>
-      <Button onPress={onSave} color={colors.accent}>
+      <Button
+        margin={{mt: 10}}
+        width={'100%'}
+        onPress={onSave}
+        color={colors.accent}>
         Save
       </Button>
     </>

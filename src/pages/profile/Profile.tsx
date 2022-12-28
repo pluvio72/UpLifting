@@ -63,9 +63,17 @@ const Profile: React.FC = () => {
               subText={'Kilos/Pounds'}
               onPress={() => setCurrentView('settings')}
             />
-            {/* <TouchableOpacity>
-                <Text>Log Out</Text>
-              </TouchableOpacity> */}
+            <TouchableOpacity
+              style={styles.logOutButton}
+              onPress={session!.logOut}>
+              <Text style={styles.logOutButtonText}>Log Out</Text>
+              <Icon
+                name="log-out"
+                size={24}
+                color={colors.white}
+                style={styles.logOutIcon}
+              />
+            </TouchableOpacity>
           </>
         ) : (
           <TouchableOpacity

@@ -60,6 +60,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginVertical: 'auto',
   },
+  logOutButtonText: {
+    color: colors.white,
+    fontWeight: '600',
+    fontSize: 18,
+  },
+  logOutButton: {
+    marginTop: 'auto',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logOutIcon: {
+    marginLeft: 10,
+  },
 });
 
 export default styles;

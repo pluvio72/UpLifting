@@ -1,5 +1,5 @@
 import {NavigationContainer} from '@react-navigation/native';
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import SessionContext, {Session} from '../contexts/session';
 import {PostAuthStack, PreAuthStack} from './stacks';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -32,10 +32,17 @@ const App: FC = () => {
       }
     }
     retrieveUserSession();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onLogin: onLogin = async (token, account) => {
-    setSession({token, account});
+  const onLogout = () => {
+    EncryptedStorage.removeItem(USER_SESSION).then(() => {
+      setSession(null);
+    });
+  };
+
+  const onLogin: onLogin = useCallback(async (token, account) => {
+    setSession({token, account, logOut: onLogout});
     try {
       await EncryptedStorage.setItem(
         USER_SESSION,
@@ -49,7 +56,7 @@ const App: FC = () => {
         `Error storing session data in local storage, ${error.message}.`,
       );
     }
-  };
+  }, []);
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
