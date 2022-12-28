@@ -1,5 +1,6 @@
 import {Session} from '../../contexts/session';
 import {Gym} from '../../types/gyms';
+import {UserAccount} from '../../types/user';
 import {AuthenticatedRoute, UnauthenticatedRoute} from './api';
 
 export const signUp = async (
@@ -28,7 +29,7 @@ export const signUp = async (
 };
 
 export const signIn = async (username: string, password: string) => {
-  return await UnauthenticatedRoute<{token: string}>(
+  return await UnauthenticatedRoute<{token: string; account: UserAccount}>(
     'POST',
     '/users/sign-in',
     JSON.stringify({
@@ -48,7 +49,7 @@ export const updateUserSettings = async (
       'POST',
       '/users/update/settings',
       JSON.stringify({
-        username: session.username,
+        username: session.account.username,
         data,
       }),
     )
@@ -74,9 +75,39 @@ export const updateUserStats = async (
       'POST',
       '/users/update/stats',
       JSON.stringify({
-        username: session.username,
+        username: session.account.username,
         data,
       }),
     )
   ).success;
+};
+
+export const updateUserAccount = async (
+  session: Session,
+  data: {
+    firstName: string;
+    lastName: string;
+  },
+) => {
+  return (
+    await AuthenticatedRoute(
+      session,
+      'POST',
+      '/users/update/account',
+      JSON.stringify({
+        username: session.account.username,
+        data,
+      }),
+    )
+  ).success;
+};
+
+export const getUserAccount = async (session: Session) => {
+  return (
+    await AuthenticatedRoute<{user: UserAccount}>(
+      session,
+      'GET',
+      '/users/account',
+    )
+  ).user;
 };

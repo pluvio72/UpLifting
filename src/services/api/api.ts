@@ -16,7 +16,7 @@ export const AuthenticatedRoute = async <T>(
 ): Promise<GenericResponse & T> => {
   try {
     let headers: HeadersInit_ = {
-      authorization: `${session.token} ${session.username}`,
+      authorization: `${session.token} ${session.account.username}`,
     };
     if (verb === 'POST') {
       headers['Content-Type'] = 'application/json';

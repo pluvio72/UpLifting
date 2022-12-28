@@ -4,9 +4,10 @@ import {Screens} from '../../data/navigation';
 import SignUp from '../../pages/signUp';
 import registrationContext, {Registration} from '../../contexts/registration';
 import SignIn from '../../pages/signIn/SignIn';
+import {onLogin as OnLogin} from '../App';
 
 interface Props {
-  onLogin: (token: string, username: string) => void;
+  onLogin: OnLogin;
 }
 
 const PreAuthStack: React.FC<Props> = ({onLogin}) => {

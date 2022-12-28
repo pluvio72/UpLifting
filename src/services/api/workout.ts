@@ -1,5 +1,5 @@
 import {Session} from '../../contexts/session';
-import {Template} from '../../types';
+import {Template} from '../../types/workouts';
 import {ExerciseSet, PR, WorkoutMetric} from '../../types/workouts';
 import {Workout} from '../../types/workouts';
 import {AuthenticatedRoute} from './api';
@@ -11,7 +11,7 @@ export const getAllWorkouts: AuthenticatedRoute<
     await AuthenticatedRoute<{workouts: Workout[]}>(
       session,
       'GET',
-      `/workouts/${session.username}`,
+      `/workouts/${session.account.username}`,
     )
   ).workouts;
 };
@@ -24,7 +24,7 @@ export const getRecentWorkouts: AuthenticatedRoute<Array<Workout>> = async (
     await AuthenticatedRoute<{workouts: Workout[]}>(
       session,
       'GET',
-      `/workouts/${session.username}/recent/${limit}`,
+      `/workouts/${session.account.username}/recent/${limit}`,
     )
   ).workouts;
 };
@@ -37,7 +37,7 @@ export const getRecentPRs: AuthenticatedRoute<Array<PR>> = async (
     await AuthenticatedRoute<{prs: Array<PR>}>(
       session,
       'GET',
-      `/workouts/${session.username}/prs/${limit}`,
+      `/workouts/${session.account.username}/prs/${limit}`,
     )
   ).prs;
 };
@@ -48,7 +48,7 @@ export const getTemplates: AuthenticatedRoute<Array<Template>> = async (
   const response = await AuthenticatedRoute<{templates: Array<Template>}>(
     session,
     'GET',
-    `/workouts/${session.username}/templates`,
+    `/workouts/${session.account.username}/templates`,
   );
   return response.templates;
 };
@@ -63,7 +63,7 @@ export const saveNewWorkout = async (
   const body = JSON.stringify({
     workout,
     title,
-    username: session.username,
+    username: session.account.username,
     metrics,
     isTemplate,
   });

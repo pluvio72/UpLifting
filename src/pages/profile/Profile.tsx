@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Row} from '../../components/Reusable/reusable';
 import Session from '../../contexts/session';
 import {colors} from '../../util/styles';
+import UserAccount from './components/profilePages/userAccount';
 import UserSettings from './components/profilePages/userSettings';
 import UserStats from './components/profilePages/userStats';
 import ProfilePicture from './components/profilePicture';
@@ -25,7 +26,7 @@ const ProfileItem: React.FC<{
   </TouchableOpacity>
 );
 
-type Pages = 'settings' | 'stats';
+type Pages = 'settings' | 'stats' | 'account';
 
 const Profile: React.FC = () => {
   const session = useContext(Session);
@@ -36,7 +37,7 @@ const Profile: React.FC = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoContainer}>
         <ProfilePicture />
-        <Text style={styles.username}>{session!.username}</Text>
+        <Text style={styles.username}>{session!.account.username}</Text>
         <Text style={styles.underUsername}>The Gym Kensington</Text>
       </View>
       <View style={styles.detailsContainer}>
@@ -50,7 +51,7 @@ const Profile: React.FC = () => {
             <ProfileItem
               text={'Account'}
               subText={'Change username / password etc..'}
-              onPress={() => {}}
+              onPress={() => setCurrentView('account')}
             />
             <ProfileItem
               text={'Gym Details'}
@@ -81,6 +82,7 @@ const Profile: React.FC = () => {
         )}
         {currentView === 'settings' && <UserSettings />}
         {currentView === 'stats' && <UserStats />}
+        {currentView === 'account' && <UserAccount />}
       </View>
     </SafeAreaView>
   );

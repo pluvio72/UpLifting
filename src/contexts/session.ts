@@ -1,8 +1,8 @@
 import React from 'react';
+import {UserAccount} from '../types/user';
 
-export type Session = {
+export type Session = {account: UserAccount} & {
   token: string;
-  username: string;
 };
 
 const Session = React.createContext<Session | null>(null);

@@ -3,16 +3,16 @@ import {ExerciseCategories, ExerciseNames} from '../data/exercises/exercises';
 
 export type Exercise = typeof ExerciseNames[number];
 export type ExerciseData = {name: Exercise; category: ExerciseCategories[]};
+export type Metrics = 'Max Weight' | 'Volume' | 'Reps' | 'Volume Increase';
 
-export type WorkoutMetric = {
-  name: string;
-  value: string;
-};
-
-export type Metric = {
+export interface Metric {
   name: Metrics;
   value: string;
-};
+}
+
+export interface WorkoutMetric extends Omit<Metric, 'name'> {
+  name: string;
+}
 
 export type ExerciseSet = {
   name: Exercise;
@@ -22,13 +22,17 @@ export type ExerciseSet = {
   media?: PhotoIdentifier['node'];
 };
 
-export type Metrics = 'Max Weight' | 'Volume' | 'Reps' | 'Volume Increase';
-
 export type PR = {
   name: Exercise;
   reps: string;
   weight: string;
   date_completed: string;
+};
+
+export type Template = {
+  name: string;
+  exercises: Exercise[];
+  maxs: Array<string>;
 };
 
 export type Set = {
@@ -40,5 +44,5 @@ export type Set = {
 export type Workout = {
   title: string;
   exercises: ExerciseSet[];
-  metrics: [WorkoutMetric];
+  metrics: WorkoutMetric[];
 };

@@ -15,7 +15,7 @@ import {
   getRecentWorkouts,
   getTemplates,
 } from '../../services/api/workout';
-import {Template} from '../../types';
+import {Template} from '../../types/workouts';
 import {PR, Workout} from '../../types/workouts';
 import {Styles} from '../../util/styles';
 import colors from '../../util/styles/colors';
@@ -25,17 +25,19 @@ import styles from './LandingPage.styles';
 type Props = NativeStackScreenProps<RootStackParamList, 'landing'>;
 
 const LandingPage: React.FC<Props> = ({navigation}) => {
-  const [recentWorksouts, setRecentWorkouts] = useState<Array<Workout>>([]);
+  const [recentWorkouts, setRecentWorkouts] = useState<Array<Workout>>([]);
   const [recentPRs, setRecentPRs] = useState<Array<PR>>([]);
   const [templates, setTemplates] = useState<Array<Template>>([]);
   const [selectedWorkout, setSelectedWorkout] = useState<Workout>();
 
   const session = useContext(Session);
+  console.log('Session:', session);
 
   useStartup(() => {
-    getRecentWorkouts(session!, 2).then(workouts =>
-      setRecentWorkouts(workouts),
-    );
+    getRecentWorkouts(session!, 2).then(workouts => {
+      console.log('Recent Workouts:', workouts);
+      setRecentWorkouts(workouts);
+    });
   });
 
   useStartup(() => {
@@ -80,15 +82,16 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
         <View>
           <Text style={[Styles.textBold, Styles.textMd]}>History</Text>
           <Spacer />
-          {recentWorksouts.map((workout, index) => (
-            <HistoryItem
-              workout={workout}
-              onPressShowMore={openModal}
-              key={workout.title + index}
-            />
-          ))}
+          {recentWorkouts &&
+            recentWorkouts.map((workout, index) => (
+              <HistoryItem
+                workout={workout}
+                onPressShowMore={openModal}
+                key={workout.title + index}
+              />
+            ))}
         </View>
-        {recentWorksouts.length > 0 ? (
+        {recentWorkouts && recentWorkouts.length > 0 ? (
           <Button
             color={colors.accent}
             fontSize={14}
@@ -129,7 +132,7 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
             PRs
           </Text>
           <View>
-            {recentPRs.length > 0 ? (
+            {recentPRs && recentPRs.length > 0 ? (
               recentPRs.map((pr, index) => (
                 <Row
                   xAlign="space-between"

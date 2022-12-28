@@ -4,8 +4,11 @@ import SessionContext, {Session} from '../contexts/session';
 import {PostAuthStack, PreAuthStack} from './stacks';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {UserAccount} from '../types/user';
+import {isValidJWT} from '../util/api';
 
 const USER_SESSION = 'user_session';
+export type onLogin = (token: string, account: UserAccount) => Promise<void>;
 
 const App: FC = () => {
   const [session, setSession] = useState<Session | null>(null);
@@ -17,7 +20,12 @@ const App: FC = () => {
 
         if (_session !== null) {
           const data = JSON.parse(_session) as unknown as Session;
-          onLogin(data.token, data.username);
+          if (isValidJWT(data.token)) {
+            onLogin(data.token, data.account);
+          } else {
+            console.warn('JWT out of date. Log in again.');
+            await EncryptedStorage.removeItem(USER_SESSION);
+          }
         }
       } catch (error) {
         // There was an error on the native side
@@ -26,14 +34,14 @@ const App: FC = () => {
     retrieveUserSession();
   }, []);
 
-  const onLogin = async (token: string, username: string) => {
-    setSession({token, username});
+  const onLogin: onLogin = async (token, account) => {
+    setSession({token, account});
     try {
       await EncryptedStorage.setItem(
         USER_SESSION,
         JSON.stringify({
           token,
-          username,
+          account,
         }),
       );
     } catch (error: any) {

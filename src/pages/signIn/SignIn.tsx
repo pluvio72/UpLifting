@@ -7,9 +7,10 @@ import {TextInput} from '../../components/inputs/TextInput';
 import {Screens} from '../../data/navigation';
 import {signIn} from '../../services/api/user';
 import {colors} from '../../util/styles';
+import {onLogin as OnLogin} from '../../app/App';
 
 interface Props {
-  onLogin: (token: string, username: string) => void;
+  onLogin: OnLogin;
 }
 
 const SignIn: React.FC<Props> = ({onLogin}) => {
@@ -24,9 +25,9 @@ const SignIn: React.FC<Props> = ({onLogin}) => {
 
   const submit = async () => {
     const result = await signIn(username, password);
-    console.log(result);
+    console.log('Result:', result);
     if (result.success) {
-      onLogin(result.token, username);
+      onLogin(result.token, result.account);
     }
   };
 

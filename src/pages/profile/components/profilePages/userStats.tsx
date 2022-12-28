@@ -63,6 +63,7 @@ const UserStats = () => {
             <TextInput
               backgroundColor={colors.white}
               style={styles.input}
+              type={'number'}
               borderTopRightRadius={8}
               borderBottomRightRadius={8}
               onChange={newVal => setHeight(parseInt(newVal, 10))}
@@ -85,6 +86,7 @@ const UserStats = () => {
             <TextInput
               backgroundColor={colors.white}
               style={styles.input}
+              type={'number'}
               borderTopRightRadius={8}
               borderBottomRightRadius={8}
               onChange={newVal => setBodyWeight(parseInt(newVal, 10))}
