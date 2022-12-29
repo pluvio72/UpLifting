@@ -1,5 +1,5 @@
 import {PhotoIdentifier} from '@react-native-camera-roll/camera-roll';
-import {ExerciseCategories, ExerciseNames} from '../data/exercises/exercises';
+import {ExerciseCategories, ExerciseNames} from '../constants/exercises';
 
 export type Exercise = typeof ExerciseNames[number];
 export type ExerciseData = {name: Exercise; category: ExerciseCategories[]};

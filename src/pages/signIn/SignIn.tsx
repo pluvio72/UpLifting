@@ -4,7 +4,7 @@ import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import Button from '../../components/button';
 import BackButton from '../../components/button/backButton';
 import {TextInput} from '../../components/inputs/TextInput';
-import {Screens} from '../../data/navigation';
+import {Screens} from '../../constants/navigation';
 import {signIn} from '../../services/api/user';
 import {colors} from '../../util/styles';
 import {onLogin as OnLogin} from '../../app/App';

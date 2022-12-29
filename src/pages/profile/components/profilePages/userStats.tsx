@@ -114,12 +114,11 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   input: {
-    width: '60%',
+    width: '70%',
     marginRight: 'auto',
   },
   w50: {
     width: '50%',
-    marginHorizontal: 8,
   },
   inputTextInput: {
     padding: 6,

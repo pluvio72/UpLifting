@@ -23,10 +23,17 @@ export type RootStackParamList = {
   [Screens.SignIn]: undefined;
 };
 
+// tabs should be
+// profile
+// charts
+// landing
+// gym
+// friends
+
 export const PostAuthTabs = {
-  [Screens.Landing]: 'Start',
-  [Screens.History]: 'History',
-  [Screens.Charts]: 'Charts',
-  [Screens.ExerciseList]: 'Exercises',
-  [Screens.Profile]: 'Profile',
+  Landing: 'Start',
+  Charts: 'Charts',
+  Profile: 'Profile',
+  Gym: 'Gym',
+  Friends: 'Friends',
 };

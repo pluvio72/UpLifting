@@ -17,7 +17,7 @@ import {Row} from '../../components/Reusable/reusable';
 import Spacer from '../../components/spacer';
 import Session from '../../contexts/session';
 import {Exercise, ExerciseSet} from '../../types/workouts';
-import {Screens} from '../../data/navigation';
+import {Screens} from '../../constants/navigation';
 import {saveNewWorkout} from '../../services/api/workout';
 import {colors} from '../../util/styles';
 import styles from './NewWorkout.styles';

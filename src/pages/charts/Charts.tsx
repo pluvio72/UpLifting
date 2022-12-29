@@ -6,8 +6,8 @@ import Button from '../../components/button';
 import Chart from '../../components/chart';
 import Spacer from '../../components/spacer';
 import Session from '../../contexts/session';
-import {ExerciseNames} from '../../data/exercises';
-import {RootStackParamList, Screens} from '../../data/navigation';
+import {ExerciseNames} from '../../constants/exercises';
+import {RootStackParamList, Screens} from '../../constants/navigation';
 import {getRecentWorkouts} from '../../services/api/workout';
 import {Workout} from '../../types/workouts';
 

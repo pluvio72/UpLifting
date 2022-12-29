@@ -8,7 +8,11 @@ import WorkoutHistoryModal from '../../components/modals/workoutHistoryModal';
 import {Row} from '../../components/Reusable/reusable';
 import Spacer from '../../components/spacer';
 import Session from '../../contexts/session';
-import {PostAuthTabs, RootStackParamList, Screens} from '../../data/navigation';
+import {
+  PostAuthTabs,
+  RootStackParamList,
+  Screens,
+} from '../../constants/navigation';
 import useStartup from '../../hooks/useStartup';
 import {
   getRecentPRs,

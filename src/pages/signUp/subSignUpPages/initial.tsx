@@ -5,7 +5,7 @@ import Button from '../../../components/button';
 import {TextInput} from '../../../components/inputs/TextInput';
 import Spacer from '../../../components/spacer';
 import registrationContext from '../../../contexts/registration';
-import {Screens} from '../../../data/navigation';
+import {Screens} from '../../../constants/navigation';
 import {colors, Styles} from '../../../util/styles';
 import styles from '../signUp.styles';
 

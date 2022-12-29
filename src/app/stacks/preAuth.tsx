@@ -1,6 +1,6 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {Screens} from '../../data/navigation';
+import {Screens} from '../../constants/navigation';
 import SignUp from '../../pages/signUp';
 import registrationContext, {Registration} from '../../contexts/registration';
 import SignIn from '../../pages/signIn/SignIn';
@@ -43,7 +43,9 @@ const PreAuthStack: React.FC<Props> = ({onLogin}) => {
       }}>
       <Stack.Navigator>
         <Stack.Screen name={Screens.SignUp} options={{headerShown: false}}>
-          {props => <SignUp navigation={props.navigation} />}
+          {props => (
+            <SignUp route={props.route} navigation={props.navigation} />
+          )}
         </Stack.Screen>
         <Stack.Screen name={Screens.SignIn} options={{headerShown: false}}>
           {() => <SignIn onLogin={onLogin} />}

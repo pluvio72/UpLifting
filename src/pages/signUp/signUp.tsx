@@ -2,7 +2,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useContext, useState} from 'react';
 import {KeyboardAvoidingView} from 'react-native';
 import registrationContext from '../../contexts/registration';
-import {RootStackParamList, Screens} from '../../data/navigation';
+import {RootStackParamList, Screens} from '../../constants/navigation';
 import {signUp} from '../../services/api/user';
 import {Styles} from '../../util/styles';
 import InitialSignUp from './subSignUpPages';

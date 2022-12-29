@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {FlatList, SafeAreaView, Text, View} from 'react-native';
 import Button from '../../components/button';
 import RequestAddExerciseModal from '../../components/modals/requestAddExercise';
-import exercises from '../../data/exercises';
+import exercises from '../../constants/exercises';
 import {colors, Styles} from '../../util/styles';
 import styles from './ExerciseList.styles';
 

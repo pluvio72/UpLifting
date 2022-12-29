@@ -10,11 +10,8 @@ import {
 import {Dropdown} from 'react-native-element-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import allExercises, {
-  Exercise,
-  ExerciseCategories,
-  exercises,
-} from '../../../data/exercises';
+import allExercises, {ExerciseCategories} from '../../../constants/exercises';
+import {Exercise} from '../../../types/workouts';
 import {colors, Styles} from '../../../util/styles';
 import Button from '../../button';
 import TextInputWithLabel from '../../inputs/TextInputWithLabel';
@@ -86,7 +83,7 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
           style={styles.listWrapper}
           data={
             selectedCategory?.name
-              ? exercises.filter(e =>
+              ? allExercises.filter(e =>
                   e.category.includes(selectedCategory.name as never),
                 )
               : allExercises.filter(e => e.name.includes(filter))

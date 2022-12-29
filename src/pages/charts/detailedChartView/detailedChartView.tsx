@@ -4,13 +4,14 @@ import {StyleSheet, Text, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import Chart from '../../../components/chart';
 import {Row} from '../../../components/Reusable/reusable';
-import {Metrics} from '../../../data/exercises';
-import {RootStackParamList} from '../../../data/navigation';
+import {Metrics} from '../../../constants/exercises';
+import {RootStackParamList} from '../../../constants/navigation';
 import {colors, PaddingStylesheet, Styles} from '../../../util/styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'detailed_chart_view'>;
 
-type FromDate = 'All Time' 
+type FromDate =
+  | 'All Time'
   | 'Past Week'
   | 'Past 2 Weeks'
   | 'Past Month'
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     borderRadius: 8,
   },
-  sortDropdownContainer: { margin: 0, padding: 0 },
+  sortDropdownContainer: {margin: 0, padding: 0},
   sortDropdownText: {
     fontSize: 12,
     marginTop: -2,
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 6,
     marginBottom: 6,
-  }
+  },
 });
 
 export default DetailedChartView;

@@ -44,7 +44,7 @@ const Profile: React.FC = () => {
         {currentView === undefined ? (
           <>
             <ProfileItem
-              text={'Gym Progress'}
+              text={'Stats'}
               subText={'Body measurements: weight, size etc.'}
               onPress={() => setCurrentView('stats')}
             />

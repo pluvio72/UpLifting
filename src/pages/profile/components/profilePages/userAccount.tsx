@@ -29,18 +29,18 @@ const UserAccount = () => {
     <>
       <Row>
         <View style={styles.firstLastNameWrapper}>
-          <Text style={[styles.inputLabel, {marginRight: 6}]}>First Name</Text>
+          <Text style={styles.inputLabel}>First Name</Text>
           <TextInput
             onChange={onChangeFirstName}
             style={styles.input}
             borderRadius={8}
           />
         </View>
-        <View style={[styles.firstLastNameWrapper, {marginLeft: 6}]}>
+        <View style={styles.firstLastNameWrapper}>
           <Text style={styles.inputLabel}>Last Name</Text>
           <TextInput
             onChange={onChangeLastName}
-            style={styles.input}
+            style={[styles.input, {marginLeft: 6}]}
             borderRadius={8}
           />
         </View>

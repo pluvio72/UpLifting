@@ -3,7 +3,7 @@ import React from 'react';
 import {Pressable, ViewStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {Screens} from '../../../data/navigation';
+import {Screens} from '../../../constants/navigation';
 
 interface Props {
   link?: typeof Screens[keyof typeof Screens];

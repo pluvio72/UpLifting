@@ -18,7 +18,7 @@ const colors = {
   tierchary: '#595959',
   grey400: '#ced4da',
   grey300: '#dee2e6',
-  grey200: '#e9ecef',
+  grey200: 'rgb(227,228,227)',
   grey100: '#EDF2F4',
   transparent: 'transparent',
 } as const;
