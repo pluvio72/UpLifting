@@ -1,43 +1,44 @@
-import React, {CSSProperties} from 'react';
+import React, {useEffect} from 'react';
 import {Dimensions, Text, View} from 'react-native';
-import {LineChart} from 'react-native-chart-kit';
-import {Margin, Padding} from '../../types/styles';
 import {
+  Color,
   colors,
   MarginStylesheet,
   PaddingStylesheet,
   Styles,
 } from '../../util/styles';
+import {ChartProps} from './chart';
+import {BarChart as BarChartRN} from 'react-native-chart-kit';
 
-export interface ChartProps {
-  backgroundColor?: CSSProperties['color'];
-  data: number[];
-  height?: number;
-  labels: string[];
-  margin?: Margin;
-  padding?: Padding;
-  smooth?: boolean;
-  strokeColor?: CSSProperties['color'];
-  strokeWidth?: number;
-  title: string;
-  yAxisSuffix?: string;
-  yAxisInterval?: number;
+interface Props extends ChartProps {
+  xAxisLabel?: string;
+  yAxisLabel?: string;
+  barColor: Color;
+  activeBarColor?: Color;
+  activeBarIndex?: number;
 }
 
-const Chart: React.FC<ChartProps> = ({
+const BarChart: React.FC<Props> = ({
   backgroundColor = colors.accent,
   data,
+  barColor = colors.primary,
+  activeBarColor,
+  activeBarIndex,
   height = 225,
   labels,
   margin,
   padding,
-  smooth = true,
-  strokeColor = colors.white,
-  strokeWidth = 2,
   title,
+  xAxisLabel,
+  yAxisLabel,
   yAxisSuffix,
   yAxisInterval = 1,
 }) => {
+  let barColors: Array<() => string> = new Array(data.length).fill(
+    () => barColor,
+  );
+  if (activeBarIndex) barColors[activeBarIndex] = () => activeBarColor!;
+
   return (
     <View
       style={{
@@ -54,40 +55,41 @@ const Chart: React.FC<ChartProps> = ({
         ]}>
         {title}
       </Text>
-      <LineChart
+      <BarChartRN
         data={{
           labels,
           datasets: [
             {
               data,
+              colors: barColors,
             },
           ],
         }}
         width={Dimensions.get('window').width - 20} // from react-native
         height={height}
-        yAxisSuffix={yAxisSuffix}
+        yAxisSuffix={yAxisSuffix!}
         yAxisInterval={yAxisInterval} // optional, defaults to 1
+        yAxisLabel={yAxisLabel ?? ''}
+        xAxisLabel={xAxisLabel}
+        flatColor={true}
+        withCustomBarColorFromData={true}
+        showBarTops={false}
+        withInnerLines={false}
         chartConfig={{
-          labels: ['hi'],
           backgroundColor: backgroundColor,
           backgroundGradientFrom: backgroundColor,
           backgroundGradientTo: backgroundColor,
           decimalPlaces: 1, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          color: (opacity = 1) => `#FFFFFF`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          barPercentage: 0.28,
           style: {
             borderRadius: 10,
-          },
-          propsForDots: {
-            r: '3',
-            strokeWidth,
-            stroke: strokeColor,
           },
           propsForBackgroundLines: {
             strokeWidth: 0,
           },
         }}
-        bezier={smooth}
         style={{
           borderRadius: 12,
           ...MarginStylesheet(margin),
@@ -98,4 +100,4 @@ const Chart: React.FC<ChartProps> = ({
   );
 };
 
-export default Chart;
+export default BarChart;
