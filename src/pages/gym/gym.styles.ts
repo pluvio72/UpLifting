@@ -20,17 +20,36 @@ export const styles = StyleSheet.create({
   header: {
     fontSize: 18,
     fontWeight: '600',
-    marginTop: 16,
-    marginBottom: 12,
     marginLeft: 12,
   },
   latestPR: {
     backgroundColor: colors.grey200,
     paddingVertical: 8,
-    // justifyContent: 'space-evenly',
   },
   prText: {
     width: '33%',
+    textAlign: 'center',
+  },
+  chartWrapper: {
+    margin: 12,
+  },
+  headerInfo: {
+    marginRight: 12,
+    textDecorationLine: 'underline',
+  },
+  largeText: {
+    fontSize: 60,
+    fontWeight: '800',
+    width: '50%',
+    textAlign: 'center',
+  },
+  horizontalAlign: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    textAlign: 'center',
+  },
+  bottomText: {
+    width: '50%',
     textAlign: 'center',
   },
 });
