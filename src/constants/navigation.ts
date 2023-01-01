@@ -8,6 +8,7 @@ export const Screens = {
   SignUp: 'sign_up',
   SignIn: 'sign_in',
   Profile: 'user_profile',
+  FriendSearch: 'friend_search',
 } as const;
 
 export type RootStackParamList = {
@@ -21,6 +22,7 @@ export type RootStackParamList = {
   [Screens.ExerciseList]: undefined;
   [Screens.SignUp]: undefined;
   [Screens.SignIn]: undefined;
+  [Screens.FriendSearch]: {filter: string};
 };
 
 // tabs should be

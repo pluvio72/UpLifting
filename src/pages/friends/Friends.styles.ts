@@ -54,7 +54,7 @@ export const styles = StyleSheet.create({
     marginBottom: 6,
   },
   activitySet: {
-    backgroundColor: colors.grey600,
+    backgroundColor: colors.primary,
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingVertical: 6,
@@ -69,4 +69,18 @@ export const styles = StyleSheet.create({
     marginBottom: 4,
     marginLeft: 4,
   },
+  friendRequest: {
+    flexDirection: 'row',
+    backgroundColor: colors.grey200,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  friendRequestText: {
+    marginRight: 'auto',
+    marginLeft: 8,
+    fontWeight: '600',
+    fontSize: 16,
+  }
 });

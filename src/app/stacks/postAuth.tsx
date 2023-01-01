@@ -13,9 +13,9 @@ import NewWorkout from '../../pages/newWorkout';
 import Profile from '../../pages/profile';
 import Gym from '../../pages/gym';
 import Friends from '../../pages/friends';
+import FriendSearch from '../../pages/friends/friendsPages/friendSearch';
 
 const HomeStackNav = createNativeStackNavigator();
-
 const HomeStack = () => {
   return (
     <CurrentWorkoutProvider>
@@ -39,8 +39,25 @@ const HomeStack = () => {
   );
 };
 
-const ChartsStack = createNativeStackNavigator();
+const FriendsStack = createNativeStackNavigator();
+const FriendStack = () => (
+  <FriendsStack.Navigator>
+    <FriendsStack.Screen
+      options={{
+        headerShown: false,
+      }}
+      name={PostAuthTabs.Gym}
+      component={Friends}
+    />
+    <FriendsStack.Screen
+      options={{headerTitle: 'Search'}}
+      name={Screens.FriendSearch}
+      component={FriendSearch}
+    />
+  </FriendsStack.Navigator>
+);
 
+const ChartsStack = createNativeStackNavigator();
 const ChartStack = () => (
   <ChartsStack.Navigator>
     <ChartsStack.Screen
@@ -57,7 +74,6 @@ const ChartStack = () => (
 );
 
 const Tab = createBottomTabNavigator();
-
 const PostAuthStack = () => {
   return (
     <Tab.Navigator
@@ -110,7 +126,7 @@ const PostAuthStack = () => {
       />
       <Tab.Screen
         name={PostAuthTabs.Friends}
-        component={Friends}
+        component={FriendStack}
         options={{headerShown: false}}
       />
     </Tab.Navigator>

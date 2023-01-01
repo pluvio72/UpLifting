@@ -43,11 +43,6 @@ export const styles = StyleSheet.create({
     width: '50%',
     textAlign: 'center',
   },
-  horizontalAlign: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    textAlign: 'center',
-  },
   bottomText: {
     width: '50%',
     textAlign: 'center',

@@ -3,6 +3,18 @@ import {Gym} from '../../types/gyms';
 import {UserAccount} from '../../types/user';
 import {AuthenticatedRoute, UnauthenticatedRoute} from './api';
 
+export const searchUsers = async (session: Session, filter: string) => {
+  return (
+    await AuthenticatedRoute<{
+      users: Array<{
+        firstName: string;
+        lastName: string;
+        username: string;
+      }>;
+    }>(session, 'POST', '/users/', JSON.stringify({filter}))
+  ).users;
+};
+
 export const signUp = async (
   username: string,
   password: string,
@@ -23,6 +35,23 @@ export const signUp = async (
           address: gym_details.address,
           post_code: gym_details.post_code,
         },
+      }),
+    )
+  ).success;
+};
+
+export const sendFriendRequest = async (
+  session: Session,
+  newFriendUsername: string,
+) => {
+  return (
+    await AuthenticatedRoute(
+      session,
+      'POST',
+      '/users/friend/request',
+      JSON.stringify({
+        username: session.account.username,
+        newFriendUsername,
       }),
     )
   ).success;
