@@ -6,12 +6,14 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {UserAccount} from '../types/user';
 import {isValidJWT} from '../util/api';
+import {validateJWT} from '../services/api/user';
 
 const USER_SESSION = 'user_session';
 export type onLogin = (token: string, account: UserAccount) => Promise<void>;
 
 const App: FC = () => {
   const [session, setSession] = useState<Session | null>(null);
+  // EncryptedStorage.removeItem(USER_SESSION);
 
   useEffect(() => {
     async function retrieveUserSession() {
@@ -20,12 +22,15 @@ const App: FC = () => {
 
         if (_session !== null) {
           const data = JSON.parse(_session) as unknown as Session;
-          if (isValidJWT(data.token) || true) {
-            onLogin(data.token, data.account);
-          } else {
-            console.warn('JWT out of date. Log in again.');
-            await EncryptedStorage.removeItem(USER_SESSION);
-          }
+
+          validateJWT(data).then(async valid => {
+            if (isValidJWT(data.token) && valid) {
+              onLogin(data.token, data.account);
+            } else {
+              console.warn('JWT out of date. Log in again.');
+              await EncryptedStorage.removeItem(USER_SESSION);
+            }
+          });
         }
       } catch (error) {
         // There was an error on the native side

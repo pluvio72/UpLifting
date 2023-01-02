@@ -140,3 +140,8 @@ export const getUserAccount = async (session: Session) => {
     )
   ).user;
 };
+
+export const validateJWT = async (session: Session) => {
+  return (await AuthenticatedRoute(session, 'GET', '/users/validate-jwt'))
+    .success;
+};
