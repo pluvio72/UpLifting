@@ -10,15 +10,21 @@ import {updateUserStats} from '../../../../services/api/user';
 import {colors} from '../../../../util/styles';
 
 const UserStats = () => {
-  const [bodyWeight, setBodyWeight] = useState<number>();
-  const [height, setHeight] = useState<number>();
+  const session = useContext(Session);
+  const [bodyWeight, setBodyWeight] = useState<number>(
+    session?.account.stats.weight?.value ?? 0,
+  );
+  const [height, setHeight] = useState<number>(
+    session?.account.stats.height?.value ?? 0,
+  );
 
   const [metrics, setMetrics] = useState<{
     weight: typeof WeightMetrics[number];
     height: typeof HeightMetrics[number];
-  }>({weight: 'kg', height: 'cm'});
-
-  const session = useContext(Session);
+  }>({
+    weight: session?.account.stats.weight?.unit ?? 'kg',
+    height: session?.account.stats.height?.unit ?? 'cm',
+  });
 
   const onChangeMetric = (item: {
     name: typeof WeightMetrics[number] | typeof HeightMetrics[number];
@@ -62,11 +68,13 @@ const UserStats = () => {
             />
             <TextInput
               backgroundColor={colors.white}
-              style={styles.input}
-              type={'number'}
-              borderTopRightRadius={8}
               borderBottomRightRadius={8}
+              borderTopRightRadius={8}
+              defaultValue={height.toString()}
               onChange={newVal => setHeight(parseInt(newVal, 10))}
+              type={'number'}
+              style={styles.input}
+              value={height.toString()}
             />
           </Row>
         </View>
@@ -85,11 +93,13 @@ const UserStats = () => {
             />
             <TextInput
               backgroundColor={colors.white}
+              borderBottomRightRadius={8}
+              borderTopRightRadius={8}
+              defaultValue={bodyWeight.toString()}
+              onChange={newVal => setBodyWeight(parseInt(newVal, 10))}
               style={styles.input}
               type={'number'}
-              borderTopRightRadius={8}
-              borderBottomRightRadius={8}
-              onChange={newVal => setBodyWeight(parseInt(newVal, 10))}
+              value={bodyWeight.toString()}
             />
           </Row>
         </View>

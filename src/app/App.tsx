@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {FC, useCallback, useEffect, useState} from 'react';
-import SessionContext, {Session} from '../contexts/session';
+import SessionContext, {onUpdateSession, Session} from '../contexts/session';
 import {PostAuthStack, PreAuthStack} from './stacks';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -46,8 +46,18 @@ const App: FC = () => {
     });
   };
 
+  const updateSession: onUpdateSession = (key, value) =>
+    setSession(prev => {
+      const newAccountValue = {...prev?.account, [key]: value};
+      return {
+        ...prev,
+        account: newAccountValue,
+      } as Session;
+    });
+
   const onLogin: onLogin = useCallback(async (token, account) => {
-    setSession({token, account, logOut: onLogout});
+    console.log('Account:', account);
+    setSession({token, account, logOut: onLogout, update: updateSession});
     try {
       await EncryptedStorage.setItem(
         USER_SESSION,

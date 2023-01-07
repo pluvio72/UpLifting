@@ -13,7 +13,7 @@ const UserAccount = () => {
     session?.account.firstName ?? '',
   );
   const [lastName, setLastName] = useState<string>(
-    session?.account.firstName ?? '',
+    session?.account.lastName ?? '',
   );
 
   const onChangeFirstName = (newVal: string) => setFirstName(newVal);
@@ -31,17 +31,21 @@ const UserAccount = () => {
         <View style={styles.firstLastNameWrapper}>
           <Text style={styles.inputLabel}>First Name</Text>
           <TextInput
+            borderRadius={8}
+            defaultValue={firstName}
             onChange={onChangeFirstName}
             style={styles.input}
-            borderRadius={8}
+            value={firstName}
           />
         </View>
         <View style={styles.firstLastNameWrapper}>
           <Text style={styles.inputLabel}>Last Name</Text>
           <TextInput
+            borderRadius={8}
+            defaultValue={lastName}
             onChange={onChangeLastName}
             style={[styles.input, {marginLeft: 6}]}
-            borderRadius={8}
+            value={lastName}
           />
         </View>
       </Row>
@@ -62,6 +66,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     textAlign: 'center',
+    marginBottom: 6,
   },
   input: {
     padding: 4,

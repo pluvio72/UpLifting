@@ -48,7 +48,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.grey200,
   },
   activityTitle: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
     textAlign: 'center',
     marginBottom: 6,
@@ -56,13 +56,14 @@ export const styles = StyleSheet.create({
   activitySet: {
     backgroundColor: colors.primary,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     paddingVertical: 6,
     marginBottom: 2,
   },
   activityText: {
     color: colors.white,
     fontWeight: '500',
+    marginHorizontal: 20,
   },
   activityUser: {
     fontWeight: '600',
