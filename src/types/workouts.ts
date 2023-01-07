@@ -1,7 +1,7 @@
 import {PhotoIdentifier} from '@react-native-camera-roll/camera-roll';
-import {ExerciseCategories, ExerciseNames} from '../constants/exercises';
+import {ExerciseCategories} from '../constants/exercises';
 
-export type Exercise = typeof ExerciseNames[number];
+export type Exercise = string;
 export type ExerciseData = {name: Exercise; category: ExerciseCategories[]};
 export type Metrics = 'Max Weight' | 'Volume' | 'Reps' | 'Volume Increase';
 

@@ -14,8 +14,8 @@ const History = () => {
   const session = useContext(Session);
 
   useStartup(() => {
-    getAllWorkouts(session!).then(_workouts => {
-      setWorkouts(_workouts);
+    getAllWorkouts(session!).then(response => {
+      setWorkouts(response.workouts);
     });
   });
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   FlatList,
   Modal,
@@ -10,7 +10,11 @@ import {
 import {Dropdown} from 'react-native-element-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import allExercises, {ExerciseCategories} from '../../../constants/exercises';
+import {ExerciseCategories} from '../../../constants/exercises';
+import ExerciseContext from '../../../contexts/exercises';
+import Session from '../../../contexts/session';
+import useStartup from '../../../hooks/useStartup';
+import {getExercises} from '../../../services/api/workout';
 import {Exercise} from '../../../types/workouts';
 import {colors, Styles} from '../../../util/styles';
 import Button from '../../button';
@@ -27,8 +31,17 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
   onSelect,
   show,
 }) => {
-  const keys = Object.keys(ExerciseCategories);
+  const {exercises, onUpdate} = useContext(ExerciseContext);
+  const session = useContext(Session);
 
+  console.log('Exercises:', exercises);
+  useStartup(() => {
+    if (exercises.length === 0) {
+      getExercises(session!).then(res => onUpdate(res.exercises));
+    }
+  });
+
+  const keys = Object.keys(ExerciseCategories);
   const categories = keys.map(e => ({name: e}));
 
   const [filter, setFilter] = useState('');
@@ -83,10 +96,10 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
           style={styles.listWrapper}
           data={
             selectedCategory?.name
-              ? allExercises.filter(e =>
+              ? exercises.filter(e =>
                   e.category.includes(selectedCategory.name as never),
                 )
-              : allExercises.filter(e => e.name.includes(filter))
+              : exercises.filter(e => e.name.includes(filter))
           }
           renderItem={item => (
             <TouchableHighlight

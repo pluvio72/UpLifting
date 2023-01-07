@@ -12,13 +12,13 @@ type Props = NativeStackScreenProps<RootStackParamList, 'friend_search'>;
 
 const FriendSearch: React.FC<Props> = ({route}) => {
   const [filter, setFilter] = useState(route.params.filter);
-  const [users, setUsers] = useState<Awaited<ReturnType<typeof searchUsers>>>(
-    [],
-  );
+  const [users, setUsers] = useState<
+    Awaited<ReturnType<typeof searchUsers>>['users']
+  >([]);
   const session = useContext(Session);
 
   useEffect(() => {
-    searchUsers(session!, filter).then(_users => setUsers(_users));
+    searchUsers(session!, filter).then(response => setUsers(response.users));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
@@ -34,7 +34,7 @@ const FriendSearch: React.FC<Props> = ({route}) => {
       <ScrollView style={styles.scrollView}>
         {users &&
           users.map((user, index) => (
-            <View style={styles.friend}>
+            <View style={styles.friend} key={index}>
               <Text style={styles.friendText}>{user.username}</Text>
               <Icon name="person-add" size={24} />
             </View>

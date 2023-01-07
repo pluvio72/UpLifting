@@ -1,56 +1,50 @@
 import {Session} from '../../contexts/session';
-import {Template} from '../../types/workouts';
+import {ExerciseData, Template} from '../../types/workouts';
 import {ExerciseSet, PR, WorkoutMetric} from '../../types/workouts';
 import {Workout} from '../../types/workouts';
 import {AuthenticatedRoute} from './api';
 
-export const getAllWorkouts: AuthenticatedRoute<
-  Array<Workout>
-> = async session => {
-  return (
-    await AuthenticatedRoute<{workouts: Workout[]}>(
-      session,
-      'GET',
-      `/workouts/${session.account.username}`,
-    )
-  ).workouts;
+export const getExercises = async (session: Session) => {
+  return await AuthenticatedRoute<{exercises: ExerciseData[]}>(
+    session,
+    'GET',
+    '/workouts/exercises',
+  );
 };
 
-export const getRecentWorkouts: AuthenticatedRoute<Array<Workout>> = async (
-  session,
+export const getAllWorkouts = async (session: Session) => {
+  return await AuthenticatedRoute<{workouts: Workout[]}>(
+    session,
+    'GET',
+    `/workouts/${session.account.username}`,
+  );
+};
+
+export const getRecentWorkouts = async (
+  session: Session,
   limit: number = 3,
 ) => {
-  return (
-    await AuthenticatedRoute<{workouts: Workout[]}>(
-      session,
-      'GET',
-      `/workouts/${session.account.username}/recent/${limit}`,
-    )
-  ).workouts;
+  return await AuthenticatedRoute<{workouts: Workout[]}>(
+    session,
+    'GET',
+    `/workouts/${session.account.username}/recent/${limit}`,
+  );
 };
 
-export const getRecentPRs: AuthenticatedRoute<Array<PR>> = async (
-  session,
-  limit = 5,
-) => {
-  return (
-    await AuthenticatedRoute<{prs: Array<PR>}>(
-      session,
-      'GET',
-      `/workouts/${session.account.username}/prs/${limit}`,
-    )
-  ).prs;
+export const getRecentPRs = async (session: Session, limit = 5) => {
+  return await AuthenticatedRoute<{prs: Array<PR>}>(
+    session,
+    'GET',
+    `/workouts/${session.account.username}/prs/${limit}`,
+  );
 };
 
-export const getTemplates: AuthenticatedRoute<Array<Template>> = async (
-  session,
-): Promise<Array<Template>> => {
-  const response = await AuthenticatedRoute<{templates: Array<Template>}>(
+export const getTemplates = async (session: Session) => {
+  return await AuthenticatedRoute<{templates: Array<Template>}>(
     session,
     'GET',
     `/workouts/${session.account.username}/templates`,
   );
-  return response.templates;
 };
 
 export const saveNewWorkout = async (

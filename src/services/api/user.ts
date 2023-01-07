@@ -4,15 +4,13 @@ import {UserAccount} from '../../types/user';
 import {AuthenticatedRoute, UnauthenticatedRoute} from './api';
 
 export const searchUsers = async (session: Session, filter: string) => {
-  return (
-    await AuthenticatedRoute<{
-      users: Array<{
-        firstName: string;
-        lastName: string;
-        username: string;
-      }>;
-    }>(session, 'POST', '/users/', JSON.stringify({filter}))
-  ).users;
+  return await AuthenticatedRoute<{
+    users: Array<{
+      firstName: string;
+      lastName: string;
+      username: string;
+    }>;
+  }>(session, 'POST', '/users/', JSON.stringify({filter}));
 };
 
 export const signUp = async (

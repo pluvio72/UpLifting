@@ -30,8 +30,8 @@ const GymSelect = ({onBack, onNext}: Props) => {
   const hideGymModal = () => setShowAddGymModal(false);
 
   useEffect(() => {
-    getGyms().then((_gyms: Array<Gym> | undefined) => {
-      setGyms(_gyms!);
+    getGyms().then(res => {
+      setGyms(res.gyms);
     });
   }, []);
 

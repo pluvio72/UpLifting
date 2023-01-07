@@ -8,11 +8,7 @@ import WorkoutHistoryModal from '../../components/modals/workoutHistoryModal';
 import {Row} from '../../components/Reusable/reusable';
 import Spacer from '../../components/spacer';
 import Session from '../../contexts/session';
-import {
-  PostAuthTabs,
-  RootStackParamList,
-  Screens,
-} from '../../constants/navigation';
+import {RootStackParamList, Screens} from '../../constants/navigation';
 import useStartup from '../../hooks/useStartup';
 import {
   getRecentPRs,
@@ -38,18 +34,18 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
   console.log('Session:', session);
 
   useStartup(() => {
-    getRecentWorkouts(session!, 2).then(workouts => {
-      console.log('Recent Workouts:', workouts);
-      setRecentWorkouts(workouts);
+    getRecentWorkouts(session!, 2).then(response => {
+      console.log('Recent Workouts:', response.workouts);
+      setRecentWorkouts(response.workouts);
     });
   });
 
   useStartup(() => {
-    getRecentPRs(session!).then(prs => setRecentPRs(prs));
+    getRecentPRs(session!).then(response => setRecentPRs(response.prs));
   });
 
   useStartup(() => {
-    getTemplates(session!).then(_templates => setTemplates(_templates));
+    getTemplates(session!).then(response => setTemplates(response.templates));
   });
 
   const ClickStartNewWorkout = () => {
@@ -57,7 +53,7 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
   };
 
   const goToHistory = () => {
-    navigation.navigate(PostAuthTabs.history as any);
+    navigation.navigate(Screens.History as any);
   };
 
   const openModal = (selected: Workout) => setSelectedWorkout(selected);

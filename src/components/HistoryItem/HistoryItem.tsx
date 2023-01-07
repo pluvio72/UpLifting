@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 4,
     marginHorizontal: 8,
-    borderRadius: 8
+    borderRadius: 8,
   },
   title: {
     marginLeft: 'auto',
@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 8,
     shadowColor: colors.black,
-    shadowOffset: { height: 4, width: 0 },
+    shadowOffset: {height: 4, width: 0},
     shadowRadius: 4,
-    shadowOpacity: 0.15
+    shadowOpacity: 0.15,
   },
   detailsWrapper: {
     paddingHorizontal: 8,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colors.grey200,
-  }
+  },
 });
 
 interface Props {
@@ -72,9 +72,11 @@ const HistoryItem: React.FC<Props> = ({workout, onPressShowMore}) => {
         {workout.exercises.map(exercise => {
           return (
             <View style={styles.historySet} key={exercise.name}>
-              <Text style={[Styles.textBold, styles.text]}>{exercise.name}</Text>
+              <Text style={[Styles.textBold, styles.text]}>
+                {exercise.name}
+              </Text>
               <Text style={styles.text}>
-                Top Set: {formatWeightValue(exercise.sets[0].weight)} x{' '}
+                Top Set: {formatWeightValue(exercise.sets[0].weight!)} x{' '}
                 {exercise.sets[0].reps}
               </Text>
             </View>

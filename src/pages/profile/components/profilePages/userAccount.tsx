@@ -22,6 +22,8 @@ const UserAccount = () => {
   const onSave = () => {
     if (firstName && lastName) {
       updateUserAccount(session!, {firstName, lastName});
+      session?.update('firstName', firstName);
+      session?.update('lastName', lastName);
     }
   };
 
