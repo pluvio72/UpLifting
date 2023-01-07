@@ -15,6 +15,7 @@ const UserSettings = () => {
     updateUserSettings(session!, {useKilos: value === 'KG'}).then(result => {
       console.log('Result:', result);
     });
+    session?.update('settings', {useKilos: value === 'KG'});
   };
 
   return (

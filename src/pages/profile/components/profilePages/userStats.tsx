@@ -46,7 +46,14 @@ const UserStats = () => {
           value: bodyWeight,
         },
       };
-      updateUserStats(session!, data).then(success => {});
+      updateUserStats(session!, data).then(success => {
+        if (success) {
+          session?.update('stats', {
+            height: {unit: metrics.height, value: height},
+            weight: {unit: metrics.weight, value: bodyWeight},
+          });
+        }
+      });
     }
   };
 
