@@ -15,7 +15,7 @@ import Gym from '../../pages/gym';
 import Friends from '../../pages/friends';
 import FriendSearch from '../../pages/friends/friendsPages/friendSearch';
 import History from '../../pages/history';
-import ExerciseContext, {ExerciseProvider} from '../../contexts/exercises';
+import {ExerciseProvider} from '../../contexts/exercises';
 
 const HomeStackNav = createNativeStackNavigator();
 const HomeStack = () => {

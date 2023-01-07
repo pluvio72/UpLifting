@@ -145,10 +145,10 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
               <Icon
                 name="cog"
                 size={16}
-                color={colors.black}
+                color={colors.white}
                 style={styles.settingsDropdownIcon}
               />
-              <Icon name="caret-down" size={16} color={colors.black} />
+              <Icon name="caret-down" size={16} color={colors.white} />
             </Row>
           )}
           data={SettingsItems}
@@ -206,7 +206,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
         />
       ))}
       <Button
-        color={colors.secondary}
+        color={colors.primary}
         padding={{px: 8, py: 4}}
         margin={{mx: 12, mb: 12, mt: 8}}
         bold={true}

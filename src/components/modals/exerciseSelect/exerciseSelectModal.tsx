@@ -70,10 +70,12 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
             />
           }
           style={styles.filterWrapper}
+          textInputStyle={{paddingVertical: 6, fontWeight: '600'}}
           onChange={setFilter}
           backgroundColor={colors.black}
           textColor={colors.white}
           borderRadius={8}
+          maxLength={20}
         />
         <View>
           <Dropdown

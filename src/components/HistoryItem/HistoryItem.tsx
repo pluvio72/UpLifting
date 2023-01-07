@@ -14,8 +14,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 4,
-    marginHorizontal: 8,
-    borderRadius: 8,
   },
   title: {
     marginLeft: 'auto',
@@ -23,9 +21,10 @@ const styles = StyleSheet.create({
   },
   historyWrapper: {
     display: 'flex',
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.grey300,
     marginBottom: 10,
-    borderRadius: 8,
+    marginLeft: -10,
+    marginRight: -10,
     shadowColor: colors.black,
     shadowOffset: {height: 4, width: 0},
     shadowRadius: 4,
@@ -83,11 +82,14 @@ const HistoryItem: React.FC<Props> = ({workout, onPressShowMore}) => {
           );
         })}
         <Button
-          color={colors.grey600}
+          color={colors.grey400}
           fontSize={12}
           bold
           padding={{p: 8}}
           margin={{m: 8, mt: 4, mb: 14}}
+          width={'50%'}
+          style={{marginLeft: 'auto', marginRight: 'auto'}}
+          textAlign="center"
           onPress={() => onPressShowMore(workout)}>
           Click To View More...
         </Button>

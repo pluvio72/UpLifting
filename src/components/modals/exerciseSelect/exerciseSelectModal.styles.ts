@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native";
-import { colors } from "../../../util/styles";
+import {StyleSheet} from 'react-native';
+import {colors} from '../../../util/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,15 +19,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 12,
   },
-  item: {
-  },
+  item: {},
   dropdownWrapper: {
     backgroundColor: colors.grey400,
     borderColor: colors.grey400,
     borderWidth: 2,
     paddingHorizontal: 8,
     borderRadius: 8,
-  }
+  },
 });
 
 export default styles;

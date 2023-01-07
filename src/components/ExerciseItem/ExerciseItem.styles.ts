@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     marginVertical: -6,
   },
   settingsDropdown: {
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.primary,
     borderRadius: 8,
     paddingHorizontal: 8,
   },

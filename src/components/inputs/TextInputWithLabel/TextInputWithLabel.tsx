@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, TextInput, TextStyle} from 'react-native';
-import {Color} from '../../../util/styles';
+import {Color, colors} from '../../../util/styles';
 import {TextInputProps} from '../TextInput/TextInput';
 
 interface Props extends TextInputProps {
@@ -26,6 +26,7 @@ const TextInputWithLabel = (props: Props) => {
           style={{
             includeFontPadding: false,
             textAlign: 'center',
+            color: props.textColor,
           }}>
           {props.label}
         </Text>
@@ -46,12 +47,13 @@ const TextInputWithLabel = (props: Props) => {
         defaultValue={props.defaultValue}
         selectTextOnFocus={props.focusOnPress}
         onChangeText={props.onChange}
-        maxLength={3}
+        maxLength={props.maxLength}
         placeholder={props.placeholder}
         style={[
           {
             textAlign: 'center',
             flexGrow: 1,
+            color: props.textColor ?? colors.white,
           },
           props.textInputStyle,
         ]}
