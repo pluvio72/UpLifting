@@ -1,2 +1,2 @@
-import TextInputWithLabel from "./TextInputWithLabel";
+import TextInputWithLabel from './TextInputWithLabel';
 export default TextInputWithLabel;

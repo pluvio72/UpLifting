@@ -1,15 +1,15 @@
+import {Button, Heading} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
-import Button from '../../../components/button';
 import BackButton from '../../../components/button/backButton';
 import RequestAddGym from '../../../components/modals/requestAddGym/RequestAddGym';
 import Spacer from '../../../components/spacer';
 import registrationContext from '../../../contexts/registration';
 import {getGyms} from '../../../services/api/gym';
 import {Gym} from '../../../types/gyms';
-// import {ShuffleArray} from '../../../util/format';
 import {colors} from '../../../util/styles';
+// import {ShuffleArray} from '../../../util/format';
 
 interface Props {
   onBack: () => void;
@@ -54,7 +54,9 @@ const GymSelect = ({onBack, onNext}: Props) => {
     <SafeAreaView style={styles.container}>
       <RequestAddGym show={showAddGymModal} onHide={hideGymModal} />
       <BackButton style={{top: '5%'}} onPress={onBack} />
-      <Text style={styles.header}>Select Gym</Text>
+      <Heading textAlign={'center'} mb={3}>
+        Select Gym
+      </Heading>
       <Dropdown
         style={styles.dropdown}
         containerStyle={styles.dropdownMenu}
@@ -85,7 +87,7 @@ const GymSelect = ({onBack, onNext}: Props) => {
         value={selectedName}
         placeholder="Name"
       />
-      <Button color={colors.accent} bold textAlign="center" onPress={submit}>
+      <Button textAlign="center" onPress={submit}>
         Next
       </Button>
       <Spacer size={3} />

@@ -9,10 +9,12 @@ import styles from '../ExerciseItem.styles';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {Animated} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ExerciseSet} from '../../../types/workouts';
 
 interface SetRowProps {
   completed: boolean;
   index: number;
+  pastSets: ExerciseSet['pastSets'];
   repValue?: number;
   weightValue?: number;
   onRemove: (setIndex: number) => void;
@@ -32,6 +34,7 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
   index,
   repValue,
   weightValue,
+  pastSets,
   onRemove,
   onUpdate,
   toggleComplete,
@@ -74,11 +77,11 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
           itemTextStyle={styles.prevBestDropdownText}
           itemContainerStyle={styles.prevBestDropdownItem}
           containerStyle={styles.prevBestDropdown}
-          data={TempPrevExercises}
+          data={pastSets!}
           value={TempPrevExercises[0]}
           activeColor={colors.grey200}
-          valueField={'value'}
-          labelField={'value'}
+          valueField={'sets'}
+          labelField={'sets'}
           onChange={() => {}}
         />
         <TextInput

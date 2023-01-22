@@ -1,2 +1,2 @@
-import ExerciseSelectModal from "./exerciseSelectModal";
+import ExerciseSelectModal from './exerciseSelectModal';
 export default ExerciseSelectModal;

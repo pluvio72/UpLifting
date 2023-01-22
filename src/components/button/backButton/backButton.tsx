@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Screens} from '../../../constants/navigation';
 
 interface Props {
-  link?: typeof Screens[keyof typeof Screens];
+  link?: (typeof Screens)[keyof typeof Screens];
   onPress?: () => void;
   style?: ViewStyle;
 }

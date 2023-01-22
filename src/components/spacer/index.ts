@@ -1,2 +1,2 @@
-import Spacer from "./spacer";
+import Spacer from './spacer';
 export default Spacer;

@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '../../util/styles';
 
 const styles = StyleSheet.create({
   inputWrapper: {
@@ -10,6 +9,8 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 12,
+    fontSize: 20,
+    fontWeight: '600',
   },
   detailsWrapper: {
     height: '100%',
@@ -22,10 +23,6 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     marginBottom: 10,
     textAlign: 'center',
-  },
-  alreadyHaveAccount: {
-    fontWeight: '500',
-    color: colors.blue,
   },
 });
 

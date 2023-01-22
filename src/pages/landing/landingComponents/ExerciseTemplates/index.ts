@@ -1,2 +1,2 @@
-import ExerciseTemplates from "./ExerciseTemplates";
+import ExerciseTemplates from './ExerciseTemplates';
 export default ExerciseTemplates;

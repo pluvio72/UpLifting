@@ -1,7 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useContext, useState} from 'react';
 import {SafeAreaView, ScrollView, Text, View} from 'react-native';
-import Button from '../../components/button';
 import Chip from '../../components/chip';
 import HistoryItem from '../../components/HistoryItem/HistoryItem';
 import WorkoutHistoryModal from '../../components/modals/workoutHistoryModal';
@@ -21,6 +20,8 @@ import {Styles} from '../../util/styles';
 import colors from '../../util/styles/colors';
 import ExerciseTemplates from './landingComponents/ExerciseTemplates';
 import styles from './LandingPage.styles';
+import {Button} from 'native-base';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'landing'>;
 
@@ -68,13 +69,10 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
       />
       <ScrollView style={styles.container}>
         <Button
-          color={colors.primary}
-          bold
-          fontSize={14}
-          icon="plus"
-          iconSize={14}
-          iconColor={colors.white}
-          padding={{p: 20}}
+          endIcon={<Icon name="add" size={20} color={colors.white} />}
+          px={20}
+          py={4}
+          shadow={9}
           onPress={ClickStartNewWorkout}>
           Start New Workout
         </Button>
@@ -92,12 +90,7 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
             ))}
         </View>
         {recentWorkouts && recentWorkouts.length > 0 ? (
-          <Button
-            color={colors.accent}
-            fontSize={14}
-            bold
-            textAlign="center"
-            onPress={goToHistory}>
+          <Button textAlign="center" onPress={goToHistory} bg="light.600">
             View History
           </Button>
         ) : (

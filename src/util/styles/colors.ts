@@ -23,7 +23,7 @@ const colors = {
   transparent: 'transparent',
 } as const;
 
-export type Color = typeof colors[keyof typeof colors];
+export type Color = (typeof colors)[keyof typeof colors];
 
 export const getTextColor = (color: Color) => {
   if (

@@ -53,7 +53,7 @@ const TextInputWithLabel = (props: Props) => {
           {
             textAlign: 'center',
             flexGrow: 1,
-            color: props.textColor ?? colors.white,
+            color: props.textColor ?? colors.black,
           },
           props.textInputStyle,
         ]}

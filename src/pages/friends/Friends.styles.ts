@@ -83,5 +83,5 @@ export const styles = StyleSheet.create({
     marginLeft: 8,
     fontWeight: '600',
     fontSize: 16,
-  }
+  },
 });

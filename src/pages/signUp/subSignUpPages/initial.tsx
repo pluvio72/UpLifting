@@ -1,13 +1,15 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useContext, useState} from 'react';
-import {Text, View} from 'react-native';
-import Button from '../../../components/button';
-import {TextInput} from '../../../components/inputs/TextInput';
+import {View} from 'react-native';
+// import {TextInput} from '../../../components/inputs/TextInput';
 import Spacer from '../../../components/spacer';
 import registrationContext from '../../../contexts/registration';
 import {Screens} from '../../../constants/navigation';
-import {colors, Styles} from '../../../util/styles';
+import {colors} from '../../../util/styles';
 import styles from '../signUp.styles';
+
+import {Button, Heading, Input, Text} from 'native-base';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props {
   onNext: () => void;
@@ -33,51 +35,39 @@ const InitialSignUp: React.FC<Props> = ({onNext}) => {
 
   return (
     <View style={styles.inputWrapper}>
-      <Text style={[Styles.textBold, Styles.textLg, styles.title]}>
-        Sign Up
-      </Text>
-      <TextInput
-        onChange={setEmail}
+      <Heading my={2}>Sign Up</Heading>
+      <Input
+        onChangeText={setEmail}
         value={email}
-        placeholder="Enter E-Mail"
-        borderRadius={8}
         autoCapitalize={'none'}
-        style={{width: '100%', paddingVertical: 10}}
-        margin={{mb: 6}}
+        placeholder="E-Mail"
+        mx="3"
+        w="100%"
+        my={1}
       />
       <Button
-        width="100%"
-        color={colors.accent}
-        textAlign="center"
-        padding={{p: 7}}
-        icon="arrow-right"
-        iconColor={colors.white}
-        iconSize={12}
-        onPress={submit}>
+        w="100%"
+        onPress={submit}
+        endIcon={<Icon name="ios-arrow-forward" size={20} color="white" />}>
         Next
       </Button>
       <Spacer withDots padding={{py: 16}} />
       <Button
-        color={colors.primary}
-        width={'100%'}
-        textAlign="center"
-        icon="apple"
-        iconColor={colors.white}
-        margin={{mb: 4}}
-        borderRadius={20}>
+        colorScheme="light"
+        w="100%"
+        mb={1}
+        endIcon={<Icon name="ios-logo-apple" size={20} color="white" />}>
         Apple
       </Button>
       <Button
-        color={colors.green}
-        width={'100%'}
-        textAlign="center"
-        icon="google"
-        iconColor={colors.black}
-        borderRadius={20}>
+        colorScheme="dark"
+        _text={{color: colors.black}}
+        w="100%"
+        endIcon={<Icon name="ios-logo-google" size={20} color="black" />}>
         Google
       </Button>
       <Spacer size={3} />
-      <Text style={styles.alreadyHaveAccount} onPress={goToSignIn}>
+      <Text color={colors.blue} fontWeight="500" onPress={goToSignIn}>
         Already have an account? Sign In
       </Text>
     </View>

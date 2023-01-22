@@ -19,6 +19,7 @@ interface ExerciseItemProps {
   data: Set[];
   exerciseIndex: number;
   name: string;
+  pastSets: ExerciseSet['pastSets'];
   addSet: () => void;
   onRemoveExercise: () => void;
   onSelectAddMedia: (exerciseIndex: number) => void;
@@ -28,6 +29,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   data,
   exerciseIndex,
   name,
+  pastSets,
   addSet,
   onRemoveExercise,
   // onSelectAddMedia,
@@ -76,7 +78,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
         .toString() + 'kg';
   };
 
-  const onPressSettingsItem = (item: typeof Settings[number]) => {
+  const onPressSettingsItem = (item: (typeof Settings)[number]) => {
     switch (item) {
       case 'Add Notes':
         setShowNotes(true);
@@ -203,6 +205,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           completed={item.completed}
           toggleComplete={() => toggleCompleted(index)}
           onRemove={() => onRemoveSet(index)}
+          pastSets={pastSets}
         />
       ))}
       <Button

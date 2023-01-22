@@ -1,13 +1,12 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import Button from '../../components/button';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 import BackButton from '../../components/button/backButton';
-import {TextInput} from '../../components/inputs/TextInput';
 import {Screens} from '../../constants/navigation';
 import {signIn} from '../../services/api/user';
-import {colors} from '../../util/styles';
 import {onLogin as OnLogin} from '../../app/App';
+import {Button, Heading, Input} from 'native-base';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props {
   onLogin: OnLogin;
@@ -16,6 +15,8 @@ interface Props {
 const SignIn: React.FC<Props> = ({onLogin}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const [showPassword, setShowPassword] = useState(true);
 
   const navigation = useNavigation<NavigationProp<any, any>>();
 
@@ -35,27 +36,44 @@ const SignIn: React.FC<Props> = ({onLogin}) => {
     <SafeAreaView>
       <View style={styles.container}>
         <BackButton onPress={goBack} style={{marginLeft: 20}} />
-        <Text style={styles.header}>Sign-In</Text>
-        <TextInput
-          onChange={setUsername}
+        <Heading textAlign={'center'} mb={4}>
+          Sign In
+        </Heading>
+        <Input
+          onChangeText={setUsername}
           value={username}
           autoCapitalize="none"
           autoComplete="off"
-          borderRadius={8}
-          margin={{mb: 6}}
           placeholder="Username"
+          InputLeftElement={
+            <Icon
+              name="ios-person"
+              size={20}
+              color={'gray'}
+              style={{marginLeft: 8}}
+            />
+          }
+          mb={1}
         />
-        <TextInput
-          onChange={setPassword}
+        <Input
+          onChangeText={setPassword}
           value={password}
           autoCapitalize="none"
           autoComplete="off"
-          borderRadius={8}
-          margin={{mb: 6}}
+          mb={3}
+          InputRightElement={
+            <Icon
+              name={showPassword ? 'ios-eye' : 'ios-eye-off'}
+              size={20}
+              color={'gray'}
+              style={{marginRight: 12}}
+              onPress={() => setShowPassword(!showPassword)}
+            />
+          }
           placeholder="Password"
-          secureTextEntry
+          secureTextEntry={showPassword}
         />
-        <Button textAlign="center" color={colors.accent} onPress={submit}>
+        <Button textAlign="center" colorScheme={'primary'} onPress={submit}>
           Sign In
         </Button>
       </View>
@@ -69,12 +87,6 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     padding: 20,
-  },
-  header: {
-    fontWeight: '800',
-    textAlign: 'center',
-    fontSize: 18,
-    marginBottom: 12,
   },
 });
 

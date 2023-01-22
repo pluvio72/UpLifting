@@ -1,2 +1,2 @@
-import NewWorkout from "./NewWorkout";
+import NewWorkout from './NewWorkout';
 export default NewWorkout;

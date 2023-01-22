@@ -1,44 +1,10 @@
+import {Text, Box, HStack, VStack, Pressable} from 'native-base';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {Workout} from '../../types/workouts';
 import {formatWeightValue} from '../../util/format';
-import {colors, Styles} from '../../util/styles';
+import {colors} from '../../util/styles';
 import Button from '../button';
-import Chip from '../chip';
-import {Row} from '../Reusable/reusable';
-
-const styles = StyleSheet.create({
-  historySet: {
-    backgroundColor: colors.primary,
-    padding: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 4,
-  },
-  title: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-  historyWrapper: {
-    display: 'flex',
-    backgroundColor: colors.grey300,
-    marginBottom: 10,
-    marginLeft: -10,
-    marginRight: -10,
-    shadowColor: colors.black,
-    shadowOffset: {height: 4, width: 0},
-    shadowRadius: 4,
-    shadowOpacity: 0.15,
-  },
-  detailsWrapper: {
-    paddingHorizontal: 8,
-    paddingTop: 10,
-    paddingBottom: 6,
-  },
-  text: {
-    color: colors.grey200,
-  },
-});
 
 interface Props {
   workout: Workout;
@@ -48,52 +14,55 @@ interface Props {
 const HistoryItem: React.FC<Props> = ({workout, onPressShowMore}) => {
   if (workout) {
     return (
-      <View style={styles.historyWrapper}>
-        <Row style={styles.detailsWrapper}>
-          <Chip color={colors.grey200}>Total {workout.metrics[0].value}</Chip>
-          <Chip color={colors.grey200} style={{margin: 6}}>
-            Sets{' '}
-            {workout.exercises.reduce(
-              (total, cur) => total + cur.sets.length,
-              0,
-            )}
-          </Chip>
-          <Text
-            style={[
-              Styles.textBold,
-              Styles.textMd,
-              Styles.textCenter,
-              styles.title,
-            ]}>
+      <Box bg="muted.200" rounded="xl" mb={2}>
+        <HStack alignItems={'center'} justifyContent={'center'} p={2}>
+          <HStack bg="primary.300" px={3} py={1} rounded="xl">
+            <Text>Total {workout.metrics[0].value}</Text>
+          </HStack>
+          <HStack bg="primary.300" px={3} ml={2} py={1} rounded="xl">
+            <Text>
+              Sets{' '}
+              {workout.exercises.reduce(
+                (total, cur) => total + cur.sets.length,
+                0,
+              )}
+            </Text>
+          </HStack>
+          <Text textAlign={'center'} mx={'auto'} fontWeight="600" fontSize={16}>
             {workout.title}
           </Text>
-        </Row>
+        </HStack>
         {workout.exercises.map(exercise => {
           return (
-            <View style={styles.historySet} key={exercise.name}>
-              <Text style={[Styles.textBold, styles.text]}>
+            <HStack
+              justifyContent={'space-between'}
+              px={3}
+              py={1.5}
+              mb={0.5}
+              bg="muted.500"
+              key={exercise.name}>
+              <Text fontWeight="500" color="muted.200">
                 {exercise.name}
               </Text>
-              <Text style={styles.text}>
+              <Text color="muted.200" fontWeight="400">
                 Top Set: {formatWeightValue(exercise.sets[0].weight!)} x{' '}
                 {exercise.sets[0].reps}
               </Text>
-            </View>
+            </HStack>
           );
         })}
-        <Button
-          color={colors.grey400}
-          fontSize={12}
-          bold
-          padding={{p: 8}}
-          margin={{m: 8, mt: 4, mb: 14}}
-          width={'50%'}
-          style={{marginLeft: 'auto', marginRight: 'auto'}}
-          textAlign="center"
-          onPress={() => onPressShowMore(workout)}>
-          Click To View More...
-        </Button>
-      </View>
+        <Pressable
+          onPress={() => onPressShowMore(workout)}
+          alignItems={'center'}
+          pb={2}
+          pt={1}>
+          <HStack mx={'auto'} justifyContent={'center'}>
+            <Icon color="grey" name="arrow-down" size={20} />
+            <Text color="muted.500">View More</Text>
+            <Icon color="grey" name="arrow-down" size={20} />
+          </HStack>
+        </Pressable>
+      </Box>
     );
   } else {
     return <></>;

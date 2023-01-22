@@ -10,7 +10,7 @@ const metricSettings = ['KG', 'LB'].map(e => ({value: e}));
 const UserSettings = () => {
   const session = useContext(Session);
 
-  const onUpdateKgDropdown = (item: typeof metricSettings[number]) => {
+  const onUpdateKgDropdown = (item: (typeof metricSettings)[number]) => {
     const {value} = item;
     updateUserSettings(session!, {useKilos: value === 'KG'}).then(result => {
       console.log('Result:', result);

@@ -1,5 +1,6 @@
 import {PhotoIdentifier} from '@react-native-camera-roll/camera-roll';
 import {ExerciseCategories} from '../constants/exercises';
+import {getExerciseHistory} from '../services/api/workout';
 
 export type Exercise = string;
 export type ExerciseData = {name: Exercise; category: ExerciseCategories[]};
@@ -20,6 +21,7 @@ export type ExerciseSet = {
   metric: Metric;
   note?: string;
   media?: PhotoIdentifier['node'];
+  pastSets?: Awaited<ReturnType<typeof getExerciseHistory>>['info'];
 };
 
 export type PR = {

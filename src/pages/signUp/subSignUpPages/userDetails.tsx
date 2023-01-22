@@ -1,10 +1,8 @@
+import {Button, Heading, Input} from 'native-base';
 import React, {useContext, useState} from 'react';
-import {KeyboardAvoidingView, SafeAreaView, Text, View} from 'react-native';
-import Button from '../../../components/button';
+import {KeyboardAvoidingView, SafeAreaView, View} from 'react-native';
 import BackButton from '../../../components/button/backButton';
-import {TextInput} from '../../../components/inputs/TextInput';
 import registrationContext from '../../../contexts/registration';
-import {colors} from '../../../util/styles';
 import styles from '../signUp.styles';
 
 interface Props {
@@ -34,47 +32,41 @@ const UserDetails = ({goBack, onSubmit}: Props) => {
       <KeyboardAvoidingView>
         <BackButton onPress={goBack} style={{left: 20}} />
         <View style={styles.detailsWrapper}>
-          <Text style={styles.detailsHeader}>Details</Text>
-          <TextInput
-            onChange={setUsername}
+          <Heading my={4}>Details</Heading>
+          <Input
+            onChangeText={setUsername}
             value={username}
             placeholder="Username"
-            style={{width: '100%'}}
-            margin={{mb: 4}}
-            borderRadius={10}
+            w={'100%'}
+            mb={1}
             autoCapitalize={'none'}
             autoCorrect={false}
           />
-          <TextInput
-            onChange={setPassword}
+          <Input
+            onChangeText={setPassword}
             value={password}
             placeholder="Enter Password"
-            style={{width: '100%'}}
-            margin={{mb: 4}}
+            w={'100%'}
+            mb={1}
             borderRadius={10}
             autoCapitalize={'none'}
             autoComplete={'password'}
             autoCorrect={false}
             secureTextEntry
           />
-          <TextInput
-            onChange={setConfirmPassword}
+          <Input
+            onChangeText={setConfirmPassword}
             value={confirmPassword}
             placeholder="Confirm Password"
             style={{width: '100%'}}
             borderRadius={10}
-            margin={{mb: 8}}
+            mb={3}
             autoCapitalize={'none'}
             autoComplete={'password'}
             autoCorrect={false}
             secureTextEntry
           />
-          <Button
-            width={'100%'}
-            textAlign="center"
-            bold
-            color={colors.accent}
-            onPress={submit}>
+          <Button width={'100%'} textAlign="center" onPress={submit}>
             Create
           </Button>
         </View>

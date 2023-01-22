@@ -1,2 +1,2 @@
-import DetailedChartView from "./detailedChartView";
+import DetailedChartView from './detailedChartView';
 export default DetailedChartView;

@@ -19,19 +19,21 @@ const UserStats = () => {
   );
 
   const [metrics, setMetrics] = useState<{
-    weight: typeof WeightMetrics[number];
-    height: typeof HeightMetrics[number];
+    weight: (typeof WeightMetrics)[number];
+    height: (typeof HeightMetrics)[number];
   }>({
     weight: session?.account.stats.weight?.unit ?? 'kg',
     height: session?.account.stats.height?.unit ?? 'cm',
   });
 
   const onChangeMetric = (item: {
-    name: typeof WeightMetrics[number] | typeof HeightMetrics[number];
+    name: (typeof WeightMetrics)[number] | (typeof HeightMetrics)[number];
   }) => {
-    if (WeightMetrics.includes(item.name as any))
+    if (WeightMetrics.includes(item.name as any)) {
       setMetrics(prev => ({...prev, weight: item.name as any}));
-    else setMetrics(prev => ({...prev, height: item.name as any}));
+    } else {
+      setMetrics(prev => ({...prev, height: item.name as any}));
+    }
   };
 
   const onSave = () => {

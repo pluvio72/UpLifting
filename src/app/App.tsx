@@ -7,6 +7,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {UserAccount} from '../types/user';
 import {isValidJWT} from '../util/api';
 import {validateJWT} from '../services/api/user';
+import Theme from '../util/styles/theme';
 
 const USER_SESSION = 'user_session';
 export type onLogin = (token: string, account: UserAccount) => Promise<void>;
@@ -76,9 +77,11 @@ const App: FC = () => {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <SessionContext.Provider value={session}>
-        <NavigationContainer>
-          {session ? <PostAuthStack /> : <PreAuthStack onLogin={onLogin} />}
-        </NavigationContainer>
+        <Theme>
+          <NavigationContainer>
+            {session ? <PostAuthStack /> : <PreAuthStack onLogin={onLogin} />}
+          </NavigationContainer>
+        </Theme>
       </SessionContext.Provider>
     </GestureHandlerRootView>
   );

@@ -18,7 +18,7 @@ import Spacer from '../../components/spacer';
 import Session from '../../contexts/session';
 import {Exercise, ExerciseSet} from '../../types/workouts';
 import {Screens} from '../../constants/navigation';
-import {saveNewWorkout} from '../../services/api/workout';
+import {getExerciseHistory, saveNewWorkout} from '../../services/api/workout';
 import {colors} from '../../util/styles';
 import styles from './NewWorkout.styles';
 import {CurrentWorkout} from '../../contexts/currentWorkout';
@@ -49,13 +49,18 @@ const NewWorkout = () => {
     currentWorkout.onChange('exercises', newExercises);
   };
 
-  const addExercise = (name: Exercise) => {
+  const addExercise = async (name: Exercise) => {
+    const exerciseHistory = await (
+      await getExerciseHistory(session!, name)
+    ).info;
+
     currentWorkout.onChange('exercises', [
       ...currentWorkout.exercises,
       {
         sets: [{weight: 0, reps: 0, completed: false}],
         name,
         metric: {name: 'Reps', value: '0'},
+        pastSets: exerciseHistory,
       },
     ]);
   };
@@ -190,6 +195,7 @@ const NewWorkout = () => {
                 <ExerciseItem
                   addSet={() => addSet(index)}
                   data={exercise.sets}
+                  pastSets={exercise.pastSets ?? []}
                   exerciseIndex={index}
                   key={exercise.name + index}
                   name={exercise.name}

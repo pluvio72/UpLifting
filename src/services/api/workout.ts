@@ -63,3 +63,19 @@ export const saveNewWorkout = async (
   });
   return await AuthenticatedRoute(session, 'POST', '/workouts/new', body);
 };
+
+export const getExerciseHistory = async (
+  session: Session,
+  exerciseName: string,
+) => {
+  return await AuthenticatedRoute<{
+    info: {value: string; date_completed: string}[];
+  }>(
+    session,
+    'POST',
+    '/workouts/exercise-history',
+    JSON.stringify({
+      exerciseName,
+    }),
+  );
+};

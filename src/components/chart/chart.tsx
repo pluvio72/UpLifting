@@ -9,7 +9,8 @@ const Chart: React.FC<ChartProps> = ({}) => {
       style={{
         borderRadius: 12,
         marginBottom: 8,
-      }}></View>
+      }}
+    />
   );
 };
 
