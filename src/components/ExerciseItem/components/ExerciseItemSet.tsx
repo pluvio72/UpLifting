@@ -1,15 +1,12 @@
 import React, {useRef} from 'react';
-import {Dropdown} from 'react-native-element-dropdown';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {colors} from '../../../util/styles';
-import {Row} from '../../Reusable/reusable';
-import {TextInput} from '../../inputs/TextInput';
-import TextInputWithLabel from '../../inputs/TextInputWithLabel';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../ExerciseItem.styles';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {Animated} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ExerciseSet} from '../../../types/workouts';
+import {Button, HStack, Icon, Input, Menu, Text} from 'native-base';
 
 interface SetRowProps {
   completed: boolean;
@@ -56,72 +53,94 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
           },
         ]}>
         <TouchableOpacity onPress={() => onRemove(index)}>
-          <Icon name="trash" size={20} />
+          <Icon as={Ionicons} name="trash" size={6} color="dark.100" />
         </TouchableOpacity>
       </Animated.View>
     );
   };
+
+  const pastSetsButton = (triggerProps: any) => (
+    <Button
+      alignSelf="center"
+      bg="transparent"
+      rightIcon={
+        <Icon as={FontAwesome} color="dark.500" name="angle-down" size={18} />
+      }
+      _pressed={{
+        bg: 'transparent',
+      }}
+      _text={{color: 'dark.500'}}
+      w={'40%'}
+      {...triggerProps}>
+      10 x 19kg
+    </Button>
+  );
 
   return (
     <Swipeable
       ref={updateRef}
       renderLeftActions={SwipeItems}
       overshootLeft={false}>
-      <Row
-        xAlign="space-around"
-        style={completed && {backgroundColor: colors.fadedGreen}}>
-        {/* <Text style={styles.prevBest}>50KG x 10</Text> */}
-        <Dropdown
-          style={styles.prevBest}
-          selectedTextStyle={styles.prevBestText}
-          itemTextStyle={styles.prevBestDropdownText}
-          itemContainerStyle={styles.prevBestDropdownItem}
-          containerStyle={styles.prevBestDropdown}
-          data={pastSets!}
-          value={TempPrevExercises[0]}
-          activeColor={colors.grey200}
-          valueField={'sets'}
-          labelField={'sets'}
-          onChange={() => {}}
-        />
-        <TextInput
+      <HStack
+        justifyContent="space-around"
+        alignItems="center"
+        display="flex"
+        w={'100%'}
+        bg={completed ? 'primary.200' : 'transparent'}>
+        <Menu trigger={triggerProps => pastSetsButton(triggerProps)}>
+          {/* {pastSets!.map(set => (
+            <Select.Item label={set.value} value={''} />
+          ))} */}
+          <Menu.Item>20 x 10kg</Menu.Item>
+          <Menu.Item>20 x 10kg</Menu.Item>
+          <Menu.Item>20 x 10kg</Menu.Item>
+        </Menu>
+        <Input
           style={styles.repInput}
-          onChange={(val: string) => {
+          onChangeText={(val: string) => {
             onUpdate('reps', index, val ? parseFloat(val) : undefined);
           }}
           maxLength={2}
-          focusOnPress
+          selectTextOnFocus
           placeholder={'Reps'}
           defaultValue={repValue?.toString()}
           borderRadius={8}
-          backgroundColor={completed ? 'transparent' : colors.white}
+          w={'16%'}
+          px={2}
+          py={1}
+          textAlign="center"
+          backgroundColor={completed ? 'primary.200' : 'white'}
         />
-        <TextInputWithLabel
-          style={styles.weightInput}
-          textInputStyle={styles.weightInputTextInput}
-          onChange={(val: string) =>
+        <Input
+          bgColor="white"
+          w={'17.5%'}
+          textAlign="center"
+          py={1}
+          px={1}
+          leftElement={<Text pl={2}>kg</Text>}
+          onChangeText={(val: string) =>
             onUpdate('weight', index, val ? parseFloat(val) : undefined)
           }
           maxLength={3}
-          focusOnPress
+          selectTextOnFocus
           placeholder={'0'}
-          backgroundColor={completed ? 'transparent' : colors.white}
-          label="kg"
           defaultValue={weightValue?.toString()}
+          backgroundColor={completed ? 'primary.200' : 'white'}
         />
         <Icon
           onPress={() => toggleComplete(index + 1)}
+          as={Ionicons}
           name={
             completed ? 'md-checkmark-circle' : 'md-checkmark-circle-outline'
           }
-          style={completed === false ? styles.notDone : styles.done}
           size={26}
+          color="muted.400"
         />
 
         {/* <Pressable onPress={() => onRemove(index + 1)}>
               <Text>RM</Text>
             </Pressable> */}
-      </Row>
+      </HStack>
     </Swipeable>
   );
 };

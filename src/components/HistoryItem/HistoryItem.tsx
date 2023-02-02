@@ -1,10 +1,8 @@
-import {Text, Box, HStack, VStack, Pressable} from 'native-base';
+import {Text, Box, HStack, Pressable} from 'native-base';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Workout} from '../../types/workouts';
 import {formatWeightValue} from '../../util/format';
-import {colors} from '../../util/styles';
-import Button from '../button';
 
 interface Props {
   workout: Workout;

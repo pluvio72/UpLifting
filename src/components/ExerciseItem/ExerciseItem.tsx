@@ -1,19 +1,22 @@
+import {
+  Box,
+  Button,
+  HStack,
+  Icon,
+  Menu,
+  Text,
+  Pressable,
+  Heading,
+  Input,
+} from 'native-base';
 import React, {useContext, useState} from 'react';
-import {Text, View} from 'react-native';
-import {Dropdown} from 'react-native-element-dropdown';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {MetricsItems, Settings} from '../../constants/workout';
 import {CurrentWorkout} from '../../contexts/currentWorkout';
 import {ExerciseSet, Set} from '../../types/workouts';
-import {colors, Styles} from '../../util/styles';
-import Button from '../button';
-import {TextInput} from '../inputs/TextInput';
-import {Row} from '../Reusable/reusable';
+import {colors} from '../../util/styles';
 import Spacer from '../spacer';
 import ExerciseItemSet from './components/ExerciseItemSet';
-import styles from './ExerciseItem.styles';
-
-const SettingsItems = Settings.map(e => ({name: e}));
 
 interface ExerciseItemProps {
   data: Set[];
@@ -134,61 +137,42 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   };
 
   return (
-    <View style={styles.exerciseItem}>
-      <Row yAlign="center" padding={{pb: 6, px: 12, pt: 12}}>
-        <Dropdown
-          style={styles.settingsDropdown}
-          placeholderStyle={styles.settingsDropdownText}
-          containerStyle={styles.settingsDropdownMenu}
-          itemTextStyle={styles.settingsDropdownMenuItem}
-          selectedTextStyle={styles.settingsDropdownText}
-          renderRightIcon={() => (
-            <Row>
-              <Icon
-                name="cog"
-                size={16}
-                color={colors.white}
-                style={styles.settingsDropdownIcon}
-              />
-              <Icon name="caret-down" size={16} color={colors.white} />
-            </Row>
-          )}
-          data={SettingsItems}
-          labelField={'name'}
-          valueField={'name'}
-          onChange={newVal => onPressSettingsItem(newVal.name)}
-        />
-        <Dropdown
-          style={styles.metricsDropdown}
-          placeholderStyle={styles.metricsDropdownPlaceholder}
-          containerStyle={styles.metricsDropdownMenu}
-          itemTextStyle={styles.metricsDropdownText}
-          selectedTextStyle={styles.metricsDropdownButtonText}
-          itemContainerStyle={styles.metricsDropdownItemContainer}
-          renderRightIcon={() => (
-            <Icon
-              name="caret-down"
-              size={16}
-              color={colors.black}
-              style={styles.metricsDropdownIcon}
-            />
-          )}
-          data={MetricsItems}
-          labelField={'value'}
-          valueField={'value'}
-          onChange={newVal => onUpdateMetric(newVal)}
-          placeholder="Metric"
-        />
-        <Text style={[styles.exerciseName, Styles.textCenter]}>{name}</Text>
-      </Row>
+    <Box bg="muted.200" mb={2} shadow={4}>
+      <HStack
+        alignItems="center"
+        justifyContent="space-evenly"
+        pb={2}
+        px={3}
+        pt={3}>
+        <Menu trigger={SettingsMenuButton}>
+          {Settings.map(setting => (
+            <Menu.Item onPress={() => onPressSettingsItem(setting)}>
+              {setting}
+            </Menu.Item>
+          ))}
+        </Menu>
+        <Menu w="100%" trigger={MetricsMenuButton}>
+          {MetricsItems.map(metric => (
+            <Menu.Item onPress={() => onUpdateMetric(metric as any)}>
+              {metric.name}
+            </Menu.Item>
+          ))}
+        </Menu>
+        <Heading w="50%" size="xs">
+          {name}
+        </Heading>
+      </HStack>
       {showNotes && (
-        <TextInput
-          textArea
+        <Input
+          multiline
           autoFocus
+          borderWidth={0}
+          borderBottomWidth={1}
+          borderBottomLeftRadius={0}
+          borderBottomRightRadius={0}
           maxLength={150}
-          onChange={newVal => onUpdateNote(newVal)}
+          onChangeText={newVal => onUpdateNote(newVal)}
           backgroundColor={colors.grey}
-          style={styles.note}
           placeholder="Add notes..."
         />
       )}
@@ -209,17 +193,39 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
         />
       ))}
       <Button
-        color={colors.primary}
-        padding={{px: 8, py: 4}}
-        margin={{mx: 12, mb: 12, mt: 8}}
-        bold={true}
+        bg={'muted.400'}
+        _pressed={{
+          bg: 'muted.500',
+        }}
+        px={2}
+        py={1}
+        mx={3}
+        mb={3}
+        mt={2}
         textAlign="center"
-        borderRadius={6}
         onPress={addSet}>
         Add Set
       </Button>
-    </View>
+    </Box>
   );
 };
+
+const SettingsMenuButton = (triggerProps: any) => (
+  <Pressable {...triggerProps}>
+    <Icon size={6} as={FontAwesome} name="cog" />
+  </Pressable>
+);
+
+const MetricsMenuButton = (triggerProps: any) => (
+  <Pressable
+    {...triggerProps}
+    backgroundColor="primary.400"
+    px={2}
+    py={1}
+    alignItems="center"
+    borderRadius={4}>
+    <Text fontWeight={'bold'}>Metric</Text>
+  </Pressable>
+);
 
 export default ExerciseItem;

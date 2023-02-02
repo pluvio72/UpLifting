@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   prevBest: {
-    width: '50%',
+    width: '30%',
   },
   prevBestText: {
     color: colors.secondary,
