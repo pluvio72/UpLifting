@@ -1,12 +1,12 @@
 import React, {useRef} from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import styles from '../ExerciseItem.styles';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import {Animated} from 'react-native';
+import {Animated, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ExerciseSet} from '../../../types/workouts';
 import {Button, HStack, Icon, Input, Menu, Text} from 'native-base';
+import {colors} from '../../../util/styles';
 
 interface SetRowProps {
   completed: boolean;
@@ -96,7 +96,6 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
           <Menu.Item>20 x 10kg</Menu.Item>
         </Menu>
         <Input
-          style={styles.repInput}
           onChangeText={(val: string) => {
             onUpdate('reps', index, val ? parseFloat(val) : undefined);
           }}
@@ -144,5 +143,16 @@ const ExerciseItemSet: React.FC<SetRowProps> = ({
     </Swipeable>
   );
 };
+
+const styles = StyleSheet.create({
+  swipeDeleteContainer: {
+    backgroundColor: colors.accent,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 60,
+    marginBottom: 0,
+  },
+});
 
 export default ExerciseItemSet;
