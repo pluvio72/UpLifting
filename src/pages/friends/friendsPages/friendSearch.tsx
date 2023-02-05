@@ -1,12 +1,11 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Box, Icon, Input, Row, Text} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, View, Text, ScrollView} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {TextInput} from '../../../components/inputs/TextInput';
+import {StyleSheet, ScrollView} from 'react-native';
+import Ionic from 'react-native-vector-icons/Ionicons';
 import {RootStackParamList} from '../../../constants/navigation';
 import Session from '../../../contexts/session';
 import {searchUsers} from '../../../services/api/user';
-import {colors} from '../../../util/styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'friend_search'>;
 
@@ -23,49 +22,40 @@ const FriendSearch: React.FC<Props> = ({route}) => {
   }, [filter]);
 
   return (
-    <View style={styles.container}>
-      <TextInput
+    <Box p={3}>
+      <Input
         borderRadius={8}
-        onChange={setFilter}
+        onChangeText={setFilter}
         value={filter}
         defaultValue={route.params.filter}
-        style={styles.input}
+        mb={2}
       />
       <ScrollView style={styles.scrollView}>
         {users &&
           users.map((user, index) => (
-            <View style={styles.friend} key={index}>
-              <Text style={styles.friendText}>{user.username}</Text>
-              <Icon name="person-add" size={24} />
-            </View>
+            <Row
+              justifyContent="space-between"
+              alignItems="center"
+              bg="gray.200"
+              px={3}
+              py={2}
+              mb={2}
+              borderRadius={8}
+              key={index}>
+              <Text fontSize={16} fontWeight={500}>
+                {user.username}
+              </Text>
+              <Icon as={Ionic} name="person-add" size={6} />
+            </Row>
           ))}
       </ScrollView>
-    </View>
+    </Box>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 12,
-  },
-  input: {
-    marginBottom: 10,
-  },
   scrollView: {
     marginBottom: 30,
-  },
-  friend: {
-    backgroundColor: colors.grey200,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    marginBottom: 6,
-    borderRadius: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  friendText: {
-    fontSize: 20,
-    fontWeight: '500',
   },
 });
 

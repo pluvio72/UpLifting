@@ -1,29 +1,31 @@
+import {Box, Pressable, Row, Text, Icon, Column} from 'native-base';
 import React, {useContext, useState} from 'react';
-import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {Row} from '../../components/Reusable/reusable';
+import {SafeAreaView} from 'react-native';
+import Ionic from 'react-native-vector-icons/Ionicons';
 import Session from '../../contexts/session';
-import {colors} from '../../util/styles';
 import UserAccount from './components/profilePages/userAccount';
 import UserSettings from './components/profilePages/userSettings';
 import UserStats from './components/profilePages/userStats';
 import ProfilePicture from './components/profilePicture';
-import styles from './Profile.styles';
 
 const ProfileItem: React.FC<{
   text: string;
   subText: string;
   onPress: () => void;
 }> = ({text, subText, onPress}) => (
-  <TouchableOpacity onPress={onPress}>
-    <Row style={styles.profileItem}>
-      <View style={{marginRight: 'auto'}}>
-        <Text style={styles.profileItemText}>{text}</Text>
-        <Text style={styles.profileItemSubText}>{subText}</Text>
-      </View>
-      <Icon name="arrow-forward" size={24} color={colors.white} />
+  <Pressable onPress={onPress} mb={4}>
+    <Row justifyContent={'space-between'}>
+      <Box>
+        <Text fontSize={20} fontWeight={500} color="white">
+          {text}
+        </Text>
+        <Text fontSize={13} fontWeight={300} color="white">
+          {subText}
+        </Text>
+      </Box>
+      <Icon name="arrow-forward" size={8} color={'white'} as={Ionic} />
     </Row>
-  </TouchableOpacity>
+  </Pressable>
 );
 
 type Pages = 'settings' | 'stats' | 'account';
@@ -34,13 +36,17 @@ const Profile: React.FC = () => {
   const [currentView, setCurrentView] = useState<Pages>();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.userInfoContainer}>
+    <SafeAreaView style={{flex: 1}}>
+      <Box flexGrow={1} justifyContent="flex-end" alignItems="center">
         <ProfilePicture />
-        <Text style={styles.username}>{session!.account.username}</Text>
-        <Text style={styles.underUsername}>The Gym Kensington</Text>
-      </View>
-      <View style={styles.detailsContainer}>
+        <Text fontSize={28} fontWeight={500}>
+          {session!.account.username}
+        </Text>
+        <Text fontSize={14} fontWeight={300} mb={2}>
+          The Gym Kensington
+        </Text>
+      </Box>
+      <Column w="100%" flexGrow={3} backgroundColor="gray.600" p={6} pt={8}>
         {currentView === undefined ? (
           <>
             <ProfileItem
@@ -63,35 +69,42 @@ const Profile: React.FC = () => {
               subText={'Kilos/Pounds'}
               onPress={() => setCurrentView('settings')}
             />
-            <TouchableOpacity
-              style={styles.logOutButton}
+            <Pressable
+              mt="auto"
+              ml="auto"
+              mr="auto"
+              flexDir="row"
+              alignItems={'center'}
+              justifyContent="center"
               onPress={session!.logOut}>
-              <Text style={styles.logOutButtonText}>Log Out</Text>
-              <Icon
-                name="log-out"
-                size={24}
-                color={colors.white}
-                style={styles.logOutIcon}
-              />
-            </TouchableOpacity>
+              <Text color="white" fontWeight={600} fontSize={18}>
+                Log Out
+              </Text>
+              <Icon as={Ionic} name="log-out" size={6} color={'white'} ml={2} />
+            </Pressable>
           </>
         ) : (
-          <TouchableOpacity
-            style={styles.backContainer}
+          <Pressable
+            mb={3}
+            flexDir="row"
+            alignItems="center"
             onPress={() => setCurrentView(undefined)}>
             <Icon
               name="arrow-back"
-              color={colors.white}
-              size={26}
-              style={styles.backIcon}
+              color={'white'}
+              size={30}
+              my={'auto'}
+              as={Ionic}
             />
-            <Text style={styles.backText}>Back</Text>
-          </TouchableOpacity>
+            <Text color="white" fontSize={16} my={'auto'}>
+              Back
+            </Text>
+          </Pressable>
         )}
         {currentView === 'settings' && <UserSettings />}
         {currentView === 'stats' && <UserStats />}
         {currentView === 'account' && <UserAccount />}
-      </View>
+      </Column>
     </SafeAreaView>
   );
 };

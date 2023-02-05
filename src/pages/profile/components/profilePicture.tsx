@@ -1,7 +1,7 @@
+import {Box, Center, Icon, Image} from 'native-base';
 import React from 'react';
-import {Image, ImageURISource, StyleSheet, View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {colors} from '../../../util/styles';
+import {ImageURISource} from 'react-native';
+import Ionic from 'react-native-vector-icons/Ionicons';
 
 interface Props {
   src?: ImageURISource;
@@ -9,30 +9,14 @@ interface Props {
 
 const ProfilePicture: React.FC<Props> = ({src}) => {
   if (src) {
-    return <Image source={src} style={styles.image} />;
+    return <Image source={src} width={80} height={80} borderRadius={16} />;
   } else {
     return (
-      <View style={styles.defaultImage}>
-        <Icon name={'user'} size={72} color={colors.white} />
-      </View>
+      <Center backgroundColor="gray.600" borderRadius={80} p={4}>
+        <Icon as={Ionic} name={'person'} size={60} color={'white'} />
+      </Center>
     );
   }
 };
-
-const styles = StyleSheet.create({
-  image: {
-    width: 128,
-    height: 128,
-    borderRadius: 64,
-  },
-  defaultImage: {
-    backgroundColor: colors.primary,
-    width: 128,
-    height: 128,
-    borderRadius: 64,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default ProfilePicture;

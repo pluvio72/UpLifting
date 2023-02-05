@@ -177,7 +177,7 @@ const NewWorkout = () => {
             value={currentWorkout.title}
           />
         </Row>
-        <Box px={2} mt={1}>
+        <Box px={2} mt={1} mb={2}>
           <Button onPress={toggleExerciseSelect}>Add Exercise</Button>
         </Box>
         <ScrollView h="100%">

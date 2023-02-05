@@ -72,7 +72,7 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
           endIcon={<Icon name="add" size={20} color={colors.white} />}
           px={20}
           py={4}
-          shadow={9}
+          shadow={5}
           onPress={ClickStartNewWorkout}>
           Start New Workout
         </Button>

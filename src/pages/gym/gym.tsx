@@ -1,44 +1,63 @@
 import React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
 import BarChart from './components/barChart';
-import {Row} from '../../components/Reusable/reusable';
-import {colors} from '../../util/styles';
 import {styles} from './gym.styles';
 import Spacer from '../../components/spacer';
+import {SafeAreaView} from 'react-native';
+import {Box, Center, Row, Text} from 'native-base';
 
 const Gym = () => {
   return (
     <SafeAreaView>
-      <Row xAlign="flex-start" style={styles.wrapper}>
-        <Text style={styles.gymBrand}>The Gym Group</Text>
-        <Text style={styles.gymName}>(Kingston)</Text>
+      <Row justifyContent="flex-start" mx={3} mb={2}>
+        <Text fontWeight={800} fontSize={26}>
+          The Gym Group
+        </Text>
+        <Text fontWeight={400} fontSize={26}>
+          (Kingston)
+        </Text>
       </Row>
-      <Row xAlign="flex-start" style={styles.wrapper}>
+      <Row justifyContent="flex-start" mx={3} mb={2}>
         <Text>You have </Text>
-        <Text style={styles.bold}>31</Text>
+        <Text fontWeight={600}>31</Text>
         <Text> workouts at this gym.</Text>
       </Row>
       <Spacer size={2} />
-      <Text style={styles.header}>Latest PRs</Text>
+      <Text fontSize={18} fontWeight={600} ml={3}>
+        Latest PRs
+      </Text>
       <Spacer size={1} />
-      <Row style={styles.latestPR}>
-        <Text style={styles.prText}>@arriana</Text>
-        <Text style={[styles.prText, styles.bold]}>140 x 12kg</Text>
-        <Text style={styles.prText}>Hip Thrusts</Text>
+      <Row bg="gray.200" py={2}>
+        <Text w="33%" textAlign="center">
+          @arriana
+        </Text>
+        <Text fontWeight={600} w="33%" textAlign="center">
+          140 x 12kg
+        </Text>
+        <Text w="33%" textAlign="center">
+          Hip Thrusts
+        </Text>
       </Row>
-      <Row style={styles.latestPR}>
-        <Text style={styles.prText}>@josff</Text>
-        <Text style={[styles.prText, styles.bold]}>1 x 120kg</Text>
-        <Text style={styles.prText}>Bench Press</Text>
+      <Row bg="gray.200" py={2}>
+        <Text w="33%" textAlign="center">
+          @josff
+        </Text>
+        <Text w="33%" textAlign="center" fontWeight={600}>
+          1 x 120kg
+        </Text>
+        <Text w="33%" textAlign="center">
+          Bench Press
+        </Text>
       </Row>
       <Spacer size={3} />
-      <Row yAlign="center" xAlign="center">
-        <Text style={[styles.header, {marginRight: 'auto'}]}>
+      <Row alignItems="center">
+        <Text mr={'auto'} fontSize={18} fontWeight={600} ml={3}>
           Strength Comparison
         </Text>
-        <Text style={styles.headerInfo}>(What is this?)</Text>
+        <Text mr={3} textDecorationLine="underline">
+          (What is this?)
+        </Text>
       </Row>
-      <View style={styles.chartWrapper}>
+      <Box m={3}>
         <BarChart
           data={[
             {centile: 10, people: 20},
@@ -66,15 +85,23 @@ const Gym = () => {
           x={'centile'}
           y={'people'}
         />
-      </View>
+      </Box>
       <Spacer size={3} />
       <Row>
-        <Text style={[styles.bottomText]}>Visits this month</Text>
-        <Text style={[styles.bottomText]}>Percentile</Text>
+        <Text w="50%" textAlign="center">
+          Visits this month
+        </Text>
+        <Text w="50%" textAlign="center">
+          Percentile
+        </Text>
       </Row>
       <Row>
-        <Text style={[styles.largeText]}>15</Text>
-        <Text style={styles.largeText}>63%</Text>
+        <Text w="50%" fontSize={60} fontWeight={800} textAlign="center">
+          15
+        </Text>
+        <Text w="50%" fontSize={60} fontWeight={800} textAlign="center">
+          63%
+        </Text>
       </Row>
     </SafeAreaView>
   );
