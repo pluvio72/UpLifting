@@ -13,17 +13,29 @@ const ProfileItem: React.FC<{
   subText: string;
   onPress: () => void;
 }> = ({text, subText, onPress}) => (
-  <Pressable onPress={onPress} mb={4}>
+  <Pressable
+    onPress={onPress}
+    bg="primary.500"
+    mb={1.5}
+    py={2}
+    px={4}
+    borderRadius={12}>
     <Row justifyContent={'space-between'}>
       <Box>
-        <Text fontSize={20} fontWeight={500} color="white">
+        <Text fontSize={20} fontWeight={500}>
           {text}
         </Text>
-        <Text fontSize={13} fontWeight={300} color="white">
+        <Text fontSize={13} fontWeight={300}>
           {subText}
         </Text>
       </Box>
-      <Icon name="arrow-forward" size={8} color={'white'} as={Ionic} />
+      <Icon
+        my={'auto'}
+        name="arrow-forward"
+        size={8}
+        color="black"
+        as={Ionic}
+      />
     </Row>
   </Pressable>
 );
@@ -39,14 +51,14 @@ const Profile: React.FC = () => {
     <SafeAreaView style={{flex: 1}}>
       <Box flexGrow={1} justifyContent="flex-end" alignItems="center">
         <ProfilePicture />
-        <Text fontSize={28} fontWeight={500}>
+        <Text fontSize={28} fontWeight={500} mb={-1}>
           {session!.account.username}
         </Text>
         <Text fontSize={14} fontWeight={300} mb={2}>
           The Gym Kensington
         </Text>
       </Box>
-      <Column w="100%" flexGrow={3} backgroundColor="gray.600" p={6} pt={8}>
+      <Column w="100%" flexGrow={3} p={3} pt={8}>
         {currentView === undefined ? (
           <>
             <ProfileItem
@@ -77,10 +89,10 @@ const Profile: React.FC = () => {
               alignItems={'center'}
               justifyContent="center"
               onPress={session!.logOut}>
-              <Text color="white" fontWeight={600} fontSize={18}>
+              <Text fontWeight={600} fontSize={18}>
                 Log Out
               </Text>
-              <Icon as={Ionic} name="log-out" size={6} color={'white'} ml={2} />
+              <Icon color="black" as={Ionic} name="log-out" size={6} ml={2} />
             </Pressable>
           </>
         ) : (
@@ -88,17 +100,16 @@ const Profile: React.FC = () => {
             mb={3}
             flexDir="row"
             alignItems="center"
+            justifyContent={'center'}
             onPress={() => setCurrentView(undefined)}>
             <Icon
               name="arrow-back"
-              color={'white'}
-              size={30}
+              size={5}
+              color="black"
               my={'auto'}
               as={Ionic}
             />
-            <Text color="white" fontSize={16} my={'auto'}>
-              Back
-            </Text>
+            <Text fontSize={16}>Back</Text>
           </Pressable>
         )}
         {currentView === 'settings' && <UserSettings />}

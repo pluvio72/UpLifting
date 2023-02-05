@@ -1,4 +1,4 @@
-import {Box, Center, Icon, Image} from 'native-base';
+import {Center, Icon, Image} from 'native-base';
 import React from 'react';
 import {ImageURISource} from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';

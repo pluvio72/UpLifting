@@ -1,5 +1,7 @@
 import {Gym} from './gyms';
 
+export const UserAccountMetricsSettings = ['KG', 'LB'];
+
 export interface UserAccount {
   firstName: string;
   lastName: string;

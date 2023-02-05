@@ -1,67 +1,85 @@
-import React, {useContext} from 'react';
-import {StyleSheet, Text} from 'react-native';
-import {Dropdown} from 'react-native-element-dropdown';
+import {Icon, Menu, Pressable, Text} from 'native-base';
+import React, {useCallback, useContext, useState} from 'react';
 import Session from '../../../../contexts/session';
 import {updateUserSettings} from '../../../../services/api/user';
-import {colors} from '../../../../util/styles';
-
-const metricSettings = ['KG', 'LB'].map(e => ({value: e}));
+import {UserAccountMetricsSettings} from '../../../../types/user';
+import FA from 'react-native-vector-icons/FontAwesome';
 
 const UserSettings = () => {
   const session = useContext(Session);
+  const [chosenMetric, setChosenMetric] = useState<
+    (typeof UserAccountMetricsSettings)[number]
+  >(UserAccountMetricsSettings[0]);
 
-  const onUpdateKgDropdown = (item: (typeof metricSettings)[number]) => {
-    const {value} = item;
+  const onUpdateKgDropdown = (
+    value: (typeof UserAccountMetricsSettings)[number],
+  ) => {
+    setChosenMetric(value);
     updateUserSettings(session!, {useKilos: value === 'KG'}).then(result => {
       console.log('Result:', result);
     });
     session?.update('settings', {useKilos: value === 'KG'});
   };
 
+  const MetricsButton = useCallback(
+    (triggerProps: any) => (
+      <Pressable
+        {...triggerProps}
+        flexDir="row"
+        justifyContent={'space-between'}
+        bg="gray.200"
+        px={2}
+        py={1}
+        borderRadius={8}>
+        <Text ml={1} fontWeight={500}>
+          {chosenMetric}
+        </Text>
+        <Icon as={FA} name="caret-down" size={6} color="black" />
+      </Pressable>
+    ),
+    [chosenMetric],
+  );
+
   return (
     <>
-      <Text style={styles.kgDropdownLabel}>Weight Measurement</Text>
-      <Dropdown
-        data={metricSettings}
-        labelField={'value'}
-        valueField={'value'}
-        value={metricSettings[0]}
-        style={styles.kgDropdown}
-        itemTextStyle={styles.kgDropdownItemText}
-        selectedTextStyle={styles.kgDropdownItemText}
-        placeholderStyle={styles.kgDropdownItemText}
-        containerStyle={styles.kgDropdownContainer}
-        itemContainerStyle={styles.kgDropdownItemContainer}
-        onChange={onUpdateKgDropdown}
-      />
+      <Text textAlign="center" w="100%" fontWeight={600} mb={1.5}>
+        Weight Measurement
+      </Text>
+      <Menu trigger={MetricsButton} w={500}>
+        {UserAccountMetricsSettings.map(metric => (
+          <Menu.Item onPress={() => onUpdateKgDropdown(metric)}>
+            {metric}
+          </Menu.Item>
+        ))}
+      </Menu>
     </>
   );
 };
 
-const styles = StyleSheet.create({
-  kgDropdownLabel: {
-    color: colors.white,
-    textAlign: 'center',
-    width: '100%',
-    fontWeight: '600',
-    fontSize: 14,
-    marginBottom: 6,
-  },
-  kgDropdown: {
-    width: '100%',
-    backgroundColor: colors.grey100,
-    paddingHorizontal: 8,
-    borderRadius: 8,
-  },
-  kgDropdownItemText: {
-    color: colors.black,
-    fontWeight: '500',
-    marginVertical: -10,
-  },
-  kgDropdownItemContainer: {},
-  kgDropdownContainer: {
-    borderRadius: 8,
-  },
-});
+// const styles = StyleSheet.create({
+//   kgDropdownLabel: {
+//     color: colors.white,
+//     textAlign: 'center',
+//     width: '100%',
+//     fontWeight: '600',
+//     fontSize: 14,
+//     marginBottom: 6,
+//   },
+//   kgDropdown: {
+//     width: '100%',
+//     backgroundColor: colors.grey100,
+//     paddingHorizontal: 8,
+//     borderRadius: 8,
+//   },
+//   kgDropdownItemText: {
+//     color: colors.black,
+//     fontWeight: '500',
+//     marginVertical: -10,
+//   },
+//   kgDropdownItemContainer: {},
+//   kgDropdownContainer: {
+//     borderRadius: 8,
+//   },
+// });
 
 export default UserSettings;

@@ -1,8 +1,5 @@
+import {Box, Button, Input, Row, Text} from 'native-base';
 import React, {useContext, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import Button from '../../../../components/button';
-import {TextInput} from '../../../../components/inputs/TextInput';
-import {Row} from '../../../../components/Reusable/reusable';
 import Session from '../../../../contexts/session';
 import {updateUserAccount} from '../../../../services/api/user';
 import {colors} from '../../../../util/styles';
@@ -30,52 +27,37 @@ const UserAccount = () => {
   return (
     <>
       <Row>
-        <View style={styles.firstLastNameWrapper}>
-          <Text style={styles.inputLabel}>First Name</Text>
-          <TextInput
+        <Box w="50%">
+          <Text fontSize={15} fontWeight={500} textAlign="center" mb={1.5}>
+            First Name
+          </Text>
+          <Input
             borderRadius={8}
             defaultValue={firstName}
-            onChange={onChangeFirstName}
-            style={styles.input}
+            onChangeText={onChangeFirstName}
+            p={1}
             value={firstName}
           />
-        </View>
-        <View style={styles.firstLastNameWrapper}>
-          <Text style={styles.inputLabel}>Last Name</Text>
-          <TextInput
+        </Box>
+        <Box w="50%">
+          <Text fontSize={15} fontWeight={500} textAlign="center" mb={1.5}>
+            Last Name
+          </Text>
+          <Input
             borderRadius={8}
             defaultValue={lastName}
-            onChange={onChangeLastName}
-            style={[styles.input, {marginLeft: 6}]}
+            onChangeText={onChangeLastName}
+            p={1}
+            ml={1.5}
             value={lastName}
           />
-        </View>
+        </Box>
       </Row>
-      <Button
-        margin={{mt: 10}}
-        width={'100%'}
-        onPress={onSave}
-        color={colors.accent}>
+      <Button mt={2.5} w={'100%'} onPress={onSave}>
         Save
       </Button>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  inputLabel: {
-    color: colors.white,
-    fontSize: 15,
-    fontWeight: '500',
-    textAlign: 'center',
-    marginBottom: 6,
-  },
-  input: {
-    padding: 4,
-  },
-  firstLastNameWrapper: {
-    width: '50%',
-  },
-});
 
 export default UserAccount;

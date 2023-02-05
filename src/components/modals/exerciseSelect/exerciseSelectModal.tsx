@@ -8,9 +8,9 @@ import {
   Row,
   Text,
   Modal,
+  FlatList,
 } from 'native-base';
 import React, {useContext, useState} from 'react';
-import {FlatList, SafeAreaView} from 'react-native';
 import FA from 'react-native-vector-icons/FontAwesome';
 
 import {ExerciseCategories} from '../../../constants/exercises';
@@ -20,7 +20,6 @@ import useStartup from '../../../hooks/useStartup';
 import {getExercises} from '../../../services/api/workout';
 import {Exercise} from '../../../types/workouts';
 import {ModalProps} from '../modalProps';
-import styles from './exerciseSelectModal.styles';
 
 interface ExerciseSelectModalProps extends ModalProps {
   onSelect: (selectedItem: Exercise) => void;
@@ -106,7 +105,7 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
           </Menu>
         </Box>
         <FlatList
-          style={styles.listWrapper}
+          mt={2.5}
           data={
             selectedCategory
               ? exercises.filter(e =>
