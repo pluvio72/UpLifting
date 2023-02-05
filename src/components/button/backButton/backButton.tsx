@@ -1,7 +1,8 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {Icon, Pressable} from 'native-base';
 import React from 'react';
-import {Pressable, ViewStyle} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {ViewStyle} from 'react-native';
+import Ionic from 'react-native-vector-icons/Ionicons';
 
 import {Screens} from '../../../constants/navigation';
 
@@ -28,7 +29,7 @@ const BackButton = ({link, onPress, style}: Props) => {
     <Pressable
       onPress={onPressButton}
       style={[{position: 'absolute', top: 0, left: 0, zIndex: 10}, style]}>
-      <Icon name="arrow-back" size={24} />
+      <Icon as={Ionic} name="arrow-back" size={8} />
     </Pressable>
   );
 };

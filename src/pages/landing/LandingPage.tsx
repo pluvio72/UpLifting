@@ -1,10 +1,9 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useContext, useState} from 'react';
-import {SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import Chip from '../../components/chip';
 import HistoryItem from '../../components/HistoryItem/HistoryItem';
 import WorkoutHistoryModal from '../../components/modals/workoutHistoryModal';
-import {Row} from '../../components/Reusable/reusable';
 import Spacer from '../../components/spacer';
 import Session from '../../contexts/session';
 import {RootStackParamList, Screens} from '../../constants/navigation';
@@ -16,11 +15,10 @@ import {
 } from '../../services/api/workout';
 import {Template} from '../../types/workouts';
 import {PR, Workout} from '../../types/workouts';
-import {Styles} from '../../util/styles';
 import colors from '../../util/styles/colors';
 import ExerciseTemplates from './landingComponents/ExerciseTemplates';
 import styles from './LandingPage.styles';
-import {Button} from 'native-base';
+import {Box, Button, Row, ScrollView, Text} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'landing'>;
@@ -77,8 +75,16 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
           Start New Workout
         </Button>
         <Spacer size={2} />
-        <View>
-          <Text style={[Styles.textBold, Styles.textMd]}>History</Text>
+        <Box>
+          <Text fontWeight={600} fontSize={16}>
+            We Go Jim
+          </Text>
+        </Box>
+        <Spacer size={2} />
+        <Box>
+          <Text fontSize={16} fontWeight={600}>
+            History
+          </Text>
           <Spacer />
           {recentWorkouts &&
             recentWorkouts.map((workout, index) => (
@@ -88,52 +94,41 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
                 key={workout.title + index}
               />
             ))}
-        </View>
+        </Box>
         {recentWorkouts && recentWorkouts.length > 0 ? (
           <Button textAlign="center" onPress={goToHistory} bg="light.600">
             View History
           </Button>
         ) : (
-          <Text
-            style={{
-              textAlign: 'center',
-              fontWeight: '600',
-              marginBottom: 12,
-              color: colors.secondary,
-            }}>
+          <Text textAlign="center" fontWeight={600} mb={3} color="gray.300">
             No Workout History
           </Text>
         )}
         <Spacer size={2} />
-        <View>
-          <Row xAlign="flex-start">
-            <Text style={[Styles.textBold, Styles.textMd, {marginLeft: 5}]}>
+        <Box>
+          <Row justifyContent="flex-start">
+            <Text fontWeight={600} fontSize={16} ml={1}>
               Templates
             </Text>
           </Row>
           <Spacer />
           <ExerciseTemplates templates={templates} />
-        </View>
+        </Box>
         <Spacer size={3} />
-        <View>
-          <Text
-            style={[
-              Styles.textBold,
-              Styles.textMd,
-              {marginLeft: 5, marginBottom: 10},
-            ]}>
+        <Box>
+          <Text fontWeight={600} fontSize={16} ml={1} mb={2}>
             PRs
           </Text>
-          <View>
+          <Box>
             {recentPRs && recentPRs.length > 0 ? (
               recentPRs.map((pr, index) => (
                 <Row
-                  xAlign="space-between"
-                  margin={{mb: 8}}
-                  padding={{px: 4}}
+                  justifyContent="space-between"
+                  mb={2}
+                  px={1}
                   key={pr.date_completed + ' ' + pr.name + index}>
                   <Text>{pr.date_completed}</Text>
-                  <Text style={Styles.textBold}>{pr.name}</Text>
+                  <Text fontWeight={600}>{pr.name}</Text>
                   <Chip color={colors.accent}>
                     {pr.weight}kg x {pr.reps}
                   </Chip>
@@ -142,7 +137,7 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
             ) : (
               <Text>No PRs</Text>
             )}
-          </View>
+          </Box>
           <Spacer size={2} />
           {/* <Row xAlign="space-between" margin={{mb: 8}}>
             <Text>10/10/22</Text>
@@ -154,7 +149,7 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
             <Text style={Styles.textBold}>Squat (Paused)</Text>
             <Text style={Styles.textBold}>180kg x 10</Text>
           </Row> */}
-        </View>
+        </Box>
       </ScrollView>
     </SafeAreaView>
   );
