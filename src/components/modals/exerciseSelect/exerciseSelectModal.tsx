@@ -1,14 +1,17 @@
-import React, {useContext, useState} from 'react';
 import {
-  FlatList,
-  Modal,
-  SafeAreaView,
+  Box,
+  Button,
+  Icon,
+  Input,
+  Menu,
+  Pressable,
+  Row,
   Text,
-  TouchableHighlight,
-  View,
-} from 'react-native';
-import {Dropdown} from 'react-native-element-dropdown';
-import Icon from 'react-native-vector-icons/FontAwesome';
+  Modal,
+} from 'native-base';
+import React, {useContext, useState} from 'react';
+import {FlatList, SafeAreaView} from 'react-native';
+import FA from 'react-native-vector-icons/FontAwesome';
 
 import {ExerciseCategories} from '../../../constants/exercises';
 import ExerciseContext from '../../../contexts/exercises';
@@ -16,9 +19,6 @@ import Session from '../../../contexts/session';
 import useStartup from '../../../hooks/useStartup';
 import {getExercises} from '../../../services/api/workout';
 import {Exercise} from '../../../types/workouts';
-import {colors, Styles} from '../../../util/styles';
-import Button from '../../button';
-import TextInputWithLabel from '../../inputs/TextInputWithLabel';
 import {ModalProps} from '../modalProps';
 import styles from './exerciseSelectModal.styles';
 
@@ -41,13 +41,11 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
     }
   });
 
-  const keys = Object.keys(ExerciseCategories);
-  const categories = keys.map(e => ({name: e}));
+  const categories = Object.keys(ExerciseCategories);
 
   const [filter, setFilter] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<{
-    name: typeof ExerciseCategories;
-  }>();
+  const [selectedCategory, setSelectedCategory] =
+    useState<ExerciseCategories>();
 
   const hide = () => {
     onHide();
@@ -58,74 +56,90 @@ const ExerciseSelectModal: React.FC<ExerciseSelectModalProps> = ({
     onSelect(item);
   };
 
+  const selectCategory = (_category: ExerciseCategories) => {
+    if (_category === selectedCategory) setSelectedCategory(undefined);
+    else setSelectedCategory(_category);
+  };
+
+  const dropdownButton = (triggerProps: any) => (
+    <Pressable px={2} py={1.5} {...triggerProps} bg="gray.300" borderRadius={8}>
+      <Row w="100%" justifyContent="space-between">
+        <Text fontWeight={600} ml={1} fontSize={15} textAlign={'center'}>
+          {(selectedCategory as unknown as string) ?? 'Select Category'}
+        </Text>
+        <Icon as={FA} size={6} name="caret-down" />
+      </Row>
+    </Pressable>
+  );
+
   return (
-    <Modal visible={show} animationType="slide">
-      <SafeAreaView style={styles.container}>
-        <TextInputWithLabel
-          label={
+    <Modal isOpen={show} size="xl" animationPreset="slide">
+      <Modal.Content p={2} h="100%">
+        <Input
+          InputLeftElement={
             <Icon
+              as={FA}
               name="search"
-              color={colors.grey100}
-              style={{paddingHorizontal: 12}}
+              color="gray.100"
+              w="20px"
+              ml={2}
+              size={4}
             />
           }
-          style={styles.filterWrapper}
-          textInputStyle={{paddingVertical: 6, fontWeight: '600'}}
-          onChange={setFilter}
-          backgroundColor={colors.black}
-          textColor={colors.white}
+          my={1}
+          fontWeight={600}
+          py={1.5}
+          onChangeText={setFilter}
+          bgColor={'black'}
+          color={'white'}
           borderRadius={8}
           maxLength={20}
         />
-        <View>
-          <Dropdown
-            style={styles.dropdownWrapper}
-            activeColor={colors.grey400}
-            data={categories}
-            labelField={'name'}
-            valueField={'name'}
-            onChange={e => {
-              if (selectedCategory?.name === e.name) {
-                setSelectedCategory(undefined);
-              } else {
-                setSelectedCategory(e);
-              }
-            }}
-            value={selectedCategory}
-          />
-        </View>
+        <Box>
+          <Menu trigger={dropdownButton} bg="gray.400" borderRadius={8}>
+            {categories.map(category => (
+              <Menu.Item
+                onPress={() => selectCategory(category as ExerciseCategories)}>
+                {category}
+              </Menu.Item>
+            ))}
+          </Menu>
+        </Box>
         <FlatList
           style={styles.listWrapper}
           data={
-            selectedCategory?.name
+            selectedCategory
               ? exercises.filter(e =>
-                  e.category.includes(selectedCategory.name as never),
+                  e.category.includes(selectedCategory as any),
                 )
               : exercises.filter(e => e.name.includes(filter))
           }
           renderItem={item => (
-            <TouchableHighlight
-              underlayColor={colors.grey}
+            <Pressable
               onPress={() => select(item.item.name)}
-              style={styles.itemWrapper}>
+              borderTopColor="gray.400"
+              borderTopWidth={1}
+              px={1.5}
+              py={3}>
               <>
-                <Text style={[Styles.textBold, {marginBottom: 4}]}>
+                <Text fontWeight={600} mb={1}>
                   {item.item.name}
                 </Text>
                 <Text>{item.item.category[0]}</Text>
               </>
-            </TouchableHighlight>
+            </Pressable>
           )}
         />
         <Button
-          margin={{mx: 20}}
-          bold
+          mt={2}
+          w="100%"
+          fontWeight={600}
           textAlign="center"
-          color={colors.accent}
+          colorScheme={'danger'}
           onPress={hide}>
           Close
         </Button>
-      </SafeAreaView>
+      </Modal.Content>
     </Modal>
   );
 };

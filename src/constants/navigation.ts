@@ -4,7 +4,6 @@ export const Screens = {
   History: 'history',
   Charts: 'charts',
   DetailedChartView: 'detailed_chart_view',
-  ExerciseList: 'exercise_list',
   SignUp: 'sign_up',
   SignIn: 'sign_in',
   Profile: 'user_profile',
@@ -19,7 +18,6 @@ export type RootStackParamList = {
   [Screens.DetailedChartView]: {
     exerciseName: string;
   };
-  [Screens.ExerciseList]: undefined;
   [Screens.SignUp]: undefined;
   [Screens.SignIn]: undefined;
   [Screens.FriendSearch]: {filter: string};

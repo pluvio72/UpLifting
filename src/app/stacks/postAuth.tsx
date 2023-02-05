@@ -6,7 +6,6 @@ import {CurrentWorkoutProvider} from '../../contexts/currentWorkout';
 import {Screens, PostAuthTabs} from '../../constants/navigation';
 import Charts from '../../pages/charts';
 import DetailedChartView from '../../pages/charts/detailedChartView';
-// import ExerciseList from '../../pages/exerciseList';
 // import History from '../../pages/history';
 import LandingPage from '../../pages/landing';
 import NewWorkout from '../../pages/newWorkout';
