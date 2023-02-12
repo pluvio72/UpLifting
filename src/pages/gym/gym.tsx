@@ -1,9 +1,8 @@
 import React from 'react';
 import BarChart from './components/barChart';
-import {styles} from './gym.styles';
 import Spacer from '../../components/spacer';
 import {SafeAreaView} from 'react-native';
-import {Box, Center, Row, Text} from 'native-base';
+import {Box, Row, Text} from 'native-base';
 
 const Gym = () => {
   return (

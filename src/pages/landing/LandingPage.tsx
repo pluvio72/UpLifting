@@ -1,12 +1,16 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useContext, useState} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 import {SafeAreaView} from 'react-native';
 import Chip from '../../components/chip';
 import HistoryItem from '../../components/HistoryItem/HistoryItem';
 import WorkoutHistoryModal from '../../components/modals/workoutHistoryModal';
 import Spacer from '../../components/spacer';
 import Session from '../../contexts/session';
-import {RootStackParamList, Screens} from '../../constants/navigation';
+import {
+  PostAuthStackPL,
+  PostAuthTabs,
+  WorkoutStackPL,
+  WorkoutStackScreens,
+} from '../../constants/navigation';
 import useStartup from '../../hooks/useStartup';
 import {
   getRecentPRs,
@@ -18,11 +22,25 @@ import {PR, Workout} from '../../types/workouts';
 import colors from '../../util/styles/colors';
 import ExerciseTemplates from './landingComponents/ExerciseTemplates';
 import styles from './LandingPage.styles';
-import {Box, Button, Row, ScrollView, Text} from 'native-base';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  Badge,
+  Box,
+  Button,
+  Icon,
+  Pressable,
+  Row,
+  ScrollView,
+  Text,
+} from 'native-base';
+import Ionic from 'react-native-vector-icons/Ionicons';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {CompositeScreenProps} from '@react-navigation/native';
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'landing'>;
-
+type Props = CompositeScreenProps<
+  NativeStackScreenProps<WorkoutStackPL, 'workout_stack_index'>,
+  BottomTabScreenProps<PostAuthStackPL>
+>;
 const LandingPage: React.FC<Props> = ({navigation}) => {
   const [recentWorkouts, setRecentWorkouts] = useState<Array<Workout>>([]);
   const [recentPRs, setRecentPRs] = useState<Array<PR>>([]);
@@ -48,15 +66,25 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
   });
 
   const ClickStartNewWorkout = () => {
-    navigation.navigate(Screens.NewWorkout);
+    navigation.navigate(WorkoutStackScreens.NewWorkout);
   };
 
   const goToHistory = () => {
-    navigation.navigate(Screens.History as any);
+    navigation.navigate(WorkoutStackScreens.History as any);
   };
 
   const openModal = (selected: Workout) => setSelectedWorkout(selected);
   const closeModal = () => setSelectedWorkout(undefined);
+
+  const friendRequests = useCallback(
+    () => session?.account.friends.filter(e => e.pending === true) || [],
+    [session?.account.friends],
+  );
+
+  const goToFriendsPage = () =>
+    navigation.navigate(PostAuthTabs.Friends, {
+      screen: 'friend_stack_index',
+    });
 
   return (
     <SafeAreaView>
@@ -67,7 +95,7 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
       />
       <ScrollView style={styles.container}>
         <Button
-          endIcon={<Icon name="add" size={20} color={colors.white} />}
+          endIcon={<Icon as={Ionic} name="add" size={6} color={colors.white} />}
           px={20}
           py={4}
           shadow={5}
@@ -75,6 +103,37 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
           Start New Workout
         </Button>
         <Spacer size={2} />
+        {friendRequests().length > 0 && (
+          <Pressable
+            bg="amber.500"
+            onPress={goToFriendsPage}
+            flexDir="row"
+            mx={10}
+            py={2}
+            px={3}
+            mb={4}
+            borderRadius={8}
+            justifyContent="center"
+            alignItems="center">
+            <Row alignItems="center" ml="auto">
+              <Text fontWeight={500}>New friend request</Text>
+              <Icon
+                mt={0.5}
+                as={Ionic}
+                name="chevron-forward"
+                size={5}
+                color="black"
+              />
+            </Row>
+            <Badge
+              ml={'auto'}
+              borderRadius={8}
+              bg="black"
+              _text={{color: 'white'}}>
+              {friendRequests().length}
+            </Badge>
+          </Pressable>
+        )}
         <Box>
           <Text fontWeight={600} fontSize={16}>
             We Go Jim

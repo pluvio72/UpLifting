@@ -1,13 +1,18 @@
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {CompositeScreenProps} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Box, Button, Input, Icon, Pressable, Row, Text} from 'native-base';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import Spacer from '../../components/spacer';
-import {RootStackParamList} from '../../constants/navigation';
+import {FriendStackPL, PostAuthStackPL} from '../../constants/navigation';
 import {colors} from '../../util/styles';
 
-type Props = NativeStackScreenProps<RootStackParamList, any>;
+type Props = CompositeScreenProps<
+  NativeStackScreenProps<FriendStackPL, 'friend_stack_index'>,
+  BottomTabScreenProps<PostAuthStackPL>
+>;
 
 const Friends: React.FC<Props> = ({navigation}) => {
   const [friendSearch, setFriendSearch] = useState('');

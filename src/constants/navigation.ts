@@ -1,39 +1,68 @@
-export const Screens = {
-  Landing: 'landing',
-  NewWorkout: 'new_workout',
-  History: 'history',
-  Charts: 'charts',
-  DetailedChartView: 'detailed_chart_view',
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+  ParamListBase,
+} from '@react-navigation/native';
+import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+
+export const PreAuthScreens = {
   SignUp: 'sign_up',
   SignIn: 'sign_in',
-  Profile: 'user_profile',
-  FriendSearch: 'friend_search',
 } as const;
-
-export type RootStackParamList = {
-  [Screens.Landing]: undefined;
-  [Screens.NewWorkout]: undefined;
-  [Screens.History]: undefined;
-  [Screens.Charts]: undefined;
-  [Screens.DetailedChartView]: {
-    exerciseName: string;
-  };
-  [Screens.SignUp]: undefined;
-  [Screens.SignIn]: undefined;
-  [Screens.FriendSearch]: {filter: string};
+export type PreAuthStackPL = {
+  [PreAuthScreens.SignUp]: undefined;
+  [PreAuthScreens.SignIn]: undefined;
 };
-
-// tabs should be
-// profile
-// charts
-// landing
-// gym
-// friends
 
 export const PostAuthTabs = {
-  Landing: 'Start',
-  Charts: 'Charts',
-  Profile: 'Profile',
-  Gym: 'Gym',
-  Friends: 'Friends',
+  Profile: 'profile',
+  Charts: 'charts',
+  Landing: 'landing',
+  Gym: 'gym',
+  Friends: 'friends',
+} as const;
+export type PostAuthStackPL = {
+  [PostAuthTabs.Profile]: undefined;
+  [PostAuthTabs.Gym]: undefined;
+  [PostAuthTabs.Charts]: NavigatorScreenParams<ChartStackPL>;
+  [PostAuthTabs.Landing]: NavigatorScreenParams<WorkoutStackPL>;
+  [PostAuthTabs.Friends]: NavigatorScreenParams<FriendStackPL>;
 };
+
+export const WorkoutStackScreens = {
+  Index: 'workout_stack_index',
+  NewWorkout: 'new_workout',
+  History: 'history',
+} as const;
+export type WorkoutStackPL = {
+  [WorkoutStackScreens.Index]: undefined;
+  [WorkoutStackScreens.NewWorkout]: undefined;
+  [WorkoutStackScreens.History]: undefined;
+};
+
+export const FriendStackScreens = {
+  Index: 'friend_stack_index',
+  FriendSearch: 'friend_search',
+} as const;
+export type FriendStackPL = {
+  [FriendStackScreens.Index]: undefined;
+  [FriendStackScreens.FriendSearch]: {filter: string};
+};
+
+export const ChartStackScreens = {
+  Index: 'chart_stack_index',
+  DetailedChartView: 'detailed_chart_view',
+} as const;
+export type ChartStackPL = {
+  [ChartStackScreens.Index]: undefined;
+  [ChartStackScreens.DetailedChartView]: {exerciseName: string};
+};
+
+export type SubScreen<
+  T extends string,
+  K extends ParamListBase,
+> = CompositeScreenProps<
+  NativeStackScreenProps<K, T>,
+  BottomTabScreenProps<PostAuthStackPL>
+>;

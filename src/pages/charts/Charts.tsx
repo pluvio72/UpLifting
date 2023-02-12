@@ -7,14 +7,24 @@ import Chart from '../../components/chart';
 import Spacer from '../../components/spacer';
 import Session from '../../contexts/session';
 import {ExerciseNames} from '../../constants/exercises';
-import {RootStackParamList, Screens} from '../../constants/navigation';
+import {
+  ChartStackPL,
+  PostAuthStackPL,
+  RootStackParamList,
+  Screens,
+} from '../../constants/navigation';
 import {getRecentWorkouts} from '../../services/api/workout';
 import {Workout} from '../../types/workouts';
 
 import {colors, MarginStylesheet, Styles} from '../../util/styles';
 import styles from './Charts.styles';
+import {CompositeScreenProps} from '@react-navigation/native';
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'charts'>;
+type Props = CompositeScreenProps<
+  NativeStackScreenProps<ChartStackPL, 'chart_stack_index'>,
+  BottomTabScreenProps<PostAuthStackPL>
+>;
 
 const Charts: React.FC<Props> = ({navigation}) => {
   const [filter, setFilter] = useState('');
@@ -26,7 +36,7 @@ const Charts: React.FC<Props> = ({navigation}) => {
   const [recentWorkouts, setRecentWorkouts] = useState<Array<Workout>>([]);
 
   useEffect(() => {
-    getRecentWorkouts(session!.username, session!.token).then(workouts => {
+    getRecentWorkouts(session!, 4).then(workouts => {
       setRecentWorkouts(workouts);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,3 +1,5 @@
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {CompositeScreenProps} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
@@ -5,10 +7,13 @@ import {Dropdown} from 'react-native-element-dropdown';
 import Chart from '../../../components/chart';
 import {Row} from '../../../components/Reusable/reusable';
 import {Metrics} from '../../../constants/exercises';
-import {RootStackParamList} from '../../../constants/navigation';
+import {ChartStackPL, PostAuthStackPL} from '../../../constants/navigation';
 import {colors, PaddingStylesheet, Styles} from '../../../util/styles';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'detailed_chart_view'>;
+type Props = CompositeScreenProps<
+  NativeStackScreenProps<ChartStackPL, 'detailed_chart_view'>,
+  BottomTabScreenProps<PostAuthStackPL>
+>;
 
 type FromDate =
   | 'All Time'

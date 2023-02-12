@@ -2,7 +2,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 import BackButton from '../../components/button/backButton';
-import {Screens} from '../../constants/navigation';
+import {PreAuthScreens} from '../../constants/navigation';
 import {signIn} from '../../services/api/user';
 import {onLogin as OnLogin} from '../../app/App';
 import {Button, Heading, Input} from 'native-base';
@@ -21,7 +21,7 @@ const SignIn: React.FC<Props> = ({onLogin}) => {
   const navigation = useNavigation<NavigationProp<any, any>>();
 
   const goBack = () => {
-    navigation.navigate(Screens.SignUp);
+    navigation.navigate(PreAuthScreens.SignUp);
   };
 
   const submit = async () => {

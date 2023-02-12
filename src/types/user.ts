@@ -2,7 +2,7 @@ import {Gym} from './gyms';
 
 export const UserAccountMetricsSettings = ['KG', 'LB'];
 
-export interface UserAccount {
+export interface User {
   firstName: string;
   lastName: string;
   username: string;
@@ -21,3 +21,9 @@ export interface UserAccount {
   };
   gym: Gym;
 }
+
+export interface UserAccount extends User {
+  friends: Array<User & {pending: boolean}>;
+}
+
+export type Friend = UserAccount['friends'][number];

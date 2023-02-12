@@ -3,7 +3,16 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {CurrentWorkoutProvider} from '../../contexts/currentWorkout';
-import {Screens, PostAuthTabs} from '../../constants/navigation';
+import {
+  PostAuthTabs,
+  ChartStackPL,
+  FriendStackPL,
+  WorkoutStackPL,
+  WorkoutStackScreens,
+  FriendStackScreens,
+  PostAuthStackPL,
+  ChartStackScreens,
+} from '../../constants/navigation';
 import Charts from '../../pages/charts';
 import DetailedChartView from '../../pages/charts/detailedChartView';
 // import History from '../../pages/history';
@@ -16,66 +25,69 @@ import FriendSearch from '../../pages/friends/friendsPages/friendSearch';
 import History from '../../pages/history';
 import {ExerciseProvider} from '../../contexts/exercises';
 
-const HomeStackNav = createNativeStackNavigator();
+const HomeStackNav = createNativeStackNavigator<WorkoutStackPL>();
 const HomeStack = () => {
   return (
     <CurrentWorkoutProvider>
       <HomeStackNav.Navigator>
         <HomeStackNav.Screen
-          name={Screens.Landing}
+          name={WorkoutStackScreens.Index}
           component={LandingPage}
           options={{
             headerShown: false,
           }}
         />
         <HomeStackNav.Screen
-          name={Screens.NewWorkout}
+          name={WorkoutStackScreens.NewWorkout}
           component={NewWorkout}
           options={{
             headerShown: false,
           }}
         />
-        <HomeStackNav.Screen name={Screens.History} component={History} />
+        <HomeStackNav.Screen
+          name={WorkoutStackScreens.History}
+          component={History}
+        />
       </HomeStackNav.Navigator>
     </CurrentWorkoutProvider>
   );
 };
 
-const FriendsStack = createNativeStackNavigator();
+const FriendsStack = createNativeStackNavigator<FriendStackPL>();
 const FriendStack = () => (
   <FriendsStack.Navigator>
     <FriendsStack.Screen
       options={{
         headerShown: false,
       }}
-      name={PostAuthTabs.Gym}
+      name={FriendStackScreens.Index}
       component={Friends}
     />
     <FriendsStack.Screen
       options={{headerTitle: 'Search'}}
-      name={Screens.FriendSearch}
+      name={FriendStackScreens.FriendSearch}
       component={FriendSearch}
     />
   </FriendsStack.Navigator>
 );
 
-const ChartsStack = createNativeStackNavigator();
+const ChartsStack = createNativeStackNavigator<ChartStackPL>();
 const ChartStack = () => (
   <ChartsStack.Navigator>
     <ChartsStack.Screen
-      name={Screens.Charts}
+      name={ChartStackScreens.Index}
       component={Charts}
       options={{headerShown: false}}
     />
     <ChartsStack.Screen
-      name={Screens.DetailedChartView}
+      name={ChartStackScreens.DetailedChartView}
       component={DetailedChartView}
       options={{headerTitle: 'Detailed View'}}
     />
   </ChartsStack.Navigator>
 );
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<PostAuthStackPL>();
 const PostAuthStack = () => {
   return (
     <ExerciseProvider>

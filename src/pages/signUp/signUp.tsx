@@ -2,14 +2,14 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useContext, useState} from 'react';
 import {KeyboardAvoidingView} from 'react-native';
 import registrationContext from '../../contexts/registration';
-import {RootStackParamList, Screens} from '../../constants/navigation';
+import {PreAuthStackPL, PreAuthScreens} from '../../constants/navigation';
 import {signUp} from '../../services/api/user';
 import {Styles} from '../../util/styles';
 import InitialSignUp from './subSignUpPages';
 import GymSelect from './subSignUpPages/gymSelect';
 import UserDetails from './subSignUpPages/userDetails';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'sign_up'>;
+type Props = NativeStackScreenProps<PreAuthStackPL, 'sign_up'>;
 
 const SignUp = ({navigation}: Props) => {
   const {email, gym_details} = useContext(registrationContext).details;
@@ -27,7 +27,7 @@ const SignUp = ({navigation}: Props) => {
   const submit = async (_username: string, _password: string) => {
     const result = await signUp(_username!, _password!, email!, gym_details!);
     if (result) {
-      navigation.navigate(Screens.SignIn);
+      navigation.navigate(PreAuthScreens.SignIn);
     }
   };
 

@@ -28,7 +28,11 @@ const BackButton = ({link, onPress, style}: Props) => {
   return (
     <Pressable
       onPress={onPressButton}
-      style={[{position: 'absolute', top: 0, left: 0, zIndex: 10}, style]}>
+      position="absolute"
+      top={0}
+      left={0}
+      zIndex={10}
+      style={style}>
       <Icon as={Ionic} name="arrow-back" size={8} />
     </Pressable>
   );

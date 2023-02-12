@@ -1,10 +1,7 @@
+import {Box, Button, Icon, Pressable, Row, Text} from 'native-base';
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Button from '../../../../components/button';
-import {Row} from '../../../../components/Reusable/reusable';
-import {Template} from '../../../../types';
-import {colors, Styles} from '../../../../util/styles';
+import FA from 'react-native-vector-icons/FontAwesome';
+import {Template} from '../../../../types/workouts';
 
 interface Props {
   templates: Template[];
@@ -32,113 +29,76 @@ const ExerciseTemplates: React.FC<Props> = ({templates}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <Row flexWrap={'wrap'}>
       {templates.length > 0 ? (
         templates.map((template, mainIndex) => (
-          <TouchableHighlight
-            underlayColor={colors.secondary}
-            style={[styles.wrapper]}
+          <Pressable
+            p={2}
+            mb={2}
+            borderRadius={8}
+            bg="gray.400"
+            w="100%"
             key={template.name}
             onPress={() => selectTemplate(template.name)}>
             <>
-              <Row style={Styles.w100}>
+              <Row w="100%">
                 <Icon
+                  as={FA}
                   name="circle"
                   color={
-                    selectedTemplate === template.name
-                      ? colors.accentDark
-                      : colors.white
+                    selectedTemplate === template.name ? 'primary.500' : 'white'
                   }
-                  size={18}
-                  style={styles.select}
+                  size={6}
+                  position="absolute"
+                  left={5}
                 />
-                <Text style={styles.header}>{template.name}</Text>
+                <Text fontSize={16} fontWeight={600} textAlign="center">
+                  {template.name}
+                </Text>
                 <Icon
                   name={expandedView[mainIndex] ? 'caret-up' : 'caret-down'}
                   size={22}
-                  style={styles.iconDown}
+                  mb={2}
+                  left={'90%'}
+                  top={-2}
+                  position="absolute"
                   onPress={() => toggleExpanded(mainIndex)}
                 />
               </Row>
-              <View
-                style={{
-                  display: expandedView[mainIndex] ? 'flex' : 'none',
-                  marginTop: 6,
-                }}>
+              <Box display={expandedView[mainIndex] ? 'flex' : 'none'} mt={1.5}>
                 {template.exercises.map((exercise, index) => (
                   <Row
                     key={exercise}
-                    style={styles.exercise}
-                    xAlign="space-between">
-                    <Text style={styles.exerciseName}>{exercise}</Text>
+                    bg={'gray.100'}
+                    borderRadius={8}
+                    px={2}
+                    py={1}
+                    mb={1}
+                    justifyContent="space-between">
+                    <Text fontWeight={600}>{exercise}</Text>
                     <Text>{template.maxs[index]}</Text>
                   </Row>
                 ))}
-              </View>
+              </Box>
             </>
-          </TouchableHighlight>
+          </Pressable>
         ))
       ) : (
-        <Text style={styles.noTemplates}>No Templates</Text>
+        <Text textAlign="center" mb={3} w="100%">
+          No Templates
+        </Text>
       )}
       <Button
-        color={selectedTemplate ? colors.primary : colors.secondary}
+        bg={selectedTemplate ? 'primary.500' : 'gray.300'}
         disabled={selectedTemplate === undefined}
-        elevated={selectedTemplate !== undefined}
+        shadow={selectedTemplate !== undefined ? 5 : 0}
         width="100%"
         textAlign="center"
-        bold
-        fontSize={14}>
+        fontWeight={600}>
         Start Workout
       </Button>
-    </View>
+    </Row>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-  },
-  wrapper: {
-    padding: 8,
-    backgroundColor: colors.grey400,
-    borderRadius: 8,
-    marginBottom: 8,
-    width: '100%',
-  },
-  header: {
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  exercise: {
-    backgroundColor: colors.grey100,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    marginBottom: 4,
-  },
-  exerciseName: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  iconDown: {
-    marginBottom: 8,
-    left: '90%',
-    top: -2,
-    position: 'absolute',
-  },
-  select: {
-    position: 'absolute',
-    left: 5,
-  },
-  noTemplates: {
-    fontSize: 14,
-    textAlign: 'center',
-    width: '100%',
-    marginBottom: 12,
-  },
-});
 
 export default ExerciseTemplates;

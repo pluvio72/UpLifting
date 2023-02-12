@@ -1,13 +1,18 @@
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {CompositeScreenProps} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Box, Icon, Input, Row, Text} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView, Pressable} from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
-import {RootStackParamList} from '../../../constants/navigation';
+import {FriendStackPL, PostAuthStackPL} from '../../../constants/navigation';
 import Session from '../../../contexts/session';
-import {searchUsers} from '../../../services/api/user';
+import {searchUsers, sendFriendRequest} from '../../../services/api/user';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'friend_search'>;
+type Props = CompositeScreenProps<
+  NativeStackScreenProps<FriendStackPL, 'friend_search'>,
+  BottomTabScreenProps<PostAuthStackPL>
+>;
 
 const FriendSearch: React.FC<Props> = ({route}) => {
   const [filter, setFilter] = useState(route.params.filter);
@@ -21,6 +26,12 @@ const FriendSearch: React.FC<Props> = ({route}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
+  const sendRequest = async (username: string) => {
+    const res = await sendFriendRequest(session!, username);
+    if (!res) console.log('Friend request failed');
+    console.log('Friend request response:', res);
+  };
+
   return (
     <Box p={3}>
       <Input
@@ -33,20 +44,22 @@ const FriendSearch: React.FC<Props> = ({route}) => {
       <ScrollView style={styles.scrollView}>
         {users &&
           users.map((user, index) => (
-            <Row
-              justifyContent="space-between"
-              alignItems="center"
-              bg="gray.200"
-              px={3}
-              py={2}
-              mb={2}
-              borderRadius={8}
-              key={index}>
-              <Text fontSize={16} fontWeight={500}>
-                {user.username}
-              </Text>
-              <Icon as={Ionic} name="person-add" size={6} />
-            </Row>
+            <Pressable onPress={() => sendRequest(user.username)}>
+              <Row
+                justifyContent="space-between"
+                alignItems="center"
+                bg="gray.200"
+                px={3}
+                py={2}
+                mb={2}
+                borderRadius={8}
+                key={index}>
+                <Text fontSize={16} fontWeight={500}>
+                  {user.username}
+                </Text>
+                <Icon as={Ionic} name="person-add" size={6} />
+              </Row>
+            </Pressable>
           ))}
       </ScrollView>
     </Box>
