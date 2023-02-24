@@ -5,7 +5,15 @@ React Native (TS) Social Workout Tracker app.
 
 ## Install and Run
 
-Install with npm
+Setup Ruby Version:
+  - `brew install rbenv`
+  - `rbenv init && rbenv install`
+
+### Ruby Package Manager:
+You can either use `bundler` or `cocoapods`
+  - `sudo gem install cocoapods`
+
+### Install with npm
 
 ```bash
   npm install
