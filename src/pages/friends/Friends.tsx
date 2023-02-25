@@ -10,6 +10,7 @@ import {FriendStackPL, PostAuthStackPL} from '../../constants/navigation';
 import {colors} from '../../util/styles';
 import {useFriendManager} from '../../hooks/useFriendManager';
 import Session from '../../contexts/session';
+import WeGoJim from '../../components/modals/weGoJimModal';
 
 type Props = CompositeScreenProps<
   NativeStackScreenProps<FriendStackPL, 'friend_stack_index'>,
@@ -18,6 +19,7 @@ type Props = CompositeScreenProps<
 
 const Friends: React.FC<Props> = ({navigation}) => {
   const [friendSearch, setFriendSearch] = useState('');
+  const [showGoJim, setShowGoJim] = useState(false);
 
   const onFindFriend = () => {
     navigation.navigate('friend_search', {filter: friendSearch});
@@ -26,10 +28,10 @@ const Friends: React.FC<Props> = ({navigation}) => {
   const session = useContext(Session);
   const {pendingFriends, acceptFriendRequest, rejectFriendRequest} =
     useFriendManager(session!);
-  console.log('Pending friends changed, ', pendingFriends);
 
   return (
     <SafeAreaView style={{flex: 1}}>
+      <WeGoJim show={showGoJim} onHide={() => setShowGoJim(false)} />
       <Row mx={3} height={10}>
         <Input
           borderBottomLeftRadius={8}
@@ -58,7 +60,12 @@ const Friends: React.FC<Props> = ({navigation}) => {
         <Button flex={1} flexDir={'row'} color={colors.primary} mr={1}>
           My Friends
         </Button>
-        <Button flex={1} flexDir={'row'} color={colors.primary} ml={1}>
+        <Button
+          flex={1}
+          flexDir={'row'}
+          color={colors.primary}
+          ml={1}
+          onPress={() => setShowGoJim(true)}>
           We Go Jim
         </Button>
       </Row>

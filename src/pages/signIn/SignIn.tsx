@@ -44,6 +44,7 @@ const SignIn: React.FC<Props> = ({onLogin}) => {
           value={username}
           autoCapitalize="none"
           autoComplete="off"
+          autoCorrect={false}
           placeholder="Username"
           InputLeftElement={
             <Icon
