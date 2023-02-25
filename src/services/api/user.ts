@@ -68,6 +68,21 @@ export const acceptFriendRequest = async (
   );
 };
 
+export const rejectFriendRequest = async (
+  session: Session,
+  friendUsername: string,
+) => {
+  return await AuthenticatedRoute(
+    session,
+    'POST',
+    '/users/friend/request/reject',
+    JSON.stringify({
+      username: session.account.username,
+      friendUsername,
+    }),
+  );
+};
+
 export const signIn = async (username: string, password: string) => {
   return await UnauthenticatedRoute<{token: string; account: UserAccount}>(
     'POST',

@@ -24,7 +24,8 @@ const Friends: React.FC<Props> = ({navigation}) => {
   };
 
   const session = useContext(Session);
-  const {pendingFriends, acceptFriendRequest} = useFriendManager(session!);
+  const {pendingFriends, acceptFriendRequest, rejectFriendRequest} =
+    useFriendManager(session!);
   console.log('Pending friends changed, ', pendingFriends);
 
   return (
@@ -69,7 +70,7 @@ const Friends: React.FC<Props> = ({navigation}) => {
           <Pressable onPress={() => acceptFriendRequest(friend.user.username)}>
             <Icon as={Ionic} name="person-add" size={6} />
           </Pressable>
-          <Pressable>
+          <Pressable onPress={() => rejectFriendRequest(friend.user.username)}>
             <Icon as={Ionic} name="close-sharp" size={6} ml={2} />
           </Pressable>
         </Row>
