@@ -8,7 +8,7 @@ import Ionic from 'react-native-vector-icons/Ionicons';
 import Spacer from '../../components/spacer';
 import {FriendStackPL, PostAuthStackPL} from '../../constants/navigation';
 import {colors} from '../../util/styles';
-import {useFriends} from '../../hooks/useFriends';
+import {useFriendManager} from '../../hooks/useFriendManager';
 import Session from '../../contexts/session';
 
 type Props = CompositeScreenProps<
@@ -24,12 +24,12 @@ const Friends: React.FC<Props> = ({navigation}) => {
   };
 
   const session = useContext(Session);
-  const friends = useFriends(session!);
-  console.log(friends);
+  const {pendingFriends, acceptFriendRequest} = useFriendManager(session!);
+  console.log('Pending friends changed, ', pendingFriends);
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Row mx={2} height={10}>
+      <Row mx={3} height={10}>
         <Input
           borderBottomLeftRadius={8}
           borderTopLeftRadius={8}
@@ -40,6 +40,7 @@ const Friends: React.FC<Props> = ({navigation}) => {
           borderBottomRightRadius={0}
           value={friendSearch}
           autoCapitalize="none"
+          autoComplete="off"
         />
         <Box
           bg="primary.500"
@@ -60,16 +61,20 @@ const Friends: React.FC<Props> = ({navigation}) => {
           We Go Jim
         </Button>
       </Row>
-      {friends.map(friend => (
+      {pendingFriends.slice(0, 4).map(friend => (
         <Row bg="gray.200" px={3} py={2} alignItems="center" mb={1}>
           <Text mr={'auto'} ml={2} fontWeight={600} fontSize={16}>
             @{friend.user.username}
           </Text>
-          <Icon as={Ionic} name="person-add" size={6} />
-          <Icon as={Ionic} name="close-sharp" size={6} ml={2} />
+          <Pressable onPress={() => acceptFriendRequest(friend.user.username)}>
+            <Icon as={Ionic} name="person-add" size={6} />
+          </Pressable>
+          <Pressable>
+            <Icon as={Ionic} name="close-sharp" size={6} ml={2} />
+          </Pressable>
         </Row>
       ))}
-      {friends.length > 4 && (
+      {pendingFriends.length > 4 && (
         <Button m={2} my={1} textAlign="center">
           View Rest
         </Button>

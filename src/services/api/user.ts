@@ -1,6 +1,6 @@
 import {Session} from '../../contexts/session';
 import {Gym} from '../../types/gyms';
-import {UserAccount} from '../../types/user';
+import {User, UserAccount} from '../../types/user';
 import {AuthenticatedRoute, UnauthenticatedRoute} from './api';
 
 export const searchUsers = async (session: Session, filter: string) => {
@@ -42,17 +42,30 @@ export const sendFriendRequest = async (
   session: Session,
   newFriendUsername: string,
 ) => {
-  return (
-    await AuthenticatedRoute(
-      session,
-      'POST',
-      '/users/friend/request',
-      JSON.stringify({
-        username: session.account.username,
-        newFriendUsername,
-      }),
-    )
-  ).success;
+  return await AuthenticatedRoute<{friend: User}>(
+    session,
+    'POST',
+    '/users/friend/request',
+    JSON.stringify({
+      username: session.account.username,
+      newFriendUsername,
+    }),
+  );
+};
+
+export const acceptFriendRequest = async (
+  session: Session,
+  newFriendUsername: string,
+) => {
+  return await AuthenticatedRoute(
+    session,
+    'POST',
+    '/users/friend/request/accept',
+    JSON.stringify({
+      username: session.account.username,
+      friendUsername: newFriendUsername,
+    }),
+  );
 };
 
 export const signIn = async (username: string, password: string) => {
