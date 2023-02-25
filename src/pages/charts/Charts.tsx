@@ -2,7 +2,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useContext, useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, Text} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
-import Button from '../../components/button';
+import {Button} from 'native-base';
 import Chart from '../../components/chart';
 import Spacer from '../../components/spacer';
 import Session from '../../contexts/session';
@@ -10,7 +10,6 @@ import {ExerciseNames} from '../../constants/exercises';
 import {
   ChartStackPL,
   PostAuthStackPL,
-  RootStackParamList,
   Screens,
 } from '../../constants/navigation';
 import {getRecentWorkouts} from '../../services/api/workout';

@@ -2,12 +2,14 @@ import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Box, Button, Input, Icon, Pressable, Row, Text} from 'native-base';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {SafeAreaView} from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import Spacer from '../../components/spacer';
 import {FriendStackPL, PostAuthStackPL} from '../../constants/navigation';
 import {colors} from '../../util/styles';
+import {useFriends} from '../../hooks/useFriends';
+import Session from '../../contexts/session';
 
 type Props = CompositeScreenProps<
   NativeStackScreenProps<FriendStackPL, 'friend_stack_index'>,
@@ -21,6 +23,10 @@ const Friends: React.FC<Props> = ({navigation}) => {
     navigation.navigate('friend_search', {filter: friendSearch});
   };
 
+  const session = useContext(Session);
+  const friends = useFriends(session!);
+  console.log(friends);
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <Row mx={2} height={10}>
@@ -31,8 +37,9 @@ const Friends: React.FC<Props> = ({navigation}) => {
           placeholder={'Search for friends...'}
           flex={1}
           borderTopRightRadius={0}
-          borderBottomRadius={0}
+          borderBottomRightRadius={0}
           value={friendSearch}
+          autoCapitalize="none"
         />
         <Box
           bg="primary.500"
@@ -53,23 +60,20 @@ const Friends: React.FC<Props> = ({navigation}) => {
           We Go Jim
         </Button>
       </Row>
-      <Row bg="gray.200" px={3} py={2} alignItems="center" mb={1}>
-        <Text mr={'auto'} ml={2} fontWeight={600} fontSize={16}>
-          @hermano
-        </Text>
-        <Icon as={Ionic} name="person-add" size={6} />
-        <Icon as={Ionic} name="close-sharp" size={6} ml={2} />
-      </Row>
-      <Row bg="gray.200" px={3} py={2} alignItems="center" mb={1}>
-        <Text mr={'auto'} ml={2} fontWeight={600} fontSize={16}>
-          @josh
-        </Text>
-        <Icon as={Ionic} name="person-add" size={6} />
-        <Icon as={Ionic} name="close-sharp" size={6} ml={2} />
-      </Row>
-      <Button m={2} my={1} textAlign="center">
-        View Rest
-      </Button>
+      {friends.map(friend => (
+        <Row bg="gray.200" px={3} py={2} alignItems="center" mb={1}>
+          <Text mr={'auto'} ml={2} fontWeight={600} fontSize={16}>
+            @{friend.user.username}
+          </Text>
+          <Icon as={Ionic} name="person-add" size={6} />
+          <Icon as={Ionic} name="close-sharp" size={6} ml={2} />
+        </Row>
+      ))}
+      {friends.length > 4 && (
+        <Button m={2} my={1} textAlign="center">
+          View Rest
+        </Button>
+      )}
       <Spacer size={2} />
       <Text fontSize={18} fontWeight={600} textAlign="center" mb={3}>
         Activity

@@ -23,7 +23,7 @@ export interface User {
 }
 
 export interface UserAccount extends User {
-  friends: Array<User & {pending: boolean}>;
+  friends: Array<{user: User} & {pending: boolean}>;
 }
 
 export type Friend = UserAccount['friends'][number];

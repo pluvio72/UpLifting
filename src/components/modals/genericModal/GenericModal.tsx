@@ -4,7 +4,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Color, colors} from '../../../util/styles';
-import Button from '../../button';
+import {Button} from 'native-base';
 
 interface ModalAction {
   text: string;
@@ -42,7 +42,7 @@ const GenericModal: React.FC<Props> = ({
               color={secondAction.color}
               onPress={secondAction.onPress}
               style={styles.button}
-              margin={{mb: 6}}>
+              mb={1.5}>
               {secondAction.text}
             </Button>
           )}

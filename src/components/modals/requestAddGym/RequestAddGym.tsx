@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, Text} from 'react-native';
 import Modal from 'react-native-modal';
 import {colors} from '../../../util/styles';
-import Button from '../../button';
+import {Button} from 'native-base';
 import {TextInput} from '../../inputs/TextInput';
 import {ModalProps} from '../modalProps';
 
@@ -49,12 +49,7 @@ const RequestAddGym: React.FC<Props> = ({show, onHide}) => {
         value={postCode}
         placeholder="Post Code (e.g. 5CD F45)"
       />
-      <Button
-        textAlign="center"
-        bold
-        color={colors.accent}
-        margin={{mb: 4}}
-        onPress={onHide}>
+      <Button textAlign="center" color={colors.accent} mb={1} onPress={onHide}>
         Add
       </Button>
       <Button textAlign="center" color={colors.grey300} onPress={onHide}>

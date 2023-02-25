@@ -33,14 +33,29 @@ const FriendSearch: React.FC<Props> = ({route}) => {
   };
 
   return (
-    <Box p={3}>
-      <Input
-        borderRadius={8}
-        onChangeText={setFilter}
-        value={filter}
-        defaultValue={route.params.filter}
-        mb={2}
-      />
+    <Box p={3} flex={1}>
+      <Row height={10} mb={4}>
+        <Input
+          borderBottomLeftRadius={8}
+          borderTopLeftRadius={8}
+          borderTopRightRadius={0}
+          borderBottomRightRadius={0}
+          onChangeText={setFilter}
+          value={filter}
+          defaultValue={route.params.filter}
+          flex={1}
+        />
+        <Box
+          bg="primary.500"
+          borderBottomRightRadius={8}
+          borderTopRightRadius={8}
+          justifyContent="center"
+          px={3}>
+          <Pressable onPress={() => {}}>
+            <Icon as={Ionic} color={'white'} name="search" size={6} />
+          </Pressable>
+        </Box>
+      </Row>
       <ScrollView style={styles.scrollView}>
         {users &&
           users.map((user, index) => (

@@ -77,7 +77,10 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
   const closeModal = () => setSelectedWorkout(undefined);
 
   const friendRequests = useCallback(
-    () => session?.account.friends.filter(e => e.pending === true) || [],
+    () =>
+      session?.account.friends
+        ? session?.account.friends.filter(e => e.pending === true)
+        : [],
     [session?.account.friends],
   );
 
