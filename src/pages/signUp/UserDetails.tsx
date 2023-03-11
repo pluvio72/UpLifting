@@ -3,12 +3,16 @@ import React, {useCallback, useState} from 'react';
 import {KeyboardAvoidingView, SafeAreaView} from 'react-native';
 import BackButton from '../../components/button/backButton';
 import {CompositeScreenProps} from '@react-navigation/native';
-import {PreAuthStackPL, SignUpStackPL} from '../../constants/navigation';
+import {
+  PreAuthStackPL,
+  SignUpScreens,
+  SignUpStackPL,
+} from '../../constants/navigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {OnSignUp} from '../../app/stacks/PreAuth/stacks/SignUp';
 
 type Props = {
-  onSubmit: (payload: OnSignUp) => void;
+  onSubmit: (payload: OnSignUp) => Promise<boolean>;
 };
 
 type NavigationProps = CompositeScreenProps<
@@ -16,7 +20,11 @@ type NavigationProps = CompositeScreenProps<
   NativeStackScreenProps<PreAuthStackPL>
 >;
 
-const UserDetails: React.FC<Props & NavigationProps> = ({route, onSubmit}) => {
+const UserDetails: React.FC<Props & NavigationProps> = ({
+  navigation,
+  route,
+  onSubmit,
+}) => {
   if (!route.params.email && !route.params.gym) {
     throw new Error('Incorrect route params.');
   }
@@ -25,17 +33,22 @@ const UserDetails: React.FC<Props & NavigationProps> = ({route, onSubmit}) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const submit = useCallback(() => {
+  const submit = useCallback(async () => {
     if (username && password && confirmPassword) {
       if (password === confirmPassword) {
-        onSubmit({
+        const success = await onSubmit({
           username,
           password,
           email: route.params.email,
           gym: route.params.gym,
         });
+
+        if (success) {
+          navigation.navigate(SignUpScreens.Verify, {username});
+        }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     confirmPassword,
     onSubmit,

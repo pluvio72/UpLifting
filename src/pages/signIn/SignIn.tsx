@@ -33,6 +33,9 @@ const SignIn: React.FC<Props> = ({onLogin}) => {
     // }
     try {
       const user = await Auth.signIn(username, password);
+      for (let i = 0; i < Object.keys(user).length; i += 1) {
+        console.log(user[Object.keys(user)[i]]);
+      }
       console.log(`Signing in user: ${user}`);
     } catch (error) {
       console.log(`Signing in error: ${error}`);

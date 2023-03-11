@@ -20,11 +20,13 @@ export const SignUpScreens = {
   Initial: 'initial_preauth',
   GymSelect: 'gym_select',
   UserDetails: 'user_details',
+  Verify: 'sign_up_verify',
 } as const;
 export type SignUpStackPL = {
   [SignUpScreens.Initial]: undefined;
   [SignUpScreens.GymSelect]: {email: string};
   [SignUpScreens.UserDetails]: {email: string; gym: Gym};
+  [SignUpScreens.Verify]: {username: string};
 };
 
 // !POST AUTH NAVIGATION TYPES
