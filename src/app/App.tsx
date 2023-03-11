@@ -9,6 +9,11 @@ import {isValidJWT} from '../util/api';
 import {validateJWT} from '../services/api/user';
 import Theme from '../util/styles/theme';
 
+// load amplify config file
+import {Amplify} from 'aws-amplify';
+import awsconfig from '../aws-exports';
+Amplify.configure(awsconfig);
+
 const USER_SESSION = 'user_session';
 export type onLogin = (token: string, account: UserAccount) => Promise<void>;
 

@@ -89,7 +89,7 @@ const Friends: React.FC<Props> = ({navigation}) => {
       )}
       <Spacer size={2} />
       <Text fontSize={18} fontWeight={600} textAlign="center" mb={3}>
-        Activity
+        Friend Activity
       </Text>
       <Box mb={3} shadow={4}>
         <Text fontWeight={600} mb={1} ml={1}>

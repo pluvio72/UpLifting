@@ -2,7 +2,8 @@ import React from 'react';
 import BarChart from './components/barChart';
 import Spacer from '../../components/spacer';
 import {SafeAreaView} from 'react-native';
-import {Box, Row, Text} from 'native-base';
+import {Box, Button, Icon, Row, Text} from 'native-base';
+import Ionic from 'react-native-vector-icons/Ionicons';
 
 const Gym = () => {
   return (
@@ -25,25 +26,41 @@ const Gym = () => {
         Latest PRs
       </Text>
       <Spacer size={1} />
-      <Row bg="gray.200" py={2}>
-        <Text w="33%" textAlign="center">
+      <Row bg="gray.200" py={2} justifyContent="space-between">
+        <Icon
+          as={Ionic}
+          name="shield-checkmark"
+          size={6}
+          color="primary.500"
+          w="10%"
+          mx="auto"
+        />
+        <Text w="30%" textAlign="center">
           @arriana
         </Text>
-        <Text fontWeight={600} w="33%" textAlign="center">
+        <Text fontWeight={600} w="30%" textAlign="center">
           140 x 12kg
         </Text>
-        <Text w="33%" textAlign="center">
+        <Text w="30%" textAlign="center">
           Hip Thrusts
         </Text>
       </Row>
       <Row bg="gray.200" py={2}>
-        <Text w="33%" textAlign="center">
+        <Icon
+          as={Ionic}
+          name="shield-checkmark"
+          size={6}
+          color="primary.500"
+          w="10%"
+          mx="auto"
+        />
+        <Text w="30%" textAlign="center">
           @josff
         </Text>
-        <Text w="33%" textAlign="center" fontWeight={600}>
+        <Text w="30%" textAlign="center" fontWeight={600}>
           1 x 120kg
         </Text>
-        <Text w="33%" textAlign="center">
+        <Text w="30%" textAlign="center">
           Bench Press
         </Text>
       </Row>
@@ -84,8 +101,11 @@ const Gym = () => {
           x={'centile'}
           y={'people'}
         />
+        <Button size="sm" py={1} mt={1}>
+          View More
+        </Button>
       </Box>
-      <Spacer size={3} />
+      <Spacer size={1} />
       <Row>
         <Text w="50%" textAlign="center">
           Visits this month

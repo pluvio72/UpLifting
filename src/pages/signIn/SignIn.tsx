@@ -7,6 +7,7 @@ import {signIn} from '../../services/api/user';
 import {onLogin as OnLogin} from '../../app/App';
 import {Button, Heading, Input} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {Auth} from 'aws-amplify';
 
 interface Props {
   onLogin: OnLogin;
@@ -25,10 +26,16 @@ const SignIn: React.FC<Props> = ({onLogin}) => {
   };
 
   const submit = async () => {
-    const result = await signIn(username, password);
-    console.log('Result:', result);
-    if (result.success) {
-      onLogin(result.token, result.account);
+    // const result = await signIn(username, password);
+    // console.log('Result:', result);
+    // if (result.success) {
+    //   onLogin(result.token, result.account);
+    // }
+    try {
+      const user = await Auth.signIn(username, password);
+      console.log(`Signing in user: ${user}`);
+    } catch (error) {
+      console.log(`Signing in error: ${error}`);
     }
   };
 

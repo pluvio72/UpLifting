@@ -4,10 +4,8 @@ import React from 'react';
 import {ViewStyle} from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
 
-import {Screens} from '../../../constants/navigation';
-
 interface Props {
-  link?: (typeof Screens)[keyof typeof Screens];
+  link?: string;
   onPress?: () => void;
   style?: ViewStyle;
 }

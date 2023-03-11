@@ -1,37 +1,55 @@
-import {Button, Heading, Input} from 'native-base';
-import React, {useContext, useState} from 'react';
-import {KeyboardAvoidingView, SafeAreaView, View} from 'react-native';
-import BackButton from '../../../components/button/backButton';
-import registrationContext from '../../../contexts/registration';
-import styles from '../signUp.styles';
+import {Button, Center, Heading, Input} from 'native-base';
+import React, {useCallback, useState} from 'react';
+import {KeyboardAvoidingView, SafeAreaView} from 'react-native';
+import BackButton from '../../components/button/backButton';
+import {CompositeScreenProps} from '@react-navigation/native';
+import {PreAuthStackPL, SignUpStackPL} from '../../constants/navigation';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {OnSignUp} from '../../app/stacks/PreAuth/stacks/SignUp';
 
-interface Props {
-  goBack: () => void;
-  onSubmit: (username: string, password: string) => void;
-}
+type Props = {
+  onSubmit: (payload: OnSignUp) => void;
+};
 
-const UserDetails = ({goBack, onSubmit}: Props) => {
+type NavigationProps = CompositeScreenProps<
+  NativeStackScreenProps<SignUpStackPL, 'user_details'>,
+  NativeStackScreenProps<PreAuthStackPL>
+>;
+
+const UserDetails: React.FC<Props & NavigationProps> = ({route, onSubmit}) => {
+  if (!route.params.email && !route.params.gym) {
+    throw new Error('Incorrect route params.');
+  }
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const {onChange} = useContext(registrationContext);
-
-  const submit = () => {
-    console.log('Submitting');
+  const submit = useCallback(() => {
     if (username && password && confirmPassword) {
       if (password === confirmPassword) {
-        onChange({username, password});
-        onSubmit(username, password);
+        onSubmit({
+          username,
+          password,
+          email: route.params.email,
+          gym: route.params.gym,
+        });
       }
     }
-  };
+  }, [
+    confirmPassword,
+    onSubmit,
+    password,
+    route.params.email,
+    route.params.gym,
+    username,
+  ]);
 
   return (
     <SafeAreaView>
       <KeyboardAvoidingView>
-        <BackButton onPress={goBack} style={{left: 20}} />
-        <View style={styles.detailsWrapper}>
+        <BackButton style={{left: 20}} />
+        <Center p={2.5} h="100%">
           <Heading my={4}>Details</Heading>
           <Input
             onChangeText={setUsername}
@@ -69,7 +87,7 @@ const UserDetails = ({goBack, onSubmit}: Props) => {
           <Button width={'100%'} textAlign="center" onPress={submit}>
             Create
           </Button>
-        </View>
+        </Center>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

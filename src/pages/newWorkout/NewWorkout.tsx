@@ -6,7 +6,7 @@ import ExerciseItem from '../../components/ExerciseItem';
 import ExerciseSelectModal from '../../components/modals/exerciseSelect';
 import Session from '../../contexts/session';
 import {Exercise, ExerciseSet} from '../../types/workouts';
-import {WorkoutStackScreens} from '../../constants/navigation';
+import {PostAuthTabs} from '../../constants/navigation';
 import {getExerciseHistory, saveNewWorkout} from '../../services/api/workout';
 import {colors} from '../../util/styles';
 import {CurrentWorkout} from '../../contexts/currentWorkout';
@@ -39,7 +39,7 @@ const NewWorkout = () => {
 
   const navigate = useNavigation<NavigationProp<any, any>>();
   const goBack = () => {
-    navigate.navigate(WorkoutStackScreens.Landing);
+    navigate.navigate(PostAuthTabs.Landing);
   };
 
   const onAddPhoto = (item: PhotoIdentifier['node']) => {
@@ -86,7 +86,7 @@ const NewWorkout = () => {
 
   const cancelWorkout = () => {
     currentWorkout.clear();
-    navigate.navigate(WorkoutStackScreens.Landing);
+    navigate.navigate(PostAuthTabs.Landing);
   };
 
   const showModal = () => setShowConfirmModal(true);
@@ -141,13 +141,13 @@ const NewWorkout = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <KeyboardAvoidingView>
-        <CameraRollModal
+        {/* <CameraRollModal
           onSelect={onAddPhoto}
           onHide={() => {
             setShowPhotoSelect(false);
           }}
           show={showPhotoSelect}
-        />
+        /> */}
         <GenericModal
           isVisible={showConfirmModal}
           onHide={hideModal}

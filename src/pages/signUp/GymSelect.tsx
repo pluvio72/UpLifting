@@ -1,26 +1,37 @@
 import {Button, Heading} from 'native-base';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
-import BackButton from '../../../components/button/backButton';
-import RequestAddGym from '../../../components/modals/requestAddGym/RequestAddGym';
-import Spacer from '../../../components/spacer';
-import registrationContext from '../../../contexts/registration';
-import {getGyms} from '../../../services/api/gym';
-import {Gym} from '../../../types/gyms';
-import {colors} from '../../../util/styles';
+import BackButton from '../../components/button/backButton';
+import RequestAddGym from '../../components/modals/requestAddGym/RequestAddGym';
+import Spacer from '../../components/spacer';
+import {getGyms} from '../../services/api/gym';
+import {Gym} from '../../types/gyms';
+import {colors} from '../../util/styles';
+import {CompositeScreenProps} from '@react-navigation/native';
+import {
+  PreAuthStackPL,
+  SignUpScreens,
+  SignUpStackPL,
+} from '../../constants/navigation';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 // import {ShuffleArray} from '../../../util/format';
 
-interface Props {
-  onBack: () => void;
-  onNext: () => void;
-}
+type Props = CompositeScreenProps<
+  NativeStackScreenProps<SignUpStackPL, 'gym_select'>,
+  NativeStackScreenProps<PreAuthStackPL>
+>;
 
-const GymSelect = ({onBack, onNext}: Props) => {
-  const [gyms, setGyms] = useState<Array<Gym>>([]);
+const GymSelect: React.FC<Props> = ({navigation, route}) => {
+  const [gyms, setGyms] = useState<Array<Gym>>([
+    {
+      address: '1 Hello street',
+      brand: 'Pure',
+      name: 'Hello - Pure',
+      post_code: 'SE3 4WL',
+    },
+  ]);
   const GymBrands = Array.from(new Set(gyms?.map(e => e.brand)));
-
-  const {onChange} = useContext(registrationContext);
 
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedName, setSelectedName] = useState('');
@@ -41,19 +52,25 @@ const GymSelect = ({onBack, onNext}: Props) => {
 
   const submit = () => {
     if (selectedBrand && selectedName) {
-      onChange({
-        gym_details: gyms.find(
-          e => e.name === selectedName && e.brand === selectedBrand,
-        )!,
+      const selectedGym = gyms.find(
+        e => e.name === selectedName && e.brand === selectedBrand,
+      );
+
+      if (!selectedGym) {
+        throw new Error('No gym selected');
+      }
+
+      navigation.navigate(SignUpScreens.UserDetails, {
+        email: route.params.email,
+        gym: selectedGym,
       });
-      onNext();
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <RequestAddGym show={showAddGymModal} onHide={hideGymModal} />
-      <BackButton style={{top: '5%'}} onPress={onBack} />
+      <BackButton style={{top: '5%'}} />
       <Heading textAlign={'center'} mb={3}>
         Select Gym
       </Heading>

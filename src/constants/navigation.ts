@@ -5,7 +5,9 @@ import {
   ParamListBase,
 } from '@react-navigation/native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Gym} from '../types/gyms';
 
+// !PRE AUTH NAVIGATION TYPES
 export const PreAuthScreens = {
   SignUp: 'sign_up',
   SignIn: 'sign_in',
@@ -14,7 +16,18 @@ export type PreAuthStackPL = {
   [PreAuthScreens.SignUp]: undefined;
   [PreAuthScreens.SignIn]: undefined;
 };
+export const SignUpScreens = {
+  Initial: 'initial_preauth',
+  GymSelect: 'gym_select',
+  UserDetails: 'user_details',
+} as const;
+export type SignUpStackPL = {
+  [SignUpScreens.Initial]: undefined;
+  [SignUpScreens.GymSelect]: {email: string};
+  [SignUpScreens.UserDetails]: {email: string; gym: Gym};
+};
 
+// !POST AUTH NAVIGATION TYPES
 export const PostAuthTabs = {
   Profile: 'profile',
   Charts: 'charts',

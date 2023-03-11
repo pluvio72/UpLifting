@@ -1,31 +1,30 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import React, {useContext, useState} from 'react';
-import {View} from 'react-native';
+import {CompositeScreenProps} from '@react-navigation/native';
+import React, {useState} from 'react';
 // import {TextInput} from '../../../components/inputs/TextInput';
-import Spacer from '../../../components/spacer';
-import registrationContext from '../../../contexts/registration';
-import {PreAuthScreens} from '../../../constants/navigation';
-import {colors} from '../../../util/styles';
-import styles from '../signUp.styles';
+import Spacer from '../../components/spacer';
+import {
+  PreAuthScreens,
+  PreAuthStackPL,
+  SignUpScreens,
+  SignUpStackPL,
+} from '../../constants/navigation';
+import {colors} from '../../util/styles';
 
-import {Button, Heading, Input, Text} from 'native-base';
+import {Button, Center, Heading, Input, Text} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-interface Props {
-  onNext: () => void;
-}
+type Props = CompositeScreenProps<
+  NativeStackScreenProps<SignUpStackPL, 'initial_preauth'>,
+  NativeStackScreenProps<PreAuthStackPL>
+>;
 
-const InitialSignUp: React.FC<Props> = ({onNext}) => {
+const InitialSignUp: React.FC<Props> = ({navigation}) => {
   const [email, setEmail] = useState('');
-
-  const navigation = useNavigation<NavigationProp<any, any>>();
-
-  const {onChange} = useContext(registrationContext);
 
   const submit = () => {
     if (email) {
-      onChange({email});
-      onNext();
+      navigation.navigate(SignUpScreens.GymSelect, {email});
     }
   };
 
@@ -34,7 +33,7 @@ const InitialSignUp: React.FC<Props> = ({onNext}) => {
   };
 
   return (
-    <View style={styles.inputWrapper}>
+    <Center p={2.5} h="100%">
       <Heading my={2}>Sign Up</Heading>
       <Input
         onChangeText={setEmail}
@@ -70,7 +69,7 @@ const InitialSignUp: React.FC<Props> = ({onNext}) => {
       <Text color={colors.blue} fontWeight="500" onPress={goToSignIn}>
         Already have an account? Sign In
       </Text>
-    </View>
+    </Center>
   );
 };
 

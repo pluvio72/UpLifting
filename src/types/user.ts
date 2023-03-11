@@ -20,6 +20,15 @@ export interface User {
     };
   };
   gym: Gym;
+  weGoJimRequests: WeGoJimRequest[];
+}
+
+export interface WeGoJimRequest {
+  from: string;
+  with: string[];
+  date_suggested: Date;
+  workout_name: string;
+  accepted: boolean;
 }
 
 export interface UserAccount extends User {

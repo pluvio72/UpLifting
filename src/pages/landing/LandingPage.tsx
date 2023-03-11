@@ -21,7 +21,6 @@ import {Template} from '../../types/workouts';
 import {PR, Workout} from '../../types/workouts';
 import colors from '../../util/styles/colors';
 import ExerciseTemplates from './landingComponents/ExerciseTemplates';
-import styles from './LandingPage.styles';
 import {
   Badge,
   Box,
@@ -96,7 +95,7 @@ const LandingPage: React.FC<Props> = ({navigation}) => {
         show={selectedWorkout !== undefined}
         onHide={closeModal}
       />
-      <ScrollView style={styles.container}>
+      <ScrollView p={2}>
         <Button
           endIcon={<Icon as={Ionic} name="add" size={6} color={colors.white} />}
           px={20}

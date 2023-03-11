@@ -16,6 +16,7 @@ const WeGoJim: React.FC<Props> = ({show, onHide}) => {
   const session = useContext(Session);
   const {friends} = useFriendManager(session!);
   const [filter, setFilter] = useState('');
+  const [suggestedDate, setSuggestedDate] = useState(new Date());
   const [selectedFriends, setSelectedFriends] = useState<Array<string>>([]);
 
   const selectFriend = useCallback(
@@ -38,11 +39,22 @@ const WeGoJim: React.FC<Props> = ({show, onHide}) => {
     [selectedFriends],
   );
 
+  const submit = () => {
+    // sendEvent('weGoJim', {
+    //   friends: selectedFriends,
+    //   date_suggested: suggestedDate,
+    // });
+    // onHide();
+  };
+
   return (
     <Modal isOpen={show} animationPreset="slide" px={2} size="full">
       <Modal.Content p={2} pt={3}>
         <Text style={styles.header}>We Go Jim</Text>
-        <DateInput value={new Date()} onChangeValue={() => {}} />
+        <DateInput
+          value={suggestedDate}
+          onChangeValue={newVal => setSuggestedDate(newVal)}
+        />
         <Input
           value={filter}
           onChangeText={setFilter}
@@ -83,7 +95,7 @@ const WeGoJim: React.FC<Props> = ({show, onHide}) => {
             );
           })}
         <Spacer />
-        <Button textAlign="center" onPress={onHide} mt={2}>
+        <Button textAlign="center" onPress={submit} mt={2}>
           We Go
         </Button>
         <Button textAlign="center" bg="gray.400" onPress={onHide} mt={1}>

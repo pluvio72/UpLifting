@@ -1,2 +1,4 @@
-import SignUp from './signUp';
-export default SignUp;
+import GymSelect from './GymSelect';
+import InitialSignUp from './Initial';
+import UserDetails from './UserDetails';
+export {GymSelect, InitialSignUp, UserDetails};
