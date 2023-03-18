@@ -1,41 +1,47 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 import BackButton from '../../components/button/backButton';
-import {PreAuthScreens} from '../../constants/navigation';
-import {signIn} from '../../services/api/user';
+import {PreAuthScreens, PreAuthStackPL} from '../../constants/navigation';
 import {onLogin as OnLogin} from '../../app/App';
 import {Button, Heading, Input} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Auth} from 'aws-amplify';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 interface Props {
   onLogin: OnLogin;
 }
 
-const SignIn: React.FC<Props> = ({onLogin}) => {
+type NavigationProps = NativeStackScreenProps<PreAuthStackPL, 'sign_in'>;
+
+const SignIn: React.FC<Props & NavigationProps> = ({
+  onLogin,
+  navigation,
+  route,
+}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const [showPassword, setShowPassword] = useState(true);
 
-  const navigation = useNavigation<NavigationProp<any, any>>();
-
   const goBack = () => {
     navigation.navigate(PreAuthScreens.SignUp);
   };
 
+  useLayoutEffect(() => {
+    (async function () {
+      if (route.params.username && route.params.password) {
+        setUsername(route.params.username);
+        setPassword(route.params.password);
+        await submit();
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [route.params.password, route.params.username]);
+
   const submit = async () => {
-    // const result = await signIn(username, password);
-    // console.log('Result:', result);
-    // if (result.success) {
-    //   onLogin(result.token, result.account);
-    // }
     try {
       const user = await Auth.signIn(username, password);
-      for (let i = 0; i < Object.keys(user).length; i += 1) {
-        console.log(user[Object.keys(user)[i]]);
-      }
       console.log(`Signing in user: ${user}`);
     } catch (error) {
       console.log(`Signing in error: ${error}`);

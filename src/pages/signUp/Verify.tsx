@@ -32,7 +32,11 @@ const VerifySignUp: React.FC<Props & NavigationProps> = ({route, onSubmit}) => {
 
   const handleOnSubmit = useCallback(async () => {
     if (code) {
-      await onSubmit({username: route.params.username, code});
+      await onSubmit({
+        username: route.params.username,
+        password: route.params.password,
+        code,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code, route.params.username]);

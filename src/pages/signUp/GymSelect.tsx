@@ -40,11 +40,11 @@ const GymSelect: React.FC<Props> = ({navigation, route}) => {
   const showGymModal = () => setShowAddGymModal(true);
   const hideGymModal = () => setShowAddGymModal(false);
 
-  useEffect(() => {
-    getGyms().then(res => {
-      setGyms(res.gyms);
-    });
-  }, []);
+  // useEffect(() => {
+  //   getGyms().then(res => {
+  //     setGyms(res.gyms);
+  //   });
+  // }, []);
 
   const onSelectBrand = (newVal: {name: string}) => {
     setSelectedBrand(newVal.name);

@@ -44,7 +44,7 @@ const UserDetails: React.FC<Props & NavigationProps> = ({
         });
 
         if (success) {
-          navigation.navigate(SignUpScreens.Verify, {username});
+          navigation.navigate(SignUpScreens.Verify, {username, password});
         }
       }
     }

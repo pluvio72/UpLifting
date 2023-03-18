@@ -1,6 +1,14 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {SignUpScreens, SignUpStackPL} from '../../../../constants/navigation';
+import {
+  NativeStackScreenProps,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
+import {
+  PreAuthScreens,
+  PreAuthStackPL,
+  SignUpScreens,
+  SignUpStackPL,
+} from '../../../../constants/navigation';
 import {
   GymSelect,
   InitialSignUp,
@@ -19,16 +27,24 @@ export type OnSignUp = {
 };
 export type OnVerify = {
   username: string;
+  password: string;
   code: string;
 };
 
-const SignUpStack = () => {
-  const onVerify = async (payload: OnVerify) => {
-    const {code, username} = payload;
+type Props = NativeStackScreenProps<PreAuthStackPL, 'sign_up'>;
 
+const SignUpStack: React.FC<Props> = ({navigation}) => {
+  // Auth.signOut({global: true});
+
+  const onVerify = async (payload: OnVerify) => {
+    const {code, username, password} = payload;
     try {
       await Auth.confirmSignUp(username, code);
       console.log(`User ${username} succesfully verified.`);
+      navigation.navigate(PreAuthScreens.SignIn, {
+        username,
+        password,
+      });
       return true;
     } catch (error) {
       console.log(`Error in verification code: ${error}`);

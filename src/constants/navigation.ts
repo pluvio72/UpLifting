@@ -14,7 +14,7 @@ export const PreAuthScreens = {
 } as const;
 export type PreAuthStackPL = {
   [PreAuthScreens.SignUp]: undefined;
-  [PreAuthScreens.SignIn]: undefined;
+  [PreAuthScreens.SignIn]: {username?: string; password?: string};
 };
 export const SignUpScreens = {
   Initial: 'initial_preauth',
@@ -26,7 +26,7 @@ export type SignUpStackPL = {
   [SignUpScreens.Initial]: undefined;
   [SignUpScreens.GymSelect]: {email: string};
   [SignUpScreens.UserDetails]: {email: string; gym: Gym};
-  [SignUpScreens.Verify]: {username: string};
+  [SignUpScreens.Verify]: {username: string; password: string};
 };
 
 // !POST AUTH NAVIGATION TYPES

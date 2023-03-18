@@ -20,7 +20,7 @@ const PreAuthStack: React.FC<Props> = ({onLogin}) => {
         component={SignUpStack}
       />
       <Stack.Screen name={PreAuthScreens.SignIn} options={{headerShown: false}}>
-        {() => <SignIn onLogin={onLogin} />}
+        {props => <SignIn onLogin={onLogin} {...props} />}
       </Stack.Screen>
     </Stack.Navigator>
   );
